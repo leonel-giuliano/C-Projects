@@ -2,7 +2,7 @@
 #include <string.h>
 
 #include "main.h"
-#include "data.h"
+#include "list.h"
 #include "error.h"
 
 int main(int argc, char *argv[]) {

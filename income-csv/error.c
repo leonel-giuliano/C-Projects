@@ -20,6 +20,10 @@ void errorHandler(errorEvent_t error) {
             printf("The file isn't a '%s'.\n", FILE_TYPE);
             break;
 
+        case ERROR_MALLOC:
+            puts("There was a problem allocating.");
+            break;
+
         default:
             puts("Unkown error.");
             break;
