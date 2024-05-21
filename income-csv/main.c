@@ -50,5 +50,5 @@ void scanStr(char *str, size_t num, FILE *fp) {
         char ch;
         while((ch = getc(fp)) != '\n' && ch != EOF);
         // Skips the overflowing data
-    } else str[len - 1] == '\0';
+    } else str[len - 1] = '\0';
 }

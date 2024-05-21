@@ -25,6 +25,9 @@ void addItem(FILE *fp) {
     scanf(" %u", &(item->outcome));
     printf("Salary: ");
     scanf(" %u", &(item->salary));
+
+    printf("%s\n", item->date);
+    printf("%s\n", item->description);
 }
 
 void delList(void) {

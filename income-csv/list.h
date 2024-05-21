@@ -1,7 +1,7 @@
 #include <stdint.h>
 
 #define DATE_LENGTH 9       /* mm/dd/yy */
-#define DESC_LENGTH 100
+#define DESC_LENGTH 10
 
 typedef struct _item {
     char date[DATE_LENGTH];
