@@ -8,7 +8,8 @@
 int main(int argc, char *argv[]) {
     if(argc > ARGC_FILE) errorHandler(ERROR_ARGC);
 
-    char *fpIncome, *filePath = getPath(argc, argv);
+    char *filePath = getPath(argc, argv);
+    FILE *fpIncome;
     if((fpIncome = fopen(filePath, "w+")) == NULL)
         errorHandler(ERROR_FILE);
     // Opens the file with the indicated path

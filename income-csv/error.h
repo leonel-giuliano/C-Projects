@@ -1,3 +1,6 @@
+// Exit from loops
+#define ITEM_LOOP 1000
+
 typedef enum {
     ERROR_ARGC,
     ERROR_FILE,
