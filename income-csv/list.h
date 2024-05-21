@@ -15,4 +15,5 @@ typedef struct _item {
     struct _item *next;
 }item_t;
 
+void addItem(FILE *_Stream);
 void delList(void);

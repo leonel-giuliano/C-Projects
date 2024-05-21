@@ -14,6 +14,9 @@ int main(int argc, char *argv[]) {
         errorHandler(ERROR_FILE);
     // Opens the file with the indicated path
 
+    addItem(fpIncome);
+
+    delList();
     fclose(fpIncome);
 
     return 0;
@@ -36,4 +39,16 @@ char *getPath(int argc, char *argv[]) {
     }
 
     return path;
+}
+
+void scanStr(char *str, size_t num, FILE *fp) {
+    fgets(str, num, fp);
+    size_t len = strlen(str);
+
+    if(str[len - 1] != '\n') {
+        // Case where the string is bigger than the buffer
+        char ch;
+        while((ch = getc(fp)) != '\n' && ch != EOF);
+        // Skips the overflowing data
+    } else str[len - 1] == '\0';
 }

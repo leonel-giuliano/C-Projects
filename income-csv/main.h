@@ -13,3 +13,5 @@ enum {
 };
 
 char *getPath(int _Argc, char *_Argv[]);
+void scanStr(char *_Buffer, size_t _Num, FILE *_Stream);
+// Scans a string with a max amount of char
