@@ -10,6 +10,7 @@ static item_t *list = NULL;
 void addItem(FILE *fp) {
     item_t *item;
     if((item = (item_t*)malloc(sizeof(item_t))) == NULL) {
+        delList();
         fclose(fp);
 
         errorHandler(ERROR_MALLOC);
@@ -25,19 +26,20 @@ void addItem(FILE *fp) {
     scanf(" %u", &(item->outcome));
     printf("Salary: ");
     scanf(" %u", &(item->salary));
-
-    printf("%s\n", item->date);
-    printf("%s\n", item->description);
 }
 
 void delList(void) {
     uint16_t exitPrevent = 0;
-    item_t *delItem = list;
 
     while(list != NULL && exitPrevent != ITEM_LOOP) {
+        item_t *delItem = list;
         list = list->next;
         free(delItem);
+        // Detaches the item from the list and frees it
 
         exitPrevent++;
     }
+
+    if(exitPrevent == ITEM_LOOP && list == NULL)
+        puts("\nPROGRAM ERROR: Problem with the loop.");
 }
