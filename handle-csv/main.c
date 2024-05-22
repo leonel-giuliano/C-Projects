@@ -16,8 +16,16 @@ int main(int argc, char *argv[]) {
     // Uses this instead of appending to change
     // the content already written in the file
 
-    askData(&fpData);
+    uint8_t columnNum = getColumns(fpData);
+    char *columnNames;
+    if((columnNames = (char*)calloc(sizeof(char), columnNum)) == NULL) {
+        fclose(fpData);
 
+        errorHandler(ERROR_MEMORY);
+    }
+    // Array of the column names
+
+    free(columnNames);
     fclose(fpData);
 
     return 0;
