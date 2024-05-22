@@ -15,6 +15,10 @@ void errorHandler(errorEvent_t error) {
             puts("There was a problem with the file.");
             break;
 
+        case ERROR_MALLOC:
+            puts("There was a problem allocating.");
+            break;
+
         default:
             puts("Unkown error.");
             break;
