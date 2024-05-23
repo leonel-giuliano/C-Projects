@@ -54,6 +54,7 @@ uint8_t scanColumns(FILE *fp) {
     fprintf(fp, "%c", '\n');
     // Deletes the ',' to end the line
 
+    fflush(fp);
     return --i;
     // Returns the amount of columns
 }
@@ -69,7 +70,7 @@ char **readRow(uint8_t cells, FILE *fp) {
     for(uint8_t i = 0; i < cells; i++) {
         char *str;
         if((str = (char*)malloc(STR_LENGTH * sizeof(char))) == NULL) {
-            freeArrStr(row, i);
+            freeArrPtr(row, i + 1);
             fclose(fp);
 
             errorHandler(ERROR_MEMORY);
@@ -89,17 +90,19 @@ char **readRow(uint8_t cells, FILE *fp) {
     return row;
 }
 
-void addRow(const char *names, FILE *fp) {
+void addRow(char **names, FILE *fp) {
     char str[STR_LENGTH];
     fseek(fp, 0, SEEK_END);
 
-    for(uint8_t i = 0; i < sizeof(names); i++) {
-        printf("%s: ", &names[i]);
+    for(uint8_t i = 0; i <= sizeof(names); i++) {
+        printf("%s: ", names[i]);
         scanstr(str, STR_LENGTH, stdin);
-        fputs(str, fp);
+        fprintf(fp, "%s", str);
         // Saves the value in the file
 
-        if(i + 1 != sizeof(names)) fputc('\n', fp);
+        if(i == sizeof(names)) fputc('\n', fp);
         else fputc(',', fp);
     }
+
+    fflush(fp);
 }

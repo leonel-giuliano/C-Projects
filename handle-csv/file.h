@@ -10,4 +10,4 @@ uint8_t scanColumns(FILE *_Stream);
 // and returns the amount of cells
 
 char **readRow(uint8_t _Num, FILE *_Stream);        /* Reads every cell from a row */
-void addRow(const char *_ArrayStr, FILE *_Stream);
+void addRow(char **_ArrayStr, FILE *_Stream);
