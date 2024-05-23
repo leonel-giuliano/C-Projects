@@ -18,14 +18,13 @@ int main(int argc, char *argv[]) {
     // the content already written in the file
 
     uint8_t columnNum = getColumns(fpData);
-    // Gets the amount of columns needed
-
-    char *columnNames = readRow(columnNum, fpData);
+    char **columnNames = readRow(columnNum, fpData);
     // Array of the column names
 
-    puts(&columnNames[0]);
-
+    for(uint8_t i = 0; i < columnNum; i++) free(columnNames[i]);
     free(columnNames);
+    // Free the pointers within the array and the array itself
+
     fclose(fpData);
 
     return 0;
@@ -35,6 +34,7 @@ void scanstr(char str[], int max, FILE *fp) {
     fgets(str, max, fp);
     // Saves only the amount it can
     // The rest is still in the file
+
     size_t length = strlen(str);
 
     if(str[length - 1] != '\n') {

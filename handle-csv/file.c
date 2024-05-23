@@ -6,7 +6,9 @@
 #include "error.h"
 
 uint8_t getColumns(FILE *fp) {
-    uint8_t cells = 1;      /* The 1 is to count already the new line */
+    uint8_t cells = 1;
+    // The 1 is to count already the new line
+
     rewind(fp);
     char ch = fgetc(fp);
     rewind(fp);
@@ -56,16 +58,51 @@ uint8_t scanColumns(FILE *fp) {
     // Returns the amount of columns
 }
 
-char *readRow(uint8_t cells, FILE *fp) {
-    char *row;
-    if((row = (char*)calloc(cells, STR_LENGTH * sizeof(char))) == NULL) {
+char **readRow(uint8_t cells, FILE *fp) {
+    char **row;
+    if((row = (char**)calloc(cells, sizeof(char*))) == NULL) {
         fclose(fp);
 
         errorHandler(ERROR_MEMORY);
     }
 
-    for(uint8_t i = 0; i < cells; i++) fscanf(fp, "%[^\n,]", &row[i]);
+    for(uint8_t i = 0; i < cells; i++) {
+        char *str;
+        if((str = (char*)malloc(STR_LENGTH * sizeof(char))) == NULL) {
+            for(uint8_t j = 0; j < i; j++) free(row[j]);
+            // Frees the pointers inside of the array
+
+            free(row);
+            fclose(fp);
+
+            errorHandler(ERROR_MEMORY);
+        }
+
+        fscanf(fp, "%[^\n,]", str);
+        // Saves the string inside the memory
+
+        row[i] = str;
+        // The position of the array saves a pointer to the string
+
+        getc(fp);
+        // Skips over separator and new line
+    }
     // Reads until founds a new line or a comma
 
     return row;
+}
+
+void addRow(const char *names, FILE *fp) {
+    char str[STR_LENGTH];
+    fseek(fp, 0, SEEK_END);
+
+    for(uint8_t i = 0; i < sizeof(names); i++) {
+        printf("%s: ", &names[i]);
+        scanstr(str, STR_LENGTH, stdin);
+        fputs(str, fp);
+        // Saves the value in the file
+
+        if(i + 1 != sizeof(names)) fputc('\n', fp);
+        else fputc(',', fp);
+    }
 }
