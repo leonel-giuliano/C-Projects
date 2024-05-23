@@ -66,6 +66,7 @@ void menu(menuState_t *state, MENU_PARAM) {
     };
     // All the functions of the menu
 
+    puts("\n\t-----   MENU   -----");
     printf("%u. Add a row.\n", MENU_ADD);
     printf("%u. Print a row when inserted the number.\n", MENU_READ_ROW);
     printf("%u. Finish the program.\n\n", MENU_END);
@@ -81,6 +82,8 @@ void menu(menuState_t *state, MENU_PARAM) {
         menuF[*state - 1](MENU_ARG);
     // Calls the respctive function
     else puts("Choose a given option.");
+
+    printf("\n");
 }
 
 void menuAdd(MENU_PARAM) {
