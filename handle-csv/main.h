@@ -8,5 +8,7 @@ enum {
 // Argv values
 
 #define STR_LENGTH 100
+#define GRADE 248           /* ° */
 
-#define GRADE 248
+void scanstr(char _Buffer[], int _Length, FILE *_Stream);
+// Scans a string and clears the remaing data

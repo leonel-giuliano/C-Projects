@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "main.h"
 #include "file.h"
@@ -18,7 +19,7 @@ int main(int argc, char *argv[]) {
 
     uint8_t columnNum = getColumns(fpData);
     char *columnNames;
-    if((columnNames = (char*)calloc(sizeof(char), columnNum)) == NULL) {
+    if((columnNames = (char*)calloc(columnNum, sizeof(char) * STR_LENGTH)) == NULL) {
         fclose(fpData);
 
         errorHandler(ERROR_MEMORY);
@@ -29,4 +30,22 @@ int main(int argc, char *argv[]) {
     fclose(fpData);
 
     return 0;
+}
+
+void scanstr(char str[], int max, FILE *fp) {
+    uint16_t loopLimit = 0;
+    fgets(str, max, fp);
+    // Saves only the amount it can
+    // The rest is still in the file
+    size_t length = strlen(str);
+
+    if(str[length - 1] != '\n') {
+        // Checks if the end of the string is a new line
+        char ch;
+        while((ch = getc(fp)) != '\n' && ch != EOF && loopLimit != CH_LOOP);
+        // Cleans the data remaining
+
+        loopLimit++;
+    } else str[length - 1] = '\0';
+    // Replaces the new line with end of a string
 }
