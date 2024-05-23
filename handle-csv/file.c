@@ -69,10 +69,7 @@ char **readRow(uint8_t cells, FILE *fp) {
     for(uint8_t i = 0; i < cells; i++) {
         char *str;
         if((str = (char*)malloc(STR_LENGTH * sizeof(char))) == NULL) {
-            for(uint8_t j = 0; j < i; j++) free(row[j]);
-            // Frees the pointers inside of the array
-
-            free(row);
+            freeArrStr(row, i);
             fclose(fp);
 
             errorHandler(ERROR_MEMORY);

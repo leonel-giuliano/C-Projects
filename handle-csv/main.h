@@ -12,3 +12,5 @@ enum {
 
 void scanstr(char _Buffer[], int _Length, FILE *_Stream);
 // Scans a string and clears the remaing data
+
+void freeArrStr(char **arr, uint8_t length);

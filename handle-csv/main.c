@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -21,8 +22,7 @@ int main(int argc, char *argv[]) {
     char **columnNames = readRow(columnNum, fpData);
     // Array of the column names
 
-    for(uint8_t i = 0; i < columnNum; i++) free(columnNames[i]);
-    free(columnNames);
+    freeArrStr(columnNames, columnNum);
     // Free the pointers within the array and the array itself
 
     fclose(fpData);
@@ -47,4 +47,9 @@ void scanstr(char str[], int max, FILE *fp) {
         loopLimit++;
     } else str[length - 1] = '\0';
     // Replaces the new line with end of a string
+}
+
+void freeArrStr(char **arr, uint8_t length) {
+    for(uint8_t i = 0; i < length; i++) free(arr[i]);
+    free(arr);
 }
