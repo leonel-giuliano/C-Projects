@@ -18,12 +18,8 @@ int main(int argc, char *argv[]) {
     // the content already written in the file
 
     uint8_t columnNum = getColumns(fpData);
-    char *columnNames;
-    if((columnNames = (char*)calloc(columnNum, sizeof(char) * STR_LENGTH)) == NULL) {
-        fclose(fpData);
-
-        errorHandler(ERROR_MEMORY);
-    }
+    rewind(fpData);
+    char *columnNames = readRow(columnNum, fpData);
     // Array of the column names
 
     free(columnNames);

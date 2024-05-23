@@ -7,12 +7,6 @@
 
 uint8_t getColumns(FILE *fp) {
     char str[STR_LENGTH];
-    // char *str;
-    // if((str = (char*)malloc(sizeof(char))) == NULL) {
-    //     fclose(fp);
-
-    //     errorHandler(ERROR_MEMORY);
-    // }
 
     uint8_t i = 0;
 
@@ -23,7 +17,6 @@ uint8_t getColumns(FILE *fp) {
     while(strcmp(str, "n") && strcmp(str, "N") && loopLimit != COLUMNS_LOOP) {
         printf("%d%c Parameters: ", ++i, GRADE);
         scanstr(str, STR_LENGTH, stdin);
-        // scanf(" %[^\n]", str);
 
         if(strcmp(str, "n") && strcmp(str, "N"))
             fprintf(fp, "%s,", str);
@@ -37,15 +30,20 @@ uint8_t getColumns(FILE *fp) {
     fprintf(fp, "%c", '\n');
     // Deletes the ',' to end the line
 
-    // free(str);
     return --i;
     // Returns the amount of columns
 }
 
-// void readRow(char *row[], FILE *fp) {
-//     uint8_t cells = sizeof(row) / sizeof(char);
-//     // Know the amount of cells
+char *readRow(uint8_t cells, FILE *fp) {
+    char *row;
+    if((row = (char*)calloc(cells, sizeof(char) * STR_LENGTH)) == NULL) {
+        fclose(fp);
 
-//     for(uint8_t i = 0; i < cells; i++) fscanf(fp, "%[^\n,]", row[i]);
-//     // Reads until founds a new line or a comma
-// }
+        errorHandler(ERROR_MEMORY);
+    }
+
+    for(uint8_t i = 0; i < cells; i++) fscanf(fp, "%[^\n,]", &row[i]);
+    // Reads until founds a new line or a comma
+
+    return row;
+}
