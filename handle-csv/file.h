@@ -9,5 +9,5 @@ uint8_t scanColumns(FILE *_Stream);
 // In case the file is empty, asks for the names
 // and returns the amount of cells
 
-char **readRow(uint8_t _Num, FILE *_Stream);        /* Reads every cell from a row */
-void addRow(char **_ArrayStr, FILE *_Stream);
+char **readRow(uint8_t _Length, FILE *_Stream);
+void addRow(char **_ArrayPtr, uint8_t _Length, FILE *_Stream);

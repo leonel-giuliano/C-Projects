@@ -16,13 +16,9 @@ uint8_t getColumns(FILE *fp) {
 
     if(ch != EOF) {
         // In case the file has data, only reads it
-        unsigned int loopLimit = 0;
-        while((ch = fgetc(fp)) != '\n' && ch != EOF && loopLimit != CH_LOOP) {
+        while((ch = fgetc(fp)) != '\n' && ch != EOF)
             if(ch == ',') cells++;
             // Reads the amount of commas to know the cells
-
-            loopLimit++;
-        }
     } else cells = scanColumns(fp);
 
     rewind(fp);
@@ -90,17 +86,17 @@ char **readRow(uint8_t cells, FILE *fp) {
     return row;
 }
 
-void addRow(char **names, FILE *fp) {
+void addRow(char **names, uint8_t cells, FILE *fp) {
     char str[STR_LENGTH];
     fseek(fp, 0, SEEK_END);
 
-    for(uint8_t i = 0; i <= sizeof(names); i++) {
+    for(uint8_t i = 0; i < cells; i++) {
         printf("%s: ", names[i]);
         scanstr(str, STR_LENGTH, stdin);
         fprintf(fp, "%s", str);
         // Saves the value in the file
 
-        if(i == sizeof(names)) fputc('\n', fp);
+        if(i + 1 == cells) fputc('\n', fp);
         else fputc(',', fp);
     }
 
