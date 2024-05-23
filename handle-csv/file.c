@@ -6,6 +6,28 @@
 #include "error.h"
 
 uint8_t getColumns(FILE *fp) {
+    uint8_t cells = 1;      /* The 1 is to count already the new line */
+    rewind(fp);
+    char ch = fgetc(fp);
+    rewind(fp);
+    // Reads only the first character
+
+    if(ch != EOF) {
+        // In case the file has data, only reads it
+        unsigned int loopLimit = 0;
+        while((ch = fgetc(fp)) != '\n' && ch != EOF && loopLimit != CH_LOOP) {
+            if(ch == ',') cells++;
+            // Reads the amount of commas to know the cells
+
+            loopLimit++;
+        }
+    } else cells = scanColumns(fp);
+
+    rewind(fp);
+    return cells;
+}
+
+uint8_t scanColumns(FILE *fp) {
     char str[STR_LENGTH];
 
     uint8_t i = 0;
@@ -13,7 +35,7 @@ uint8_t getColumns(FILE *fp) {
     puts("Put the name of the columns.");
     puts("When you are done, type [n].");
 
-    uint8_t loopLimit = 0;
+    unsigned int loopLimit = 0;
     while(strcmp(str, "n") && strcmp(str, "N") && loopLimit != COLUMNS_LOOP) {
         printf("%d%c Parameters: ", ++i, GRADE);
         scanstr(str, STR_LENGTH, stdin);
@@ -36,7 +58,7 @@ uint8_t getColumns(FILE *fp) {
 
 char *readRow(uint8_t cells, FILE *fp) {
     char *row;
-    if((row = (char*)calloc(cells, sizeof(char) * STR_LENGTH)) == NULL) {
+    if((row = (char*)calloc(cells, STR_LENGTH * sizeof(char))) == NULL) {
         fclose(fp);
 
         errorHandler(ERROR_MEMORY);

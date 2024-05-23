@@ -18,9 +18,12 @@ int main(int argc, char *argv[]) {
     // the content already written in the file
 
     uint8_t columnNum = getColumns(fpData);
-    rewind(fpData);
+    // Gets the amount of columns needed
+
     char *columnNames = readRow(columnNum, fpData);
     // Array of the column names
+
+    puts(&columnNames[0]);
 
     free(columnNames);
     fclose(fpData);
@@ -29,7 +32,6 @@ int main(int argc, char *argv[]) {
 }
 
 void scanstr(char str[], int max, FILE *fp) {
-    uint16_t loopLimit = 0;
     fgets(str, max, fp);
     // Saves only the amount it can
     // The rest is still in the file
@@ -38,6 +40,7 @@ void scanstr(char str[], int max, FILE *fp) {
     if(str[length - 1] != '\n') {
         // Checks if the end of the string is a new line
         char ch;
+        unsigned int loopLimit = 0;
         while((ch = getc(fp)) != '\n' && ch != EOF && loopLimit != CH_LOOP);
         // Cleans the data remaining
 
