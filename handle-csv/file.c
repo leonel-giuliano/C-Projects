@@ -102,3 +102,24 @@ void addRow(char **names, uint8_t cells, FILE *fp) {
 
     fflush(fp);
 }
+
+void printCol(uint8_t column, FILE *fp) {
+    uint8_t comma = 1;
+
+    char ch;
+    while((ch = fgetc(fp)) != EOF) {
+        if(ch == ',') comma++;
+        // Counts the amount of separators
+
+        if(ch == '\n') comma = 1;
+        // Restart the counter per line
+
+        if(comma == column) {
+            char str[STR_LENGTH];
+
+            fscanf(fp, "%[^\n,]", str);
+            puts(str);
+            // Prints the cell
+        }
+    }
+}

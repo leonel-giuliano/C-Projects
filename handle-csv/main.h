@@ -19,6 +19,7 @@ typedef enum {
     MENU_START,
     MENU_ADD,
     MENU_READ_ROW,
+    MENU_READ_COL,
     MENU_END
 }menuState_t;
 
@@ -31,4 +32,5 @@ void freeArrPtr(char **_ArrPtr, uint8_t _Length);
 void menu(menuState_t *_State, MENU_PARAM);
 void menuAdd(MENU_PARAM);
 void menuReadRow(MENU_PARAM);
+void menuReadCol(MENU_PARAM);
 void menuEnd(MENU_PARAM);

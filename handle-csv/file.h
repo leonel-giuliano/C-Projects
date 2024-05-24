@@ -11,3 +11,4 @@ uint8_t scanColumns(FILE *_Stream);
 
 char **readRow(uint8_t _Length, FILE *_Stream);
 void addRow(char **_ArrayPtr, uint8_t _Length, FILE *_Stream);
+void printCol(uint8_t _Num, FILE *_Stream);

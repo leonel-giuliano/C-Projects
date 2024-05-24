@@ -62,20 +62,22 @@ void menu(menuState_t *state, MENU_PARAM) {
     void (*menuF[MENU_END])(MENU_PARAM) = {
         menuAdd,
         menuReadRow,
+        menuReadCol,
         menuEnd
     };
     // All the functions of the menu
 
     puts("\n\t-----   MENU   -----");
-    printf("%u. Add a row.\n", MENU_ADD);
-    printf("%u. Print a row when inserted the number.\n", MENU_READ_ROW);
-    printf("%u. Finish the program.\n\n", MENU_END);
+    printf("%d. Add a row.\n", MENU_ADD);
+    printf("%d. Print a row when inserted the number.\n", MENU_READ_ROW);
+    printf("%d. Print all the cells of a column.\n", MENU_READ_COL);
+    printf("%d. Finish the program.\n\n", MENU_END);
     // Options
 
     printf("Write your option: ");
     scanf(" %u", state);
     while(getchar() != '\n');
-    printf("\n");
+    putchar('\n');
     // Scans the option of the menu
 
     if(*state > MENU_START && *state <= MENU_END)
@@ -83,15 +85,17 @@ void menu(menuState_t *state, MENU_PARAM) {
     // Calls the respctive function
     else puts("Choose a given option.");
 
-    printf("\n");
+    putchar('\n');
 }
 
 void menuAdd(MENU_PARAM) {
+    puts("\n\t-----   ADD ROW   -----");
     addRow(columnNames, columnNum, fpData);
 }
 
 void menuReadRow(MENU_PARAM) {
     unsigned int rowNum;
+    puts("\n\t-----   READ ROW   -----");
     printf("Insert the position of the row (hexadecimal): ");
     scanf(" %x", &rowNum);
     // Scan the position of the row in hexa
@@ -109,6 +113,20 @@ void menuReadRow(MENU_PARAM) {
     // Print every cell
 
     freeArrPtr(row, columnNum);
+}
+
+void menuReadCol(MENU_PARAM) {
+    uint8_t column;
+    puts("\n\t-----   READ COLUMN   -----");
+    puts("Insert the column you want to print.");
+    for(uint8_t i = 0; i < columnNum; i++) printf("%s: %d\n", columnNames[i], i + 1);
+    // Prints all the options
+
+    printf("\nColumn: ");
+    scanf(" %hhu", &column);
+    putchar('\n');
+
+    printCol(column, fpData);
 }
 
 void menuEnd(MENU_PARAM) {
