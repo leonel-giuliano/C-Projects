@@ -4,7 +4,7 @@
 #include "error.h"
 
 void errorHandler(errorEvent_t error) {
-    puts("ERROR: ");
+    printf("ERROR: ");
 
     switch(error) {
         case ERROR_ARGC:
