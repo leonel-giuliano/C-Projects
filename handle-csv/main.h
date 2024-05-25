@@ -7,7 +7,9 @@ enum {
 };
 // Argv values
 
+// Strings
 #define STR_LENGTH 100
+#define COL_LENGTH 2        /* ZZ == 676 */
 #define GRADE 248           /* ° */
 
 // MENU

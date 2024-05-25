@@ -96,8 +96,8 @@ void menuAdd(MENU_PARAM) {
 void menuReadRow(MENU_PARAM) {
     uint16_t rowNum;
     puts("\n\t-----   READ ROW   -----");
-    printf("Insert the position of the row (hexadecimal): ");
-    scanf(" %hx", &rowNum);
+    printf("Insert the position of the row: ");
+    scanf(" %hu", &rowNum);
     // Scan the position of the row in hexa
 
     rewind(fpData);
@@ -116,17 +116,25 @@ void menuReadRow(MENU_PARAM) {
 }
 
 void menuReadCol(MENU_PARAM) {
-    uint8_t column;
+    char input[COL_LENGTH];
     puts("\n\t-----   READ COLUMN   -----");
     puts("Insert the column you want to print.");
-    for(uint8_t i = 0; i < columnNum; i++) printf("%s: %hhu\n", columnNames[i], i + 1);
+    // Make col a string and change depending
+    // the amount of letters when i > 'Z'
+    for(uint8_t i = 0; i < columnNum; i++) {
+        char col = (i + (uint8_t)'A' <= (uint8_t)'Z')
+        // Check if i is greater than Z
+            ?   i + (uint8_t)'A'
+            :   2;
+        // From num to column from Excel
+
+        printf("%s: %c\n", columnNames[i], col);
+    }
     // Prints all the options
 
     printf("\nColumn: ");
-    scanf(" %hhu", &column);
+    scanstr(input, COL_LENGTH, stdin);
     putchar('\n');
-
-    printCol(column, fpData);
 }
 
 void menuEnd(MENU_PARAM) {
