@@ -119,10 +119,10 @@ void menuReadCol(MENU_PARAM) {
     uint8_t column;
     puts("\n\t-----   READ COLUMN   -----");
     puts("Insert the column you want to print.");
-    // Make col a string and change depending
-    // the amount of letters when i > 'Z'
+
+    rewind(fpData);
     for(uint8_t i = 0; i < columnNum; i++)
-        printf("%s: %c\n", columnNames[i], i + 1);
+        printf("%s: %hhu\n", columnNames[i], i + 1);
     // Prints all the options
 
     printf("\nColumn: ");
@@ -130,6 +130,7 @@ void menuReadCol(MENU_PARAM) {
     putchar('\n');
 
     printCol(column, fpData);
+    // Prints every cell from the column
 }
 
 void menuEnd(MENU_PARAM) {
