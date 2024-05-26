@@ -121,8 +121,6 @@ void menuReadCol(MENU_PARAM) {
     puts("Insert the column you want to print.");
 
     rewind(fpData);
-
-    rewind(fpData);
     for(uint8_t i = 0; i < columnNum; i++)
         printf("%s: %hhu\n", columnNames[i], i + 1);
     // Prints all the options
