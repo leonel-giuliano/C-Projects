@@ -116,25 +116,20 @@ void menuReadRow(MENU_PARAM) {
 }
 
 void menuReadCol(MENU_PARAM) {
-    char input[COL_LENGTH];
+    uint8_t column;
     puts("\n\t-----   READ COLUMN   -----");
     puts("Insert the column you want to print.");
     // Make col a string and change depending
     // the amount of letters when i > 'Z'
-    for(uint8_t i = 0; i < columnNum; i++) {
-        char col = (i + (uint8_t)'A' <= (uint8_t)'Z')
-        // Check if i is greater than Z
-            ?   i + (uint8_t)'A'
-            :   2;
-        // From num to column from Excel
-
-        printf("%s: %c\n", columnNames[i], col);
-    }
+    for(uint8_t i = 0; i < columnNum; i++)
+        printf("%s: %c\n", columnNames[i], i + 1);
     // Prints all the options
 
     printf("\nColumn: ");
-    scanstr(input, COL_LENGTH, stdin);
+    scanf(" %hhu", &column);
     putchar('\n');
+
+    printCol(column, fpData);
 }
 
 void menuEnd(MENU_PARAM) {
