@@ -34,3 +34,5 @@ typedef struct {
 
     char type[TYPE_AMOUNT][TYPE_LENGTH];
 }pokemon_t;
+
+pokemon_t scanPkm(void);

@@ -1,9 +1,9 @@
 #include <stdio.h>
+#include <string.h>
 
+#include "main.h"
 #include "pokemon.h"
 #include "error.h"
-
-#define PKM_PATH "./pokemon.csv"
 
 int main() {
     FILE *fpPkm;
@@ -11,4 +11,14 @@ int main() {
         errorHandler(ERROR_FILE);
 
     return 0;
+}
+
+void scanstr(char *str, size_t max, FILE *fp) {
+    fgets(str, max, fp);
+    size_t length = strlen(str);
+
+    if(str[length - 1] != '\n') {
+        char ch;
+        while((ch = getc(fp)) != '\n' && ch != EOF);
+    } else str[length - 1] = '\0';
 }

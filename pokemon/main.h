@@ -1,0 +1,1 @@
+#define PKM_PATH "./pokemon.csv"
