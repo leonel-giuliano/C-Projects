@@ -1,13 +1,10 @@
-#include <stdio.h>
+#include <string.h>
 
 #include "pokemon.h"
+#include "main.h"
 
-pokemon_t scanPkm(void) {
-    pokemon_t pkm;
-
-    printf("Lv. ");
-    scanf(" %hhu", &pkm.lv);
-    printf("Pokemon: ");
+pokemon_t *scanPkm(FILE *fp) {
+    pokemon_t *pkm;
 
     return pkm;
 }

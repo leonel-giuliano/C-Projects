@@ -11,6 +11,10 @@ void errorHandler(errorState_t error) {
             puts("There was a problem with the file.");
             break;
 
+        case ERROR_MEMORY:
+            puts("There was a problem allocating.");
+            break;
+
         default:
             puts("Unkown error.");
             break;
