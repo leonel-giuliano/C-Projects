@@ -9,6 +9,8 @@ int main() {
     if((fpPkm = fopen(PKM_PATH, "r")) == NULL)
         errorHandler(ERROR_FILE);
 
+    fclose(fpPkm);
+
     return 0;
 }
 
