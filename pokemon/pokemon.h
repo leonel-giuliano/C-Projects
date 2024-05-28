@@ -1,7 +1,12 @@
+#ifndef __POKEMON_H__
+#define __POKEMON_H__
+
 #include <stdio.h>
 #include <stdint.h>
 
 #define PKM_GEN_1 151
+#define MIN_LV 1
+#define MAX_LV 100
 
 // String length
 #define NAME_LENGTH 18      /* HoopaHoopa Unbound */
@@ -26,3 +31,5 @@ typedef struct {
 }pokemon_t;
 
 uint8_t scanPkm(pokemon_t *_Pokemon, FILE *_Stream);
+
+#endif

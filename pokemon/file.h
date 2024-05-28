@@ -1,7 +1,10 @@
+#ifndef __FILE_H__
+#define __FILE_H__
+
 #include <stdio.h>
 #include <stdint.h>
 
-#include "main.h"
+#include "pokemon.h"
 
 #define FIRST_LINE 89
 // "#,Name,Type 1,Type 2,Total,HP,Attack,Defense,Sp. Atk,
@@ -26,3 +29,5 @@ enum {
 
 uint8_t searchPkm(pokemon_t *_Pokemon, uint16_t _PokemonAmount, FILE *_Stream);
 // Returns if the pokemon was found
+
+#endif

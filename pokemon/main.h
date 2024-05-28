@@ -1,3 +1,6 @@
+#ifndef __MAIN_H__
+#define __MAIN_H__
+
 #include <stdio.h>
 
 #include "pokemon.h"
@@ -17,3 +20,5 @@ void scanstr(char *_Buffer, size_t _MaxLength, FILE *_Stream);
 
 void menu(menuState_t *_State, FILE *_Stream);
 void menuSet(MENU_PARAM);
+
+#endif
