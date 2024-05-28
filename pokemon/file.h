@@ -24,5 +24,5 @@ enum {
 };
 // Parameters
 
-uint8_t searchPkm(pokemon_t *_Pokemon, FILE *_Stream);
+uint8_t searchPkm(pokemon_t *_Pokemon, uint16_t _PokemonAmount, FILE *_Stream);
 // Returns if the pokemon was found

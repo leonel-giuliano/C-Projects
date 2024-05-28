@@ -3,13 +3,13 @@
 #include "file.h"
 #include "error.h"
 
-uint8_t searchPkm(pokemon_t *pkm, FILE *fp) {
+uint8_t searchPkm(pokemon_t *pkm, uint16_t limit, FILE *fp) {
     uint8_t found = 0;      /* Bool that checks if it was found */
     uint16_t countComma = 0, countPkm = 0;
 
     rewind(fp);
     char ch;
-    while(!found && countPkm != PKM_GEN_1 && (ch = getc(fp)) != EOF) {
+    while(!found && countPkm != limit && (ch = getc(fp)) != EOF) {
         if(countComma == COMMA_NAME) {
             char str[NAME_LENGTH];
             fscanf(fp, "%[^\n,]", str);
