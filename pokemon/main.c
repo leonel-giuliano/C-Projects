@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <string.h>
 
 #include "main.h"
@@ -8,10 +9,11 @@ int main() {
     if((fpPkm = fopen(PKM_PATH, "r")) == NULL)
         errorHandler(ERROR_FILE);
 
-    menuState_t menuState = MENU_SET;
-    menu(&menuState, fpPkm);
+    menuState_t menuState;
 
-    fclose(fpPkm);
+    do {
+        menu(&menuState, fpPkm);
+    }while(menuState != MENU_END);
 
     return 0;
 }
@@ -27,9 +29,56 @@ void scanstr(char *str, size_t max, FILE *fp) {
 }
 
 void menu(menuState_t *state, FILE *fpPkm) {
-    static pokemon_t playerPkm, rivalPkm;
+    static pokemon_t attackerPkm, targetPkm;
 
-    scanPkm(&playerPkm, fpPkm);
+    void (*menuF[MENU_END])(MENU_PARAM) = {
+        menuSet,
+        menuEnd
+    };
 
-    printf("%s\n", playerPkm.name);
+    printf("Option: ");
+    scanf(" %u", state);
+    while(getchar() != '\n');
+    // Scan and delete data from the terminal
+
+    if(*state > MENU_START && *state <= MENU_END)
+        menuF[*state - 1](MENU_ARG);
+    else puts("Choose a given option.");
+
+    printf("%s\n", attackerPkm.name);
+}
+
+void menuSet(MENU_PARAM) {
+    pokemon_t tempAtk, tempTarget;
+    // In case there is a problem
+
+    printf("Pokemon attacker: ");
+    if(!scanPkm(&tempAtk, fpPkm)) {
+        puts("The pokemon wasn't found.");
+
+        return;
+    }
+
+    printf("Pokemon target: ");
+    if(!scanPkm(&tempTarget, fpPkm)) {
+        puts("The pokemon wasn't found.");
+
+        return;
+    }
+
+    *attackerPkm = tempAtk;
+    *targetPkm = tempTarget;
+    // Only saves it in case there wasn't a problem
+    // with any pokemon so the variables are the same
+    // as in the last called
+}
+
+void menuEnd(MENU_PARAM) {
+    (void)attackerPkm;
+    (void)targetPkm;
+    // Unused parameters
+
+    puts("Closing program...");
+
+    fclose(fpPkm);
 }

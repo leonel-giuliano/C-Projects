@@ -1,3 +1,5 @@
+#include <stdio.h>
+#include <stdint.h>
 #include <string.h>
 
 #include "pokemon.h"
@@ -9,17 +11,19 @@ uint8_t scanPkm(pokemon_t *pkm, FILE *fp) {
     pokemon_t temp;
     // In case there is an error
 
-    printf("Pokemon: ");
     scanstr(temp.name, NAME_LENGTH, stdin);
 
     if(searchPkm(&temp, PKM_GEN_1, fp)) {
         printf("Lv.: ");
         scanf(" %hhu", &temp.lv);
+        while(getchar() != '\n');
 
         while(temp.lv < MIN_LV || temp.lv > MAX_LV) {
             puts("Enter a valid level.");
+            
             printf("Lv.: ");
             scanf(" %hhu", &temp.lv);
+            while(getchar() != '\n');
         }
         // In case the level isn't between 1 - 100
 
