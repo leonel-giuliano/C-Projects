@@ -1,7 +1,6 @@
 #include <string.h>
 
 #include "main.h"
-#include "pokemon.h"
 #include "error.h"
 
 int main() {
@@ -9,7 +8,8 @@ int main() {
     if((fpPkm = fopen(PKM_PATH, "r")) == NULL)
         errorHandler(ERROR_FILE);
 
-    pokemon_t atkPkm;
+    menuState_t menuState = MENU_SET;
+    menu(&menuState, fpPkm);
 
     fclose(fpPkm);
 
@@ -24,4 +24,12 @@ void scanstr(char *str, size_t max, FILE *fp) {
         char ch;
         while((ch = getc(fp)) != '\n' && ch != EOF);
     } else str[length - 1] = '\0';
+}
+
+void menu(menuState_t *state, FILE *fpPkm) {
+    static pokemon_t playerPkm, rivalPkm;
+
+    scanPkm(&playerPkm, fpPkm);
+
+    printf("%s\n", playerPkm.name);
 }

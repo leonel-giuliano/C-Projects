@@ -25,4 +25,4 @@ typedef struct {
     uint8_t defense;
 }pokemon_t;
 
-pokemon_t scanPkm(FILE *_Stream);
+uint8_t scanPkm(pokemon_t *_Pokemon, FILE *_Stream);
