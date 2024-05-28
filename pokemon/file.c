@@ -6,7 +6,8 @@
 #include "error.h"
 
 uint8_t searchPkm(pokemon_t *pkm, uint16_t limit, FILE *fp) {
-    uint8_t found = 0;      /* Bool that checks if it was found */
+    uint8_t found = 0;
+    // Bool that checks if it was found
     uint16_t countComma = 0, countPkm = 0;
 
     fseek(fp, FIRST_LINE, SEEK_SET);
@@ -30,9 +31,15 @@ uint8_t searchPkm(pokemon_t *pkm, uint16_t limit, FILE *fp) {
     }
 
     if(found) {
+        fgetc(fp);
+        // Skip the comma between Name,Type 1
+
         fscanf(fp, "%[^\n,]", pkm->type[IX_TYPE_1]);
+        fgetc(fp);
+        // Skip the comma between Type 1,Type 2
+
         fscanf(fp, "%[^\n,]", pkm->type[IX_TYPE_2]);
-        // Scan only the types
+        // The length is 1 in case it's empty
     }
 
     return found;

@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdint.h>
 #include <string.h>
 
 #include "main.h"
@@ -10,10 +11,13 @@ int main() {
         errorHandler(ERROR_FILE);
 
     menuState_t menuState;
-
+    uint8_t loopLim = 0;
     do {
         menu(&menuState, fpPkm);
-    }while(menuState != MENU_END);
+        loopLim++;
+    }while(menuState != MENU_END && loopLim != LIMIT_MENU);
+
+    fclose(fpPkm);
 
     return 0;
 }
@@ -45,7 +49,7 @@ void menu(menuState_t *state, FILE *fpPkm) {
         menuF[*state - 1](MENU_ARG);
     else puts("Choose a given option.");
 
-    printf("%s\n", attackerPkm.name);
+    printf("%s\n", attackerPkm.type[IX_TYPE_1]);
 }
 
 void menuSet(MENU_PARAM) {
@@ -76,9 +80,8 @@ void menuSet(MENU_PARAM) {
 void menuEnd(MENU_PARAM) {
     (void)attackerPkm;
     (void)targetPkm;
+    (void)fpPkm;
     // Unused parameters
 
     puts("Closing program...");
-
-    fclose(fpPkm);
 }
