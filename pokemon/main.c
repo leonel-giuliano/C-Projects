@@ -9,7 +9,7 @@ int main() {
     if((fpPkm = fopen(PKM_PATH, "r")) == NULL)
         errorHandler(ERROR_FILE);
 
-    scanPkm(fpPkm);
+    pokemon_t atkPkm;
 
     fclose(fpPkm);
 
