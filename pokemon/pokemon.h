@@ -4,7 +4,7 @@
 #define PKM_GEN_1 151
 
 // String length
-#define NAME_LENGTH 10      /* Electrode */
+#define NAME_LENGTH 18      /* HoopaHoopa Unbound */
 #define TYPE_LENGTH 9       /* Electric */
 
 // Pokemon struct

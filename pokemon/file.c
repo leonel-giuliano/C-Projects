@@ -7,17 +7,9 @@ uint8_t searchPkm(pokemon_t *pkm, uint16_t limit, FILE *fp) {
     uint8_t found = 0;      /* Bool that checks if it was found */
     uint16_t countComma = 0, countPkm = 0;
 
-    rewind(fp);
+    fseek(fp, FIRST_LINE, SEEK_SET);
     char ch;
     while(!found && countPkm != limit && (ch = getc(fp)) != EOF) {
-        if(countComma == COMMA_NAME) {
-            char str[NAME_LENGTH];
-            fscanf(fp, "%[^\n,]", str);
-            // Scan string until a comma or a new line
-
-            if(!strcmp(pkm->name, str)) found = 1;
-        }
-
         if(ch == ',') countComma++;
 
         if(ch == '\n') { 
@@ -25,6 +17,14 @@ uint8_t searchPkm(pokemon_t *pkm, uint16_t limit, FILE *fp) {
             countPkm++;
         }
         // Resets the separator counter and increments the pokemon
+
+        if(countComma == COMMA_NAME) {
+            char str[NAME_LENGTH];
+            fscanf(fp, "%[^\n,]", str);
+            // Scan string until a comma or a new line
+
+            if(!strcmp(pkm->name, str)) found = 1;
+        }
     }
 
     if(found) {
