@@ -55,7 +55,7 @@ void menu(menuState_t *state, FILE *fpPkm) {
         menuF[*state - 1](MENU_ARG);
     else puts("Choose a given option.");
 
-    if(*state != MENU_END) printf("\n\t--------------------\n\n");
+    if(*state != MENU_END) printf("\n\t++++++++++++++++++++++++++++++++++++++++\n\n");
     // Menu separator
 }
 
@@ -63,6 +63,7 @@ void menuSet(MENU_PARAM) {
     pokemon_t tempAtk, tempTarget;
     // In case there is a problem
 
+    puts("\t-----   INSERT POKEMONS   -----");
     printf("Pokemon attacker: ");
     if(!scanPkm(&tempAtk, fpPkm)) {
         puts("The pokemon wasn't found.");
