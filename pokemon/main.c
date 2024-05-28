@@ -39,17 +39,24 @@ void menu(menuState_t *state, FILE *fpPkm) {
         menuSet,
         menuEnd
     };
+    // All the functions the menu offers
+
+    printf("%u. Enter the parameters of the pokemons.\n", MENU_SET);
+    printf("%u. Close the program.\n\n", MENU_END);
+    // Text with all the options
 
     printf("Option: ");
     scanf(" %u", state);
     while(getchar() != '\n');
+    putchar('\n');
     // Scan and delete data from the terminal
 
     if(*state > MENU_START && *state <= MENU_END)
         menuF[*state - 1](MENU_ARG);
     else puts("Choose a given option.");
 
-    printf("%s\n", attackerPkm.type[IX_TYPE_1]);
+    if(*state != MENU_END) printf("\n\t--------------------\n\n");
+    // Menu separator
 }
 
 void menuSet(MENU_PARAM) {
