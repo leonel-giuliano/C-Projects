@@ -6,7 +6,6 @@
 // String length
 #define NAME_LENGTH 10      /* Electrode */
 #define TYPE_LENGTH 9       /* Electric */
-#define MAX_CH NAME_LENGTH
 
 // Pokemon struct
 #define TYPE_AMOUNT 2

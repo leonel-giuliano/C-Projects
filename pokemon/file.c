@@ -1,7 +1,6 @@
 #include <string.h>
 
 #include "file.h"
-#include "pokemon.h"
 #include "error.h"
 
 uint8_t searchPkm(pokemon_t *pkm, FILE *fp) {

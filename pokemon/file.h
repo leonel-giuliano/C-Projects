@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <stdint.h>
 
+#include "pokemon.h"
+
 #define FIRST_LINE 89
 // "#,Name,Type 1,Type 2,Total,HP,Attack,Defense,Sp. Atk,
 // Sp. Def,Speed, Generation,Legendary" + '\n'

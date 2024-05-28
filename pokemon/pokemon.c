@@ -1,6 +1,7 @@
+#include <stdlib.h>
 #include <string.h>
 
-#include "pokemon.h"
+#include "file.h"
 #include "main.h"
 #include "error.h"
 
