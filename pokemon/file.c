@@ -5,21 +5,26 @@
 #include "file.h"
 #include "error.h"
 
-uint8_t searchPkm(pokemon_t *pkm, uint16_t limit, FILE *fp) {
+void skipComma(uint8_t *counter, uint8_t comma, FILE *fp) {
+    char ch;
+
+    while(*counter != comma && (ch = getc(fp)) != EOF && ch != '\n')
+        if(ch == ',') (*counter)++;
+    // Skips to the point given
+}
+
+uint8_t searchPkm(pokemon_t *pkm, FILE *fp) {
     uint8_t found = 0;
     // Bool that checks if it was found
-    uint16_t countComma = 0, countPkm = 0;
+    uint8_t countComma = 0;
 
     fseek(fp, FIRST_LINE, SEEK_SET);
     char ch;
-    while(!found && countPkm != limit && (ch = getc(fp)) != EOF) {
+    while(!found && (ch = getc(fp)) != EOF) {
         if(ch == ',') countComma++;
 
-        if(ch == '\n') { 
-            countComma = 0;
-            countPkm++;
-        }
-        // Resets the separator counter and increments the pokemon
+        if(ch == '\n') countComma = 0;
+        // Resets the separator counter
 
         if(countComma == COMMA_NAME) {
             char str[NAME_LENGTH];
@@ -31,13 +36,21 @@ uint8_t searchPkm(pokemon_t *pkm, uint16_t limit, FILE *fp) {
     }
 
     if(found) {
-        fseek(fp, SPACE_NAME_TYPE1, SEEK_CUR);
-        // Skips Type
-
+        skipComma(&countComma, COMMA_TYPE_1, fp);
         fscanf(fp, "%[^\n,]", pkm->type[IX_TYPE_1]);
-        fgetc(fp);
-        // Skips comma
+
+        skipComma(&countComma, COMMA_TYPE_2, fp);
         fscanf(fp, "%[^\n,]", pkm->type[IX_TYPE_2]);
+
+        for(uint8_t i = 0; i < TYPES_AMOUNT; i++) {
+            skipComma(&countComma, COMMA_DMG_NORMAL + i, fp);
+            // Goes to where the first damage multiplier is
+            // and then only skips one comma
+            
+            fscanf(fp, "%f", &pkm->dmgTypes[i]);
+        }
+        // Save all the damage taken multipliers
+        // This is for the target pokemon
     }
 
     return found;

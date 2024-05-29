@@ -13,7 +13,7 @@ uint8_t scanPkm(pokemon_t *pkm, FILE *fp) {
 
     scanstr(temp.name, NAME_LENGTH, stdin);
 
-    if(searchPkm(&temp, PKM_GEN_1, fp)) {
+    if(searchPkm(&temp, fp)) {
         printf("Lv.: ");
         scanf(" %hhu", &temp.lv);
         while(getchar() != '\n');
