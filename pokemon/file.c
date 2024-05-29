@@ -31,15 +31,16 @@ uint8_t searchPkm(pokemon_t *pkm, uint16_t limit, FILE *fp) {
     }
 
     if(found) {
-        fgetc(fp);
-        // Skip the comma between Name,Type 1
+        while(countComma != COMMA_TYPE_1 && (ch = fgetc(fp)) != EOF && ch != '\n')
+            if(ch == ',') countComma++;
+        // In case the file changes the space between
+        // the name and the type 1
 
         fscanf(fp, "%[^\n,]", pkm->type[IX_TYPE_1]);
-        fgetc(fp);
-        // Skip the comma between Type 1,Type 2
+        while(countComma != COMMA_TYPE_2 && (ch = fgetc(fp)) != EOF && ch != '\n')
+            if(ch == ',') countComma++;
 
         fscanf(fp, "%[^\n,]", pkm->type[IX_TYPE_2]);
-        // The length is 1 in case it's empty
     }
 
     return found;
