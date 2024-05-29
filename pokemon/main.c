@@ -85,6 +85,10 @@ void menuSet(MENU_PARAM) {
     // as in the last called
 }
 
+void menuAtk(MENU_PARAM) {
+    
+}
+
 void menuEnd(MENU_PARAM) {
     (void)attackerPkm;
     (void)targetPkm;

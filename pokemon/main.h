@@ -13,6 +13,7 @@
 typedef enum {
     MENU_START,
     MENU_SET,
+    MENU_CHOOSE_ATK,
     MENU_END
 }menuState_t;
 
@@ -21,6 +22,7 @@ void scanstr(char *_Buffer, size_t _MaxLength, FILE *_Stream);
 // MENU FUNCTIONS
 void menu(menuState_t *_State, FILE *_Stream);
 void menuSet(MENU_PARAM);
+void menuAtk(MENU_PARAM);
 void menuEnd(MENU_PARAM);
 
 #endif
