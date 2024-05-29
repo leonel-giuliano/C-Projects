@@ -8,6 +8,7 @@
 
 #define FIRST_LINE 352
 // Number, Name, Types, Type1, Type2, Height(m), Weight(kg), Male_Pct, Female_Pct, Capt_Rate, Exp_Points, Exp_Speed, Base_Total, HP, Attack, Defense, Special, Speed, Normal_Dmg, Fire_Dmg, Water_Dmg, Eletric_Dmg, Grass_Dmg, Ice_Dmg, Fight_Dmg, Poison_Dmg, Ground_Dmg, Flying_Dmg, Psychic_Dmg, Bug_Dmg, Rock_Dmg, Ghost_Dmg, Dragon_Dmg, Evolutions,Legendary
+#define SPACE_NAME_TYPE1 3      /* ,n, */
 
 enum {
     COMMA_ID,
