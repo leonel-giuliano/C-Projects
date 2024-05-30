@@ -67,7 +67,7 @@ void menuSetAtk(MENU_PARAM) {
     (void)targetPkm;
     pokemon_t temp;
 
-    MENU_PRINT_OPTION("INSERT POKEMON ATTACKER");
+    MENU_PRINT_OPTION("insert pokemon attacker");
     printf("Pokemon attacker: ");
     if(!scanPkm(&temp, fpPkm)) {
         puts("The pokemon wasn't found.");
@@ -85,7 +85,7 @@ void menuSetTgt(MENU_PARAM) {
     (void)attackerPkm;
     pokemon_t temp;
 
-    MENU_PRINT_OPTION("INSERT POKEMON TARGET");
+    MENU_PRINT_OPTION("insert pokemon target");
     printf("Pokemon target: ");
     if(!scanPkm(&temp, fpPkm)) {
         puts("The pokemon wasn't found.");
@@ -97,7 +97,7 @@ void menuSetTgt(MENU_PARAM) {
 }
 
 void menuAtk(MENU_PARAM) {
-    MENU_PRINT_OPTION("CALCULATOR");
+    MENU_PRINT_OPTION("calculator");
 }
 
 void menuEnd(MENU_PARAM) {
