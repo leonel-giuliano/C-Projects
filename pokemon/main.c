@@ -36,12 +36,16 @@ void menu(menuState_t *state, FILE *fpPkm) {
     static pokemon_t attackerPkm, targetPkm;
 
     void (*menuF[MENU_END])(MENU_PARAM) = {
-        menuSet,
+        menuSetAtk,
+        menuSetTgt,
+        menuAtk,
         menuEnd
     };
     // All the functions the menu offers
 
-    printf("%u. Enter the parameters of the pokemons.\n", MENU_SET);
+    printf("%u. Enter the pokemon attacker.\n", MENU_SET_ATTACKER);
+    printf("%u. Enter the pokemon target.\n", MENU_SET_TARGET);
+    printf("%u. Calculate damage deal.\n", MENU_ATK);
     printf("%u. Close the program.\n\n", MENU_END);
     // Text with all the options
 
@@ -59,34 +63,41 @@ void menu(menuState_t *state, FILE *fpPkm) {
     // Menu separator
 }
 
-void menuSet(MENU_PARAM) {
-    pokemon_t tempAtk, tempTarget;
-    // In case there is a problem
+void menuSetAtk(MENU_PARAM) {
+    (void)targetPkm;
+    pokemon_t temp;
 
-    puts("\t-----   INSERT POKEMONS   -----");
+    MENU_PRINT_OPTION("INSERT POKEMON ATTACKER");
     printf("Pokemon attacker: ");
-    if(!scanPkm(&tempAtk, fpPkm)) {
+    if(!scanPkm(&temp, fpPkm)) {
         puts("The pokemon wasn't found.");
 
         return;
     }
 
-    printf("Pokemon target: ");
-    if(!scanPkm(&tempTarget, fpPkm)) {
-        puts("The pokemon wasn't found.");
-
-        return;
-    }
-
-    *attackerPkm = tempAtk;
-    *targetPkm = tempTarget;
+    *attackerPkm = temp;
     // Only saves it in case there wasn't a problem
     // with any pokemon so the variables are the same
     // as in the last called
 }
 
+void menuSetTgt(MENU_PARAM) {
+    (void)attackerPkm;
+    pokemon_t temp;
+
+    MENU_PRINT_OPTION("INSERT POKEMON TARGET");
+    printf("Pokemon target: ");
+    if(!scanPkm(&temp, fpPkm)) {
+        puts("The pokemon wasn't found.");
+
+        return;
+    }
+
+    *targetPkm = temp;
+}
+
 void menuAtk(MENU_PARAM) {
-    
+    MENU_PRINT_OPTION("CALCULATOR");
 }
 
 void menuEnd(MENU_PARAM) {
