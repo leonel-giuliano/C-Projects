@@ -9,6 +9,7 @@
 #define PKM_PATH "./pokemon.csv"
 
 // MENU
+#define MENU_PRINT_OPTION(str) printf("\t\t-----   %s   -----\n", str);
 #define MENU_PARAM pokemon_t *attackerPkm, pokemon_t *targetPkm, FILE *fpPkm
 #define MENU_ARG &attackerPkm, &targetPkm, fpPkm
 typedef enum {
@@ -20,7 +21,6 @@ typedef enum {
 }menuState_t;
 
 void scanstr(char *_Buffer, size_t _MaxLength, FILE *_Stream);
-void printMenuOption(const char *_Str);
 void setPkm(pokemon_t *_Pokemon, const char *_Str, FILE *_Stream);
 
 // MENU FUNCTIONS

@@ -32,10 +32,6 @@ void scanstr(char *str, size_t max, FILE *fp) {
     } else str[length - 1] = '\0';
 }
 
-void printMenuOption(const char *str) {
-    printf("\t-----   %s   -----\n", str);
-}
-
 void menu(menuState_t *state, FILE *fpPkm) {
     static pokemon_t attackerPkm, targetPkm;
 
@@ -72,7 +68,7 @@ void setPkm(pokemon_t *pkm, const char *role, FILE *fp) {
     char str[] = "INSERT POKEMON ";
     strcat(str, role);
 
-    printMenuOption(str);
+    MENU_PRINT_OPTION(str);
     printf("Pokemon %s: ", role);
     if(!scanPkm(&temp, fp)) {
         puts("The pokemon wasn't found.");
@@ -89,17 +85,17 @@ void setPkm(pokemon_t *pkm, const char *role, FILE *fp) {
 void menuSetAtk(MENU_PARAM) {
     (void)targetPkm;
 
-    setPkm(attackerPkm, "attacker", fpPkm);
+    setPkm(attackerPkm, "ATTACKER", fpPkm);
 }
 
 void menuSetTgt(MENU_PARAM) {
     (void)attackerPkm;
 
-    setPkm(targetPkm, "target", fpPkm);
+    setPkm(targetPkm, "TARGET", fpPkm);
 }
 
 void menuAtk(MENU_PARAM) {
-    printMenuOption("CALCULATOR");
+    MENU_PRINT_OPTION("CALCULATOR");
 }
 
 void menuEnd(MENU_PARAM) {
