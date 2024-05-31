@@ -1,5 +1,5 @@
-#ifndef __FILE_H__
-#define __FILE_H__
+#ifndef __PKM_FILE_H__
+#define __PKM_FILE_H__
 
 #include <stdio.h>
 #include <stdint.h>

@@ -3,6 +3,7 @@
 #include <string.h>
 
 #include "main.h"
+#include "pokemon.h"
 #include "error.h"
 
 int main() {
@@ -96,6 +97,8 @@ void menuSetTgt(MENU_PARAM) {
 
 void menuAtk(MENU_PARAM) {
     MENU_PRINT_OPTION("CALCULATOR");
+
+    
 }
 
 void menuEnd(MENU_PARAM) {

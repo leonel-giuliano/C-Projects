@@ -3,8 +3,8 @@
 #include <string.h>
 
 #include "pokemon.h"
+#include "pkm-file.h"
 #include "main.h"
-#include "file.h"
 
 uint8_t scanPkm(pokemon_t *pkm, FILE *fp) {
     uint8_t success = 0;

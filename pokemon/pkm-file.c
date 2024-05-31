@@ -2,7 +2,8 @@
 #include <stdint.h>
 #include <string.h>
 
-#include "file.h"
+#include "pkm-file.h"
+#include "pokemon.h"
 #include "error.h"
 
 void skipComma(uint8_t *counter, uint8_t comma, FILE *fp) {
