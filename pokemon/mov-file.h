@@ -5,7 +5,25 @@
 
 #include "pokemon.h"
 
-#define MOVE_LENGTH 13      /* Selfdestruct */
+// Strings
+#define MOVE_LENGTH 28      /* Menacing Moonraze Maelstrom */
+
+// File properties
+#define MOV_COLUMNS 55
+// Name,Type,Category,Effect,Power,Acc,PP,TM,Prob.(%),Gen
+enum {
+    MOVF_NAME,
+    MOVF_TYPE,
+    MOVF_CATEGORY,
+    MOVF_EFFECT,
+    MOVF_POWER,
+    MOVF_ACCURACY,
+    MOVF_PP,
+    MOVF_TM,
+    MOVF_PROBABILITY,
+    MOVF_GEN
+};
+
 
 typedef struct {
     char name[MOVE_LENGTH];

@@ -6,46 +6,44 @@
 
 #include "pokemon.h"
 
-#define FIRST_LINE 352
+#define PKM_COLUMNS 352
 // Number, Name, Types, Type1, Type2, Height(m), Weight(kg), Male_Pct, Female_Pct, Capt_Rate, Exp_Points, Exp_Speed, Base_Total, HP, Attack, Defense, Special, Speed, Normal_Dmg, Fire_Dmg, Water_Dmg, Eletric_Dmg, Grass_Dmg, Ice_Dmg, Fight_Dmg, Poison_Dmg, Ground_Dmg, Flying_Dmg, Psychic_Dmg, Bug_Dmg, Rock_Dmg, Ghost_Dmg, Dragon_Dmg, Evolutions,Legendary
-#define IX_DMG_TYPE(type) (type - COMMA_DMG_NORMAL)
-// COMMA_DMG_type - COMMA_DMG_NORMAL to get the index
 enum {
-    COMMA_ID,
-    COMMA_NAME,
-    COMMA_TYPES,
-    COMMA_TYPE_1,
-    COMMA_TYPE_2,
-    COMMA_HEIGHT,
-    COMMA_WEIGHT,
-    COMMA_MALE_PCT,     /* Porcertage of male */
-    COMMA_FEMALE_PCT,
-    COMMA_PCT,
-    COMMA_EXP,
-    COMMA_EXP_SPEED,
-    COMMA_TOTAL,
-    COMMA_HP,
-    COMMA_ATK,
-    COMMA_DEF,
-    COMMA_SP,
-    COMMA_SPEED,
-    COMMA_DMG_NORMAL,
-    COMMA_DMG_FIRE,
-    COMMA_DMG_WATER,
-    COMMA_DMG_ELECTRIC,
-    COMMA_DMG_GRASS,
-    COMMA_DMG_ICE,
-    COMMA_DMG_FIGHT,
-    COMMA_DMG_POISON,
-    COMMA_DMG_GROUND,
-    COMMA_DMG_FLYING,
-    COMMA_DMG_PSYCHIC,
-    COMMA_DMG_BUG,
-    COMMA_DMG_ROCK,
-    COMMA_DMG_GHOST,
-    COMMA_DMG_DRAGON,
-    COMMA_DMG_EVO,
-    COMMA_LEGENDARY
+    PKMF_ID,
+    PKMF_NAME,
+    PKMF_TYPES,
+    PKMF_TYPE_1,
+    PKMF_TYPE_2,
+    PKMF_HEIGHT,
+    PKMF_WEIGHT,
+    PKMF_MALE_PCT,     /* Porcertage of male */
+    PKMF_FEMALE_PCT,
+    PKMF_PCT,
+    PKMF_EXP,
+    PKMF_EXP_SPEED,
+    PKMF_TOTAL,
+    PKMF_HP,
+    PKMF_ATK,
+    PKMF_DEF,
+    PKMF_SP,
+    PKMF_SPEED,
+    PKMF_DMG_NORMAL,
+    PKMF_DMG_FIRE,
+    PKMF_DMG_WATER,
+    PKMF_DMG_ELECTRIC,
+    PKMF_DMG_GRASS,
+    PKMF_DMG_ICE,
+    PKMF_DMG_FIGHT,
+    PKMF_DMG_POISON,
+    PKMF_DMG_GROUND,
+    PKMF_DMG_FLYING,
+    PKMF_DMG_PSYCHIC,
+    PKMF_DMG_BUG,
+    PKMF_DMG_ROCK,
+    PKMF_DMG_GHOST,
+    PKMF_DMG_DRAGON,
+    PKMF_DMG_EVO,
+    PKMF_LEGENDARY
 };
 // Parameters
 

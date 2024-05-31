@@ -19,7 +19,7 @@ uint8_t searchPkm(pokemon_t *pkm, FILE *fp) {
     // Bool that checks if it was found
     uint8_t countComma = 0;
 
-    fseek(fp, FIRST_LINE, SEEK_SET);
+    fseek(fp, PKM_COLUMNS, SEEK_SET);
     char ch;
     while(!found && (ch = getc(fp)) != EOF) {
         if(ch == ',') countComma++;
@@ -27,7 +27,7 @@ uint8_t searchPkm(pokemon_t *pkm, FILE *fp) {
         if(ch == '\n') countComma = 0;
         // Resets the separator counter
 
-        if(countComma == COMMA_NAME) {
+        if(countComma == PKMF_NAME) {
             char str[NAME_LENGTH];
             fscanf(fp, "%[^\n,]", str);
             // Scan string until a comma or a new line
@@ -37,14 +37,14 @@ uint8_t searchPkm(pokemon_t *pkm, FILE *fp) {
     }
 
     if(found) {
-        skipComma(&countComma, COMMA_TYPE_1, fp);
+        skipComma(&countComma, PKMF_TYPE_1, fp);
         fscanf(fp, "%[^\n,]", pkm->type[IX_TYPE_1]);
 
-        skipComma(&countComma, COMMA_TYPE_2, fp);
+        skipComma(&countComma, PKMF_TYPE_2, fp);
         fscanf(fp, "%[^\n,]", pkm->type[IX_TYPE_2]);
 
         for(uint8_t i = 0; i < TYPES_AMOUNT; i++) {
-            skipComma(&countComma, COMMA_DMG_NORMAL + i, fp);
+            skipComma(&countComma, PKMF_DMG_NORMAL + i, fp);
             // Goes to where the first damage multiplier is
             // and then only skips one comma
             
