@@ -4,21 +4,23 @@
 
 #include "main.h"
 #include "pokemon.h"
+#include "mov-file.h"
 #include "error.h"
 
 int main() {
-    FILE *fpPkm;
-    if((fpPkm = fopen(PKM_PATH, "r")) == NULL)
+    FILE *fpPkm, *fpMove;
+    if((fpPkm = fopen(PKM_PATH, "r")) == NULL || (fpMove = fopen(MOVE_PATH, "r")) == NULL)
         errorHandler(ERROR_FILE);
 
     menuState_t menuState;
     uint8_t loopLim = 0;
     do {
-        menu(&menuState, fpPkm);
+        menu(&menuState, fpPkm, fpMove);
         loopLim++;
     }while(menuState != MENU_END && loopLim != LIMIT_MENU);
 
     fclose(fpPkm);
+    fclose(fpMove);
 
     return 0;
 }
@@ -33,7 +35,7 @@ void scanstr(char *str, size_t max, FILE *fp) {
     } else str[length - 1] = '\0';
 }
 
-void menu(menuState_t *state, FILE *fpPkm) {
+void menu(menuState_t *state, FILE *fpPkm, FILE *fpMove) {
     static pokemon_t attackerPkm, targetPkm;
 
     void (*menuF[MENU_END])(MENU_PARAM) = {
@@ -84,21 +86,25 @@ void setPkm(pokemon_t *pkm, const char *role, FILE *fp) {
 }
 
 void menuSetAtk(MENU_PARAM) {
+    (void)fpMove;
     (void)targetPkm;
 
     setPkm(attackerPkm, "ATTACKER", fpPkm);
 }
 
 void menuSetTgt(MENU_PARAM) {
+    (void)fpMove;
     (void)attackerPkm;
 
     setPkm(targetPkm, "TARGET", fpPkm);
 }
 
 void menuAtk(MENU_PARAM) {
-    MENU_PRINT_OPTION("CALCULATOR");
+    (void)fpPkm;
+    move_t move;
 
-    
+    MENU_PRINT_OPTION("CALCULATOR");
+    scanMove(&move, fpMove);
 }
 
 void menuEnd(MENU_PARAM) {

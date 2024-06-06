@@ -4,6 +4,7 @@
 
 #include "pkm-file.h"
 #include "pokemon.h"
+#include "mov-file.h"
 #include "error.h"
 
 void skipComma(uint8_t *counter, uint8_t comma, FILE *fp) {
@@ -14,12 +15,10 @@ void skipComma(uint8_t *counter, uint8_t comma, FILE *fp) {
     // Skips to the point given
 }
 
-uint8_t searchPkm(pokemon_t *pkm, FILE *fp) {
-    uint8_t found = 0;
-    // Bool that checks if it was found
-    uint8_t countComma = 0;
+uint8_t searchStr(const char *str, uint8_t comma, uint16_t skip, FILE *fp) {
+    uint8_t found = 0, countComma = 0;
 
-    fseek(fp, PKM_COLUMNS, SEEK_SET);
+    fseek(fp, skip, SEEK_SET);
     char ch;
     while(!found && (ch = getc(fp)) != EOF) {
         if(ch == ',') countComma++;
@@ -27,16 +26,25 @@ uint8_t searchPkm(pokemon_t *pkm, FILE *fp) {
         if(ch == '\n') countComma = 0;
         // Resets the separator counter
 
-        if(countComma == PKMF_NAME) {
-            char str[NAME_LENGTH];
-            fscanf(fp, "%[^\n,]", str);
+        if(countComma == comma) {
+            char temp[NAME_LENGTH];
+            fscanf(fp, "%[^\n,]", temp);
             // Scan string until a comma or a new line
 
-            if(!strcmp(pkm->name, str)) found = 1;
+            if(!strcmp(str, temp)) found = 1;
         }
     }
 
+    return found;
+    // Returns 1 in case the wasn't any problem
+    // Returns 0 if it wasn't found
+}
+
+uint8_t searchPkm(pokemon_t *pkm, FILE *fp) {
+    uint8_t found = searchStr(pkm->name, PKMF_NAME, PKM_COLUMNS, fp);
+
     if(found) {
+        uint8_t countComma = PKMF_NAME;
         skipComma(&countComma, PKMF_TYPE_1, fp);
         fscanf(fp, "%[^\n,]", pkm->type[IX_TYPE_1]);
 

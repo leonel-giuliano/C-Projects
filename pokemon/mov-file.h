@@ -3,8 +3,6 @@
 
 #include <stdint.h>
 
-#include "pokemon.h"
-
 // Strings
 #define MOVE_LENGTH 28      /* Menacing Moonraze Maelstrom */
 
@@ -24,6 +22,7 @@ enum {
     MOVF_GEN
 };
 
+#include "pokemon.h"
 
 typedef struct {
     char name[MOVE_LENGTH];

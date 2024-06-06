@@ -4,8 +4,6 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#include "pokemon.h"
-
 #define PKM_COLUMNS 352
 // Number, Name, Types, Type1, Type2, Height(m), Weight(kg), Male_Pct, Female_Pct, Capt_Rate, Exp_Points, Exp_Speed, Base_Total, HP, Attack, Defense, Special, Speed, Normal_Dmg, Fire_Dmg, Water_Dmg, Eletric_Dmg, Grass_Dmg, Ice_Dmg, Fight_Dmg, Poison_Dmg, Ground_Dmg, Flying_Dmg, Psychic_Dmg, Bug_Dmg, Rock_Dmg, Ghost_Dmg, Dragon_Dmg, Evolutions,Legendary
 enum {
@@ -47,7 +45,10 @@ enum {
 };
 // Parameters
 
+#include "pokemon.h"
+
 void skipComma(uint8_t *_Counter, uint8_t _NumComma, FILE *_Stream);
+uint8_t searchStr(const char *_Str, uint8_t _NumComma, uint16_t _Skip, FILE *_Stream);
 uint8_t searchPkm(pokemon_t *_Pokemon, FILE *_Stream);
 // Returns if the pokemon was found
 

@@ -4,8 +4,6 @@
 #include <stdio.h>
 #include <stdint.h>
 
-#include "pkm-file.h"
-
 #define PKM_GEN_1 151
 
 // String length
@@ -37,6 +35,9 @@ typedef struct {
     // Damaged received from a type
 }pokemon_t;
 
+#include "mov-file.h"
+
 uint8_t scanPkm(pokemon_t *_Pokemon, FILE *_Stream);
+uint8_t scanMove(move_t *_Move, FILE *_Stream);
 
 #endif
