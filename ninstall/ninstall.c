@@ -20,6 +20,10 @@ void errorHandler(errorEvent_t error) {
         case ERROR_NEW_FILE:
             puts("There was a problem creating the file.");
             break;
+
+        case ERROR_MEMORY:
+            puts("There was a problem allocating memory.");
+            break;
     }
 
     exit(EXIT_FAILURE);

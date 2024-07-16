@@ -13,7 +13,8 @@
 // All posible errors that exit the code
 typedef enum {
     ERROR_ARG,
-    ERROR_NEW_FILE
+    ERROR_NEW_FILE,
+    ERROR_MEMORY
 }errorEvent_t;
 
 void errorHandler(errorEvent_t _ErrorEvent);
