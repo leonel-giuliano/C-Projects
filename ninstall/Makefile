@@ -12,7 +12,7 @@ SRCS = $(wildcard *.c)
 OBJS = $(patsubst %.c, $(OUTPUT_DIR)/%.o, $(SRCS))
 
 # Ejecutable
-EXEC = $(OUTPUT_DIR)/main.exe
+EXEC = $(OUTPUT_DIR)/main
 
 # Reglas
 all: $(OUTPUT_DIR) $(EXEC)
