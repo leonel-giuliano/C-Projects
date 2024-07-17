@@ -27,7 +27,8 @@ typedef enum {
 
 // Error events
 typedef enum {
-    ERROR_ARG
+    ERROR_ARG,
+    ERROR_MEMORY
 }errorEvent_t;
 
 arg_t checkArg(const char *_Argument);
