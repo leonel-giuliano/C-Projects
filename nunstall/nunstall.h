@@ -17,11 +17,20 @@
 #define INSTALL_LENGTH 15
 #define UNINSTALL_LENGTH 17
 
+// Possible argument pass
+typedef enum {
+    IS_FILE,
+    IS_SUBCOMM_HELP,
+    IS_OPTION_YES,
+    IS_OPTION_NO
+}arg_t;
+
 // Error events
 typedef enum {
     ERROR_ARG
 }errorEvent_t;
 
+arg_t checkArg(const char *_Argument);
 void errorHandler(errorEvent_t _ErrorEvent);
 
 #endif

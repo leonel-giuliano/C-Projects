@@ -12,6 +12,6 @@ void subcommHelp(void) {
     puts("\t-h, --help:\tPrints the usage message\n");
 
     puts("OPTION:");
-    puts("\t-n, --no:\tMakes sure the program file doesn't get erased without asking");
-    puts("\t-y, --yes:\tErases the program file without asking\n");
+    puts("\t-y, --yes:\tErases the program file without asking");
+    puts("\t-n, --no:\tMakes sure the program file doesn't get erased without asking\n");
 }
