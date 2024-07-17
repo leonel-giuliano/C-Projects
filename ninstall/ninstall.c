@@ -6,7 +6,28 @@
 #include "subcommands.h"
 
 int main(int argc, char *argv[]) {
-    if(argc > ARGC_MAX) errorHandler(ERROR_ARG);
+    if(argc < ARGC_MIN || argc > ARGC_MAX) errorHandler(ERROR_ARG);
+
+    // Number that indicates the command
+    subcommSelected_t subcommSelected = checkOption(argv[ARGV_SUBCOMM_OR_FILE]);
+
+    switch(subcommSelected) {
+        case HELP_SELECTED:
+            subcommHelp();
+            break;
+
+        case NONE_SELECTED:
+            subcommNew(argv[ARGV_SUBCOMM_OR_FILE]);
+            break;
+
+        case NEW_SELECTED:
+            subcommNew(argv[ARGV_FILE]);
+            break;
+
+        default:
+            errorHandler(ERROR_CALL);
+            break;
+    }
 
     return 0;
 }
@@ -35,6 +56,10 @@ void errorHandler(errorEvent_t error) {
         case ERROR_ARG:
             printf("The program wasn't called in the right way.\n\n");
             subcommHelp();
+            break;
+
+        case ERROR_CALL:
+            puts("[DEBUG] problem with the subcomm selected.");
             break;
 
         case ERROR_NEW_FILE:

@@ -1,7 +1,9 @@
 #ifndef __NINSTALL_H__
 #define __NINSTALL_H__
 
-#define ARGC_MAX 3 /* Max amount of arguments */
+// Arguments
+#define ARGC_MIN 2
+#define ARGC_MAX 3
 
 // File management
 #define PATH_IN_HOME "/ninstall/"
@@ -19,7 +21,7 @@
 
 enum {
     ARGV_COMM,
-    ARGV_SUBCOMM,
+    ARGV_SUBCOMM_OR_FILE,
     ARGV_FILE
 };
 
@@ -35,6 +37,7 @@ typedef enum {
 // All posible errors that exit the code
 typedef enum {
     ERROR_ARG,
+    ERROR_CALL,
     ERROR_NEW_FILE,
     ERROR_MEMORY
 }errorEvent_t;
