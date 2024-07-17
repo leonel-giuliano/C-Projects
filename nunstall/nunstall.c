@@ -21,21 +21,34 @@ int main(int argc, char *argv[]) {
     for(uint8_t i = 0; i < argc - 1; i++)
         argFunction[i] = checkArg(argv[i + 1]);
 
-    return 0;    
+    return 0;
 }
 
+// Checks what is the argument passed
 arg_t checkArg(const char *arg) {
-    arg_t res = IS_FILE;
-
     // Checks every option
     if(!strcmp(arg, HELP_SUBCOMM1) || !strcmp(arg, HELP_SUBCOMM2))
-        res = IS_SUBCOMM_HELP;
-    else if(!strcmp(arg, YES_OPTION1) || !strcmp(arg, YES_OPTION2))
-        res = IS_OPTION_YES;
-    else if(!strcmp(arg, NO_OPTION1) || !strcmp(arg, NO_OPTION2))
-        res = IS_OPTION_NO;
+        return IS_SUBCOMM_HELP;
+    
+    if(!strcmp(arg, REMOVE_SUBCOMM1) || !strcmp(arg, REMOVE_SUBCOMM2))
+        return IS_SUBCOMM_REMOVE;
+    
+    if(!strcmp(arg, YES_OPTION1) || !strcmp(arg, YES_OPTION2))
+        return IS_OPTION_YES;
+    
+    if(!strcmp(arg, NO_OPTION1) || !strcmp(arg, NO_OPTION2))
+        return IS_OPTION_NO;
 
-    return res;
+    return IS_FILE;
+}
+
+// Checks what function the program needs
+callFunction_t checkFunction(arg_t argFunction[], uint8_t length) {
+    // First, checks if the subcomm "help" was used
+    for(uint8_t i = 0; i < length; i++)
+        if(argFunction[i] == IS_SUBCOMM_HELP) return FUNCTION_HELP;
+
+    
 }
 
 void errorHandler(errorEvent_t error) {

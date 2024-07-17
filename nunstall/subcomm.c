@@ -9,7 +9,8 @@ void subcommHelp(void) {
     puts("\tnunstall <subcommand> [file ...] <option>\n");
 
     puts("SUBCOMMAND:");
-    puts("\t-h, --help:\tPrints the usage message\n");
+    puts("\t-h, --help:\tPrints the usage message");
+    puts("\t-r, --remove:\t(Predetermined subcommand) Removes the program chosen\n");
 
     puts("OPTION:");
     puts("\t-y, --yes:\tErases the program file without asking");
