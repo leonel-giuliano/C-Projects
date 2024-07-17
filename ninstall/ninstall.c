@@ -9,7 +9,7 @@ int main(int argc, char *argv[]) {
     if(argc < ARGC_MIN || argc > ARGC_MAX) errorHandler(ERROR_ARG);
 
     // Number that indicates the command
-    subcommSelected_t subcommSelected = checkOption(argv[ARGV_SUBCOMM_OR_FILE]);
+    subcommSelected_t subcommSelected = checkArg(argv[ARGV_SUBCOMM_OR_FILE]);
 
     // Subcommand depending on the parameter called
     switch(subcommSelected) {
@@ -29,6 +29,10 @@ int main(int argc, char *argv[]) {
             subcommEdit(argv[ARGV_FILE]);
             break;
 
+        case LIST_SELECTED:
+            subcommList();
+            break;
+
         default:
             errorHandler(ERROR_CALL);
             break;
@@ -37,7 +41,7 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-subcommSelected_t checkOption(char *subcomm) {
+subcommSelected_t checkArg(char *subcomm) {
     subcommSelected_t result = NONE_SELECTED;
 
     // Checks if there is a subcommand
@@ -69,6 +73,10 @@ void errorHandler(errorEvent_t error) {
 
         case ERROR_NEW_FILE:
             puts("There was a problem creating the file.");
+            break;
+
+        case ERROR_DIR:
+            puts("There was a problem trying to read the list.");
             break;
 
         case ERROR_MEMORY:

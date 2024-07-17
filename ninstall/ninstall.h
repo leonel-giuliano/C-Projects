@@ -13,11 +13,13 @@
 
 // String chars
 #define PATH_MAX 4096
+#define TYPE_LENGTH 6
 #define INSTALL_LENGTH 15
 #define UNINSTALL_LENGTH 17
 
 // Loop limit
 #define LOOP_INSTALL 255
+#define LOOP_LIST 255
 
 enum {
     ARGV_COMM,
@@ -39,10 +41,11 @@ typedef enum {
     ERROR_ARG,
     ERROR_CALL,
     ERROR_NEW_FILE,
+    ERROR_DIR,
     ERROR_MEMORY
 }errorEvent_t;
 
-subcommSelected_t checkOption(char *_Subcommand);
+subcommSelected_t checkArg(char *_Argument);
 void errorHandler(errorEvent_t _ErrorEvent);
 
 #endif

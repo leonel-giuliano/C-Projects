@@ -4,6 +4,7 @@
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
+#include <dirent.h>
 
 #include "subcommands.h"
 #include "ninstall.h"
@@ -65,11 +66,11 @@ void subcommNew(const char *program) {
         errorHandler(ERROR_MEMORY);
 
     // Skip the INSTALL_LINE to get to the commands
-    fseek(fpNew, strlen(INSTALL_LINE) + 1, SEEK_SET);
+    fseek(fpNew, INSTALL_LENGTH + 1, SEEK_SET);
     // "+ 1" for the '\n'
 
     uint8_t boolCommandEnd = 0;
-    uint8_t loopLimit = 0;
+    int loopLimit = 0;
     // Execute the commands line per line
     puts("INSTALATION:\n");
     while(!boolCommandEnd && loopLimit != LOOP_INSTALL) {
@@ -104,4 +105,38 @@ void subcommEdit(const char *program) {
     printf("The file %s%s was edited successfully.\n", program, FILE_TYPE);
 
     fclose(fpEdit);
+}
+
+void subcommList(void) {
+    // This process is to have the path
+    // Concatenates the home folder and the folder
+    char dirPath[PATH_MAX] = "";
+    // Gets the home folder
+    strcat(dirPath, getenv("HOME"));
+    strcat(dirPath, PATH_IN_HOME);
+
+    DIR *dirList;
+    if((dirList = opendir(dirPath)) == NULL)
+        errorHandler(ERROR_DIR);
+
+    // Read every file name
+    struct dirent *dirFile;
+    int loopList = 0;
+    while((dirFile = readdir(dirList)) != NULL && loopList != LOOP_LIST) {
+        loopList++;
+        // Makes sure to exclude the './' and '../'
+        if(strcmp(dirFile->d_name, ".") && strcmp(dirFile->d_name, "..")) {
+            size_t length = strlen(dirFile->d_name);
+
+            // Prints individually every char in
+            // order not to print the FILE_TYPE
+            for(uint8_t i = 0; i < length - TYPE_LENGTH + 1; i++)
+                putchar(dirFile->d_name[i]);
+            // The "- 1" is for the '\0'
+
+            putchar('\n');
+        }
+    }
+
+    closedir(dirList);
 }

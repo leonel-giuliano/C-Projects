@@ -17,5 +17,6 @@ FILE *manageFile(const char *_ProgramName, const char *_FileMode);
 void subcommHelp(void);
 void subcommNew(const char *_ProgramName);
 void subcommEdit(const char *_ProgramName);
+void subcommList(void);
 
 #endif
