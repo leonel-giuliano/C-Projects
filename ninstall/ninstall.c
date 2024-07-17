@@ -11,6 +11,7 @@ int main(int argc, char *argv[]) {
     // Number that indicates the command
     subcommSelected_t subcommSelected = checkOption(argv[ARGV_SUBCOMM_OR_FILE]);
 
+    // Subcommand depending on the parameter called
     switch(subcommSelected) {
         case HELP_SELECTED:
             subcommHelp();

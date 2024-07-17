@@ -8,6 +8,35 @@
 #include "subcommands.h"
 #include "ninstall.h"
 
+FILE *manageFile(const char *program, const char *mode) {
+    // This process is to have the path
+    // Concatenates the home folder, the folder, file name, and file type
+    char filePath[PATH_MAX] = "";
+    // Gets the home folder
+    strcat(filePath, getenv("HOME"));
+    strcat(filePath, PATH_IN_HOME);
+    strcat(filePath, program);
+    strcat(filePath, FILE_TYPE);
+
+    FILE *fp;
+    if((fp = fopen(filePath, mode)) == NULL)
+        errorHandler(ERROR_NEW_FILE);
+
+    // Prints the comments inside the file
+    // This only happens in subcommNew
+    if(!strcmp(mode, "w+")) {
+        fprintf(fp, "%s\n\n%s\n", INSTALL_LINE, UNINSTALL_LINE);
+        fflush(fp);
+    }
+
+    // Execute nano command in the shell
+    char nanoFile[PATH_MAX + 5] = "nano ";
+    strcat(nanoFile, filePath);
+    system(nanoFile);
+
+    return fp;
+}
+
 void subcommHelp(void) {
     puts("Ninstall, a command to keep track of installed programs.");
     putchar('\n');
@@ -21,34 +50,13 @@ void subcommHelp(void) {
     puts("\t-n, --new:\t(Predetermined subcommand) Adds a new program");
     puts("\t-e, --edit:\tAdds or edits a program without executing the installation commands");
     puts("\t-l, --list:\tLists all the programs in the ninstall folder");
+    putchar('\n');
 
     printf("FILE:\t Enter only the name and automatically gets converted into a '%s'\n", FILE_TYPE);
 }
 
 void subcommNew(const char *program) {
-    // This process is to have the path
-    // Concatenates the home folder, the folder, file name, and file type
-    char filePath[PATH_MAX] = "";
-    // Gets the home folder
-    strcat(filePath, getenv("HOME"));
-    strcat(filePath, PATH_IN_HOME);
-    strcat(filePath, program);
-    strcat(filePath, FILE_TYPE);
-
-    puts(filePath);
-
-    FILE *fpNew;
-    if((fpNew = fopen(filePath, "w+")) == NULL)
-        errorHandler(ERROR_NEW_FILE);
-
-    // Prints the comments inside the file
-    fprintf(fpNew, "%s\n\n%s\n", INSTALL_LINE, UNINSTALL_LINE);
-    fflush(fpNew);
-
-    // Execute nano command in the shell
-    char nanoFile[PATH_MAX + 5] = "nano ";
-    strcat(nanoFile, filePath);
-    system(nanoFile);
+    FILE *fpNew = manageFile(program, "w+");
 
     // Creates a buffer to contain the command
     char *command;
@@ -63,7 +71,7 @@ void subcommNew(const char *program) {
     uint8_t boolCommandEnd = 0;
     uint8_t loopLimit = 0;
     // Execute the commands line per line
-    puts("INSTALLING:\n");
+    puts("INSTALATION:\n");
     while(!boolCommandEnd && loopLimit != LOOP_INSTALL) {
         // Prevents the loop to go for ever
         loopLimit++;

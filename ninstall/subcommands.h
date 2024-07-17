@@ -12,6 +12,8 @@
 #define EDIT_SUBCOMM2 "--edit"
 #define LIST_SUBCOMM2 "--list"
 
+FILE *manageFile(const char *_ProgramName, const char *_FileMode);
+
 void subcommHelp(void);
 void subcommNew(const char *_ProgramName);
 
