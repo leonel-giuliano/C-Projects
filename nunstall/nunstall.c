@@ -50,7 +50,13 @@ callFunction_t checkRemove(arg_t arg) {
     if(arg == IS_OPTION_NO)
         return FUNCTION_REMOVE_NO;
 
+    // This is in case the file was passed more than once
+    if(arg == IS_FILE)
+        return FUNCTION_ERROR;
+
     // If it wasn't any option
+    // This also triggers with "help" but that already
+    // makes the subcommand "help" be called
     return FUNCTION_REMOVE;
 }
 
@@ -64,6 +70,7 @@ callFunction_t checkFunction(arg_t argFunction[], uint8_t length) {
         // If the subcommand "help" was used, call it
         // and ignore the other commands or bad usage
         if(argFunction[i] == IS_SUBCOMM_HELP) return FUNCTION_HELP;
+        // Ex: nunstall x x --help
 
         // Count the amount of options
         if(argFunction[i] == IS_OPTION_YES || argFunction == IS_OPTION_NO)
@@ -71,16 +78,21 @@ callFunction_t checkFunction(arg_t argFunction[], uint8_t length) {
 
         // Check if the subcommand "remove" was chosen
         if(i == IX_REMOVE) {
+            // Checks if it was used with the subcommand "remove"
+            // or used like the pred. subcommand
             if(argFunction[i] == IS_FILE)
                 res = checkRemove(argFunction[IX_PRED_OPTION]);
+            // Ex: nunstall [file ...] -y
 
             else if(argFunction[i] == IS_SUBCOMM_REMOVE)
                 res = checkRemove(argFunction[IX_REMOVE_OPTION]);
+            // Ex: nunstall -r [file ...] -n
         }
     }
 
     // Checks if there were more options than posible
     if(optionAmount > MAX_OPTIONS) res = FUNCTION_ERROR;
+    // Ex: nunstall [file ...] -y -n
     
     return res;
 }
