@@ -42,13 +42,47 @@ arg_t checkArg(const char *arg) {
     return IS_FILE;
 }
 
+callFunction_t checkRemove(arg_t arg) {
+    // Check the options
+    if(arg == IS_OPTION_YES)
+        return FUNCTION_REMOVE_YES;
+    
+    if(arg == IS_OPTION_NO)
+        return FUNCTION_REMOVE_NO;
+
+    // If it wasn't any option
+    return FUNCTION_REMOVE;
+}
+
 // Checks what function the program needs
 callFunction_t checkFunction(arg_t argFunction[], uint8_t length) {
-    // First, checks if the subcomm "help" was used
-    for(uint8_t i = 0; i < length; i++)
+    callFunction_t res = FUNCTION_ERROR;
+    uint8_t optionAmount = 0;
+
+    // Check every argument
+    for(uint8_t i = 0; i < length; i++) {
+        // If the subcommand "help" was used, call it
+        // and ignore the other commands or bad usage
         if(argFunction[i] == IS_SUBCOMM_HELP) return FUNCTION_HELP;
 
+        // Count the amount of options
+        if(argFunction[i] == IS_OPTION_YES || argFunction == IS_OPTION_NO)
+            optionAmount++;
+
+        // Check if the subcommand "remove" was chosen
+        if(i == IX_REMOVE) {
+            if(argFunction[i] == IS_FILE)
+                res = checkRemove(argFunction[IX_PRED_OPTION]);
+
+            else if(argFunction[i] == IS_SUBCOMM_REMOVE)
+                res = checkRemove(argFunction[IX_REMOVE_OPTION]);
+        }
+    }
+
+    // Checks if there were more options than posible
+    if(optionAmount > MAX_OPTIONS) res = FUNCTION_ERROR;
     
+    return res;
 }
 
 void errorHandler(errorEvent_t error) {

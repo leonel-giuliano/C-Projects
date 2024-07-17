@@ -19,6 +19,14 @@
 #define INSTALL_LENGTH 15
 #define UNINSTALL_LENGTH 17
 
+// Argument restrictions
+#define MAX_OPTIONS 1       /* Amount of options per call */
+
+#define IX_REMOVE 0
+#define IX_NOT_OPTION 0
+#define IX_PRED_OPTION 1
+#define IX_REMOVE_OPTION 2
+
 // Possible argument pass
 typedef enum {
     IS_FILE,
@@ -47,6 +55,7 @@ typedef enum {
 }errorEvent_t;
 
 arg_t checkArg(const char *_Argument);
+callFunction_t checkRemove(arg_t _Argument);
 callFunction_t checkFunction(arg_t _ArgumentsFunctions[], uint8_t _ArrayLength);
 void errorHandler(errorEvent_t _ErrorEvent);
 
