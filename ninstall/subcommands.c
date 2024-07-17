@@ -5,30 +5,31 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "commands.h"
+#include "subcommands.h"
 #include "ninstall.h"
 
-void commandHelp(void) {
+void subcommHelp(void) {
     puts("Ninstall, a command to keep track of installed programs.");
     putchar('\n');
 
     puts("USAGE:");
-    puts("\tninstall <options> [file ...]");
+    puts("\tninstall <subcommands> [file ...]");
     putchar('\n');
 
-    puts("OPTIONS:");
+    puts("SUBCOMMANDS:");
     puts("\t-h, --help:\tPrints help info");
-    puts("\t-n, --new:\t(Predetermined option) Adds a new program");
+    puts("\t-n, --new:\t(Predetermined subcommand) Adds a new program");
     puts("\t-e, --edit:\tAdds or edits a program without executing the installation commands");
     puts("\t-l, --list:\tLists all the programs in the ninstall folder");
 
     printf("FILE:\t Enter only the name and automatically gets converted into a '%s'\n", FILE_TYPE);
 }
 
-void commandNew(const char *program) {
+void subcommNew(const char *program) {
     // This process is to have the path
-    // Concatenates the folder, file name, and file type
+    // Concatenates the home folder, the folder, file name, and file type
     char filePath[PATH_MAX] = "";
+    // Gets the home folder
     strcat(filePath, getenv("HOME"));
     strcat(filePath, PATH_IN_HOME);
     strcat(filePath, program);

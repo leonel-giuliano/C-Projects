@@ -14,6 +14,24 @@
 #define INSTALL_LENGTH 15
 #define UNINSTALL_LENGTH 17
 
+// Loop limit
+#define LOOP_INSTALL 255
+
+enum {
+    ARGV_COMM,
+    ARGV_SUBCOMM,
+    ARGV_FILE
+};
+
+// Enumeration to know the command selected
+typedef enum {
+    NONE_SELECTED,
+    HELP_SELECTED,
+    NEW_SELECTED,
+    EDIT_SELECTED,
+    LIST_SELECTED
+}subcommSelected_t;
+
 // All posible errors that exit the code
 typedef enum {
     ERROR_ARG,
@@ -21,6 +39,7 @@ typedef enum {
     ERROR_MEMORY
 }errorEvent_t;
 
+subcommSelected_t checkOption(char *_Subcommand);
 void errorHandler(errorEvent_t _ErrorEvent);
 
 #endif
