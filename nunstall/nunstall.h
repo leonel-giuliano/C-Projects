@@ -22,28 +22,35 @@
 // Argument restrictions
 #define MAX_OPTIONS 1       /* Amount of options per call */
 
-#define IX_REMOVE 0
-#define IX_NOT_OPTION 0
-#define IX_PRED_OPTION 1
-#define IX_REMOVE_OPTION 2
+// Check for a command inside the call
+#define SEARCH_SUBCOMM_HELP(comm) strstr(comm, SPACE_SUBCOMM_HELP1) != NULL || strstr(comm, SPACE_SUBCOMM_HELP2) != NULL
+#define SEARCH_SUBCOMM_REMOVE(comm) strstr(comm, SPACE_SUBCOMM_REMOVE1) != NULL || strstr(comm, SPACE_SUBCOMM_REMOVE2) != NULL
 
-// Possible argument pass
-typedef enum {
-    IS_FILE,
+#define SEARCH_OPTION_YES(comm) strstr(comm, SPACE_OPTION_YES1) != NULL || strstr(comm, SPACE_OPTION_YES2) != NULL
+#define SEARCH_OPTION_NO(comm) strstr(comm, SPACE_OPTION_NO1) != NULL || strstr(comm, SPACE_OPTION_NO2) != NULL
 
-    IS_SUBCOMM_HELP,
-    IS_SUBCOMM_REMOVE,
+// Compare argument with a command
+#define COMP_SUBCOMM_HELP(arg) !strmcp(arg, SUBCOMM_HELP1) || !strmcp(arg, SUBCOMM_HELP2)
+#define COMP_SUBCOMM_REMOVE(arg) !strmcp(arg, SUBCOMM_REMOVE1) || !strmcp(arg, SUBCOMM_REMOVE2)
 
-    IS_OPTION_YES,
-    IS_OPTION_NO
-}arg_t;
+#define COMP_OPTION_YES(arg) !strmcp(arg, OPTION_YES1) || !strmcp(arg, OPTION_YES2)
+#define COMP_OPTION_NO(arg) !strmcp(arg, OPTION_NO1) || !strmcp(arg, OPTION_NO2)
+
+// Index of the arguments
+enum {
+    IX_COMMAND,
+    IX_SUBCOMM,
+    IX_SM_FILE,
+    IX_SM_OPTION,
+
+    IX_FILE = 1,
+    IX_OPTION
+};
 
 // Posibble function call
 typedef enum {
     FUNCTION_HELP,
     FUNCTION_REMOVE,
-    FUNCTION_REMOVE_YES,
-    FUNCTION_REMOVE_NO,
 
     FUNCTION_ERROR
 }callFunction_t;
@@ -54,9 +61,7 @@ typedef enum {
     ERROR_MEMORY
 }errorEvent_t;
 
-arg_t checkArg(const char *_Argument);
-callFunction_t checkRemove(arg_t _Argument);
-callFunction_t checkFunction(arg_t _ArgumentsFunctions[], uint8_t _ArrayLength);
+callFunction_t checkFunction(uint8_t _ArgumentsNum, char *_Arguments[]);
 void errorHandler(errorEvent_t _ErrorEvent);
 
 #endif

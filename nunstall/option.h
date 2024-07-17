@@ -2,10 +2,17 @@
 #define __NUNSTALL_OPTION_H__
 
 // Options
-#define YES_OPTION1 "-y"
-#define NO_OPTION1 "-n"
+#define OPTION_YES1 "-y"
+#define OPTION_NO1 "-n"
 
-#define YES_OPTION2 "--yes"
-#define NO_OPTION2 "--no"
+#define OPTION_YES2 "--yes"
+#define OPTION_NO2 "--no"
+
+// With spaces for strstr()
+#define SPACE_OPTION_YES1 " -y"
+#define SPACE_OPTION_NO1 " -n"
+
+#define SPACE_OPTION_YES2 " --yes"
+#define SPACE_OPTION_NO2 " --no"
 
 #endif
