@@ -25,6 +25,10 @@ int main(int argc, char *argv[]) {
             subcommNew(argv[ARGV_FILE]);
             break;
 
+        case EDIT_SELECTED:
+            subcommEdit(argv[ARGV_FILE]);
+            break;
+
         default:
             errorHandler(ERROR_CALL);
             break;

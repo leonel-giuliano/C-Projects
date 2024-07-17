@@ -93,5 +93,15 @@ void subcommNew(const char *program) {
         }
     }
 
+    putchar('\n');
+    printf("The file %s%s was created and installed successfully.\n", program, FILE_TYPE);
+
     fclose(fpNew);
+}
+
+void subcommEdit(const char *program) {
+    FILE *fpEdit = manageFile(program, "r");
+    printf("The file %s%s was edited successfully.\n", program, FILE_TYPE);
+
+    fclose(fpEdit);
 }
