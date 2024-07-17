@@ -6,6 +6,10 @@
 
 int main(int argc, char *argv[]) {
     if(argc > ARGC_MAX) errorHandler(ERROR_ARG);
+
+    if(argc == 2) commandNew(argv[1]);
+
+    return 0;
 }
 
 void errorHandler(errorEvent_t error) {

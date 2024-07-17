@@ -28,16 +28,21 @@ void commandHelp(void) {
 void commandNew(const char *program) {
     // This process is to have the path
     // Concatenates the folder, file name, and file type
-    char filePath[PATH_MAX] = PRED_PATH;
+    char filePath[PATH_MAX] = "";
+    strcat(filePath, getenv("HOME"));
+    strcat(filePath, PATH_IN_HOME);
     strcat(filePath, program);
     strcat(filePath, FILE_TYPE);
+
+    puts(filePath);
 
     FILE *fpNew;
     if((fpNew = fopen(filePath, "w+")) == NULL)
         errorHandler(ERROR_NEW_FILE);
 
     // Prints the comments inside the file
-    fprintf("%s\n\n%s\n", INSTALL_LINE, UNINSTALL_LINE);
+    fprintf(fpNew, "%s\n\n%s\n", INSTALL_LINE, UNINSTALL_LINE);
+    fflush(fpNew);
 
     // Execute nano command in the shell
     char nanoFile[PATH_MAX + 5] = "nano ";
@@ -47,24 +52,36 @@ void commandNew(const char *program) {
     // Creates a buffer to contain the command
     char *command;
     size_t commandSize = PATH_MAX;
-    if((command) = (char *)malloc(commandSize * sizeof(char)) == NULL)
+    if((command = (char *)malloc(commandSize * sizeof(char))) == NULL)
         errorHandler(ERROR_MEMORY);
 
     // Skip the INSTALL_LINE to get to the commands
-    fseek(fpNew, strlen(INSTALL_LINE), SEEK_SET);
+    fseek(fpNew, strlen(INSTALL_LINE) + 1, SEEK_SET);
+    // "+ 1" for the '\n'
 
     uint8_t boolCommandEnd = 0;
     uint8_t loopLimit = 0;
     // Execute the commands line per line
+    puts("INSTALLING:\n");
     while(!boolCommandEnd && loopLimit != LOOP_INSTALL) {
+        // Prevents the loop to go for ever
+        loopLimit++;
+
         // Read a line/command
-        command = getline(&command, &commandSize, fpNew);
+        getline(&command, &commandSize, fpNew);
 
         // Activates the flag if the end of the command was found
-        if(!strcmp(command, UNINSTALL_LINE)) boolCommandEnd = 1;
+        char endLine[UNINSTALL_LENGTH + 1] = UNINSTALL_LINE;
+        // The "+ 1" is for the '\n'
+        strcat(endLine, "\n");
+
+        if(!strcmp(command, endLine)) boolCommandEnd = 1;
 
         // Executes the command if it isn't a '\n'
-        if(strcmp(command, "\n")) system(command);
+        if(!boolCommandEnd && strcmp(command, "\n")) {
+            printf("Executing: %s", command);
+            system(command);
+        }
     }
 
     fclose(fpNew);
