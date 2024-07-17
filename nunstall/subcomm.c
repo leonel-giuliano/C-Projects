@@ -4,6 +4,11 @@
 #include "subcomm.h"
 #include "option.h"
 
+const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM] = {
+    { SUBCOMM_HELP1, SUBCOMM_HELP2 },
+    { SUBCOMM_REMOVE1, SUBCOMM_REMOVE2 }
+};
+
 void helpPred(void) {
     puts("Nunstall is a command to uninstall a listed program.\n");
 
@@ -32,9 +37,14 @@ void helpRemove(void) {
 }
 
 void subcommHelp(const char *subcommand) {
+    // The 'help' function depends in the 'subcommand'
     void (*help)(void) = helpPred;
 
     if(CMP_SUBCOMM_REMOVE(subcommand)) help = helpRemove;
 
     help();
+}
+
+void subcommRemove(const char *program, const char *option) {
+
 }

@@ -1,6 +1,12 @@
 #ifndef __NUNSTALL_SUBCOMM_H__
 #define __NUNSTALL_SUBCOMM_H__
 
+#include <string.h>
+
+// Info on subcommands
+#define AMOUNT_SUBCOMM 2
+#define SAME_SUBCOMM 2
+
 // Subcommands
 #define SUBCOMM_HELP1 "-h"
 #define SUBCOMM_REMOVE1 "-r"
@@ -8,12 +14,28 @@
 #define SUBCOMM_HELP2 "--help"
 #define SUBCOMM_REMOVE2 "--remove"
 
-// Compare str with subcommand
-#define CMP_SUBCOMM_HELP(arg) !strcmp(arg, SUBCOMM_HELP1) || !strcmp(arg, SUBCOMM_HELP2)
-#define CMP_SUBCOMM_REMOVE(arg) !strcmp(arg, SUBCOMM_REMOVE1) || !strcmp(arg, SUBCOMM_REMOVE2)
+// Ix subcommands
+enum {
+    IX_SUBCOMM_HELP,
+    IX_SUBCOMM_REMOVE
+};
 
+enum {
+    IX_SUBCOMM_1,
+    IX_SUBCOMM_2
+};
+
+// Compare str with subcommand
+#define CMP_SUBCOMM(arg, subcomm) !strcmp(arg, subcommArray[subcomm][IX_SUBCOMM_1]) || !strcmp(arg, subcommArray[subcomm][IX_SUBCOMM_2])
+
+// Subcommands
+void subcommHelp(const char *_SubCommand);
+void subcommRemove(const char *_ProgramName, const char *_Option);
+
+// Inside functions of the subcommands
 void helpPred(void);
 void helpRemove(void);
-void subcommHelp(const char *_SubCommand);
+
+extern const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM];
 
 #endif
