@@ -25,6 +25,7 @@ enum {
     IX_OPTION_2
 };
 
+
 // Compare str with an option
 #define CMP_OPTION(arg, option) !strcmp(arg, optionArray[option][IX_OPTION_1]) || !strcmp(arg, optionArray[option][IX_OPTION_2])
 

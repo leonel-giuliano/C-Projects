@@ -10,10 +10,12 @@
 #include "nunstall.h"
 #include "option.h"
 
+
 const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM] = {
     { SUBCOMM_HELP1, SUBCOMM_HELP2 },
     { SUBCOMM_REMOVE1, SUBCOMM_REMOVE2 }
 };
+
 
 void helpPred(void) {
     puts("Nunstall is a command to uninstall a listed program.\n");
@@ -135,6 +137,28 @@ void getDir(char *argv[], uint8_t offset, char *dirPath) {
     closedir(dirFolder);
 }
 
+void delFile(const char *filePath, const char *option) {
+    // Flags in the case an option was given
+    uint8_t boolYes = (CMP_OPTION(option, IX_OPTION_YES)) ? 1 : 0;
+    uint8_t boolNo = (CMP_OPTION(option, IX_OPTION_NO)) ? 1 : 0;
+
+    // In the case there wasn't any option
+    char c = ' ';
+    if(!boolYes && !boolNo) {
+        printf("Do you want to delete the program file? [y/n]: ");
+        c = getchar();
+    }
+
+    // Remove file
+    if(boolYes || c == 'y') {
+        if(remove(filePath)) errorHandler(ERROR_RM_FILE);
+
+        puts("The file was removed successfully.");
+    }
+
+    else puts("The file wasn't removed.");
+}
+
 void subcommRemove(int argc, char *argv[]) {
     // Offset in case it was called without subcommand
     // This process makes sure the command is correctly passed
@@ -145,7 +169,7 @@ void subcommRemove(int argc, char *argv[]) {
     // Open the file
     FILE *fpProgram;
     if((fpProgram = fopen(filePath, "r")) == NULL)
-        errorHandler(ERROR_FILE);
+        errorHandler(ERROR_OPEN_FILE);
 
     // Create str to save the command lines
     char *command;
@@ -198,4 +222,8 @@ void subcommRemove(int argc, char *argv[]) {
 
     free(command);
     fclose(fpProgram);
+
+    // Execute the code giving the option
+    if(argc == ARGC_MAX - offset) delFile(filePath, argv[IX_SC_OPTION - offset]);
+    else delFile(filePath, "");
 }

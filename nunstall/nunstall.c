@@ -70,8 +70,12 @@ void errorHandler(error_t error) {
             puts("The program wasn't found inside the ninstall folder.");
             break;
 
-        case ERROR_FILE:
+        case ERROR_OPEN_FILE:
             puts("There was a problem when trying to open the program file.");
+            break;
+
+        case ERROR_RM_FILE:
+            puts("There was a problem when trying to delete the program file.");
             break;
 
         case ERROR_MEMORY:
