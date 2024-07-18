@@ -98,7 +98,7 @@ uint8_t checkRemove(int argc, char *argv[]) {
 
 void getDir(char *argv[], uint8_t offset, char *dirPath) {
     // Get the directory of the ninstall folder
-    strcat(dirPath, getenv("HOME"));
+    strcpy(dirPath, getenv("HOME"));
     strcat(dirPath, PATH_IN_HOME);
 
     DIR *dirFolder;
@@ -131,7 +131,6 @@ void getDir(char *argv[], uint8_t offset, char *dirPath) {
 
     // Save the file path
     strcat(dirPath, dirFile->d_name);
-    strcat(dirPath, FILE_TYPE);
 
     closedir(dirFolder);
 }
@@ -140,7 +139,7 @@ void subcommRemove(int argc, char *argv[]) {
     // Offset in case it was called without subcommand
     // This process makes sure the command is correctly passed
     uint8_t offset = checkRemove(argc, argv);
-    char *filePath = "";
+    char filePath[PATH_MAX] = "";
     getDir(argv, offset, filePath);
 
     // Open the file
@@ -157,7 +156,16 @@ void subcommRemove(int argc, char *argv[]) {
     // Read first line of the file
     getline(&command, &commandSize, fpProgram);
     // Skip until the uninstallation commands are found
-    while(strcmp(command, UNINSTALL_LINE) && !feof(fpProgram));
+    size_t loopComm = 0;
+    while(strcmp(command, UNINSTALL_LINE_N) && loopComm != LOOP_COMM) {
+        loopComm++;
+        // Read one line
+        getline(&command, &commandSize, fpProgram);
+
+        // If the file didn't contain the uninstallation
+        // comment, break the iteration and exit the code
+        if(feof(fpProgram)) break;
+    }
 
     // In case the file didn't had uninstall commands
     if(feof(fpProgram)) {
@@ -169,12 +177,23 @@ void subcommRemove(int argc, char *argv[]) {
         return;
     }
 
-    while(!feof(fpProgram)) {
-        // Read a command line
+    puts("UNINSTALLING:\n");
+
+    // Execute every command
+    loopComm = 0;
+    while(loopComm != LOOP_COMM) {
+        loopComm++;
+
         getline(&command, &commandSize, fpProgram);
 
-        // Execute the command
-        if(strcmp(command, "\n")) system(command);
+        // If it reaches the end of the file, the command
+        // gets executed twice, this fixes that
+        if(feof(fpProgram)) break;
+
+        // Execute command
+        printf("Executing command: %s", command);
+        system(command);
+        putchar('\n');
     }
 
     free(command);

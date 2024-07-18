@@ -12,6 +12,8 @@
 #define FILE_TYPE ".list"
 #define INSTALL_LINE "# Installation"
 #define UNINSTALL_LINE "# Uninstallation"
+#define INSTALL_LINE_N "# Installation\n"
+#define UNINSTALL_LINE_N "# Uninstallation\n"
 
 // String chars
 #define PATH_MAX 4096
@@ -21,6 +23,7 @@
 
 // Loop limits to prevent errors
 #define LOOP_FILE 255
+#define LOOP_COMM 255
 
 // Ix of the arguments
 enum {
