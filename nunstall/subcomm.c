@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
 
@@ -63,6 +64,40 @@ void subcommHelp(int argc, char *argv[]) {
     help[subcomm]();
 }
 
-void subcommRemove(int argc, char *argv[]) {
+uint8_t checkRemove(int argc, char *argv[]) {
+    // Offset in case it was called without subcommand
+    uint8_t offset = (CMP_SUBCOMM(argv[IX_SUBCOMM], IX_SUBCOMM_REMOVE)) ? 0 : 1;
 
+    // Mostly in case of sth like: nunstall firefox -y -n
+    if(argc > ARGC_MAX - offset) errorHandler(ERROR_ARG);
+
+    // Checks if there is an option
+    uint8_t boolOption = 0;
+    // Checks if the command was called correctly
+    for(uint8_t i = 0; i < AMOUNT_OPTION; i++) {
+        // If there is an option where the file is supposed to be
+        if(CMP_OPTION(argv[IX_SC_FILE - offset], i))
+            errorHandler(ERROR_ARG);
+
+        // Checks if there if the option is okay in the
+        // case that it was passed
+        if(argc == ARGC_MAX - offset && (CMP_OPTION(argv[IX_SC_OPTION - offset], i)))
+            boolOption = 1;
+    }
+
+    // In case there were more parameters that weren't a valid option
+    if(argc == ARGC_MAX - offset && !boolOption)
+        errorHandler(ERROR_ARG);
+    // Ex: nunstall --remove firefox -a
+
+    return offset;
+}
+
+void subcommRemove(int argc, char *argv[]) {
+    // Offset in case it was called without subcommand
+    // This process makes sure the command is correctly passed
+    uint8_t offset = checkRemove(argc, argv);
+
+    // Get the directory of the ninstall folder
+    char *dirPath = getenv("HOME");
 }

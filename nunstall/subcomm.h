@@ -37,6 +37,8 @@ void subcommRemove(int argc, char *argv[]);
 void helpPred(void);
 void helpRemove(void);
 
+uint8_t checkRemove(int argc, char *argv[]);
+
 extern const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM];
 
 #endif
