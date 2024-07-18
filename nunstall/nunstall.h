@@ -1,6 +1,8 @@
 #ifndef __NUNSTALL_H__
 #define __NUNSTALL_H__
 
+#include <stdint.h>
+
 // Arguments
 #define ARGC_MIN 2
 #define ARGC_MAX 4
@@ -20,7 +22,7 @@ typedef enum {
     ERROR_ARG
 }error_t;
 
-void selectSubComm(char *_ArgumentStr[]);
+void selectSubcomm(int argc, char *argv[]);
 void errorHandler(error_t _ErrorEvent);
 
 #endif

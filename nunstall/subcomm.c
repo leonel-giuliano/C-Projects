@@ -1,7 +1,9 @@
 #include <stdio.h>
+#include <stdint.h>
 #include <string.h>
 
 #include "subcomm.h"
+#include "nunstall.h"
 #include "option.h"
 
 const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM] = {
@@ -36,15 +38,31 @@ void helpRemove(void) {
     printf("\tninstall %s firefox %s\n\n", SUBCOMM_REMOVE2, OPTION_YES2);
 }
 
-void subcommHelp(const char *subcommand) {
-    // The 'help' function depends in the 'subcommand'
-    void (*help)(void) = helpPred;
+void subcommHelp(int argc, char *argv[]) {
+    // This is the function that is going to be executed
+    // depending on the other subcommands used
+    void (*help[])(void) = {
+        helpPred,
+        helpRemove
+    };
 
-    if(CMP_SUBCOMM_REMOVE(subcommand)) help = helpRemove;
+    // Ix of the help command
+    uint8_t subcomm = 0;
+    // Iterate through every argument
+    for(uint8_t i = IX_COMM + 1; i < argc; i++) {
+        // Iterate through every subcommand
+        for(uint8_t j = 0; j < AMOUNT_SUBCOMM; j++) {
+            if(j == IX_SUBCOMM_HELP) continue;
 
-    help();
+            if(CMP_SUBCOMM(argv[i], j))
+                // Saves the ix of the subcommand
+                subcomm = j;
+        }
+    }
+
+    help[subcomm]();
 }
 
-void subcommRemove(const char *program, const char *option) {
+void subcommRemove(int argc, char *argv[]) {
 
 }

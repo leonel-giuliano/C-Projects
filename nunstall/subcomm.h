@@ -17,7 +17,8 @@
 // Ix subcommands
 enum {
     IX_SUBCOMM_HELP,
-    IX_SUBCOMM_REMOVE
+    IX_SUBCOMM_REMOVE,
+    IX_SUBCOMM_PRED = IX_SUBCOMM_REMOVE
 };
 
 enum {
@@ -29,8 +30,8 @@ enum {
 #define CMP_SUBCOMM(arg, subcomm) !strcmp(arg, subcommArray[subcomm][IX_SUBCOMM_1]) || !strcmp(arg, subcommArray[subcomm][IX_SUBCOMM_2])
 
 // Subcommands
-void subcommHelp(const char *_SubCommand);
-void subcommRemove(const char *_ProgramName, const char *_Option);
+void subcommHelp(int argc, char *argv[]);
+void subcommRemove(int argc, char *argv[]);
 
 // Inside functions of the subcommands
 void helpPred(void);
