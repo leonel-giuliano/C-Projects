@@ -36,8 +36,11 @@ enum {
 // Error events
 typedef enum {
     ERROR_ARG,
+    ERROR_PROGRAM_NOT_FOUND,
+
     ERROR_DIR,
-    ERROR_PROGRAM_NOT_FOUND
+    ERROR_FILE,
+    ERROR_MEMORY
 }error_t;
 
 void selectSubcomm(int argc, char *argv[]);

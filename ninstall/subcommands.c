@@ -97,6 +97,7 @@ void subcommNew(const char *program) {
     putchar('\n');
     printf("The file %s%s was created and installed successfully.\n", program, FILE_TYPE);
 
+    free(command);
     fclose(fpNew);
 }
 

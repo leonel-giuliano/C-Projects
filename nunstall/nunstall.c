@@ -63,11 +63,19 @@ void errorHandler(error_t error) {
             break;
 
         case ERROR_DIR:
-            puts("There was a problem trying to open the ninstall folder.");
+            puts("There was a problem when trying to open the ninstall folder.");
             break;
 
         case ERROR_PROGRAM_NOT_FOUND:
             puts("The program wasn't found inside the ninstall folder.");
+            break;
+
+        case ERROR_FILE:
+            puts("There was a problem when trying to open the program file.");
+            break;
+
+        case ERROR_MEMORY:
+            puts("There was a problem when allocating memory.");
             break;
 
         default:

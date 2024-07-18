@@ -1,3 +1,5 @@
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -131,6 +133,8 @@ const char *getDir(int argc, char *argv[], uint8_t offset) {
     strcat(dirPath, dirFile->d_name);
     strcat(dirPath, FILE_TYPE);
 
+    closedir(dirFolder);
+
     return dirPath;
 }
 
@@ -140,5 +144,17 @@ void subcommRemove(int argc, char *argv[]) {
     uint8_t offset = checkRemove(argc, argv);
     const char *filePath = getDir(argc, argv, offset);
 
-    
+    // Open the file
+    FILE *fpProgram;
+    if((fpProgram = fopen(filePath, "r")) == NULL)
+        errorHandler(ERROR_FILE);
+
+    // Skip until the uninstallation commands are found
+    char *command;
+    size_t commandSize = PATH_MAX;
+    if((command = (char *)malloc(commandSize * sizeof(char))) == NULL)
+        errorHandler(ERROR_MEMORY);
+
+    free(command);
+    fclose(fpProgram);
 }
