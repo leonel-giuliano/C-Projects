@@ -24,7 +24,7 @@ void selectSubcomm(int argc, char *argv[]) {
 
     // Check if the subcommand 'help' was used anywhere in the arguments
     for(uint8_t i = IX_COMM + 1; i < argc; i++) {
-        if(CMP_SUBCOMM(argv[IX_SUBCOMM], IX_SUBCOMM_HELP)) {
+        if(CMP_SUBCOMM(argv[i], IX_SUBCOMM_HELP)) {
             subcommHelp(argc, argv);
 
             exit(EXIT_SUCCESS);
