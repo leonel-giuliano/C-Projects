@@ -62,6 +62,14 @@ void errorHandler(error_t error) {
             helpPred();
             break;
 
+        case ERROR_DIR:
+            puts("There was a problem trying to open the ninstall folder.");
+            break;
+
+        case ERROR_PROGRAM_NOT_FOUND:
+            puts("The program wasn't found inside the ninstall folder.");
+            break;
+
         default:
             puts("[DEBUG]: error when used the 'errorHandler'");
             break;

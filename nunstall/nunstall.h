@@ -19,6 +19,10 @@
 #define INSTALL_LENGTH 15
 #define UNINSTALL_LENGTH 17
 
+// Loop limits to prevent errors
+#define LOOP_FILE 255
+
+// Ix of the arguments
 enum {
     IX_COMM,
     IX_SUBCOMM,
@@ -31,7 +35,9 @@ enum {
 
 // Error events
 typedef enum {
-    ERROR_ARG
+    ERROR_ARG,
+    ERROR_DIR,
+    ERROR_PROGRAM_NOT_FOUND
 }error_t;
 
 void selectSubcomm(int argc, char *argv[]);

@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdint.h>
 #include <string.h>
+#include <dirent.h>
 
 #include "subcomm.h"
 #include "nunstall.h"
@@ -93,11 +94,51 @@ uint8_t checkRemove(int argc, char *argv[]) {
     return offset;
 }
 
+const char *getDir(int argc, char *argv[], uint8_t offset) {
+    // Get the directory of the ninstall folder
+    char dirPath[PATH_MAX] = getenv("HOME");
+    strcat(dirPath, PATH_IN_HOME);
+
+    DIR *dirFolder;
+    if((dirFolder = opendir(dirPath)) == NULL)
+        errorHandler(ERROR_DIR);
+
+    // Create the struct of the file data
+    struct dirent *dirFile;
+    const char *program = argv[IX_SC_FILE - offset];
+
+    // Iterate through every file inside of it
+    uint8_t boolProgram = 0;
+    int loopFile = 0;
+    while(!boolProgram && (dirFile = readdir(dirFolder)) != NULL && loopFile != LOOP_FILE) {
+        loopFile++;
+
+        // Skip the '.' and '..'
+        if(!strcmp(dirFile->d_name, ".") || !strcmp(dirFile->d_name, ".."))
+            continue;
+
+        // The "+ 1" is to ignore the '\0'
+        size_t length = strlen(dirFile->d_name) - TYPE_LENGTH + 1;
+        // Compare the file name withouth the extension
+        if(!strncmp(dirFile->d_name, program, length))
+            boolProgram = 1;
+    }
+
+    // In case the program wasn't found
+    if(!boolProgram) errorHandler(ERROR_PROGRAM_NOT_FOUND);
+
+    // Save the file path
+    strcat(dirPath, dirFile->d_name);
+    strcat(dirPath, FILE_TYPE);
+
+    return dirPath;
+}
+
 void subcommRemove(int argc, char *argv[]) {
     // Offset in case it was called without subcommand
     // This process makes sure the command is correctly passed
     uint8_t offset = checkRemove(argc, argv);
+    const char *filePath = getDir(argc, argv, offset);
 
-    // Get the directory of the ninstall folder
-    char *dirPath = getenv("HOME");
+    
 }
