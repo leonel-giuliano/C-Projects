@@ -2,9 +2,9 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <dirent.h>
 #include <stdint.h>
 #include <string.h>
-#include <dirent.h>
 
 #include "subcomm.h"
 #include "nunstall.h"
@@ -96,9 +96,9 @@ uint8_t checkRemove(int argc, char *argv[]) {
     return offset;
 }
 
-const char *getDir(int argc, char *argv[], uint8_t offset) {
+void getDir(char *argv[], uint8_t offset, char *dirPath) {
     // Get the directory of the ninstall folder
-    char dirPath[PATH_MAX] = getenv("HOME");
+    strcat(dirPath, getenv("HOME"));
     strcat(dirPath, PATH_IN_HOME);
 
     DIR *dirFolder;
@@ -134,26 +134,48 @@ const char *getDir(int argc, char *argv[], uint8_t offset) {
     strcat(dirPath, FILE_TYPE);
 
     closedir(dirFolder);
-
-    return dirPath;
 }
 
 void subcommRemove(int argc, char *argv[]) {
     // Offset in case it was called without subcommand
     // This process makes sure the command is correctly passed
     uint8_t offset = checkRemove(argc, argv);
-    const char *filePath = getDir(argc, argv, offset);
+    char *filePath = "";
+    getDir(argv, offset, filePath);
 
     // Open the file
     FILE *fpProgram;
     if((fpProgram = fopen(filePath, "r")) == NULL)
         errorHandler(ERROR_FILE);
 
-    // Skip until the uninstallation commands are found
+    // Create str to save the command lines
     char *command;
     size_t commandSize = PATH_MAX;
     if((command = (char *)malloc(commandSize * sizeof(char))) == NULL)
         errorHandler(ERROR_MEMORY);
+
+    // Read first line of the file
+    getline(&command, &commandSize, fpProgram);
+    // Skip until the uninstallation commands are found
+    while(strcmp(command, UNINSTALL_LINE) && !feof(fpProgram));
+
+    // In case the file didn't had uninstall commands
+    if(feof(fpProgram)) {
+        puts("There wasn't any uninstallation commands.");
+
+        free(command);
+        fclose(fpProgram);
+
+        return;
+    }
+
+    while(!feof(fpProgram)) {
+        // Read a command line
+        getline(&command, &commandSize, fpProgram);
+
+        // Execute the command
+        if(strcmp(command, "\n")) system(command);
+    }
 
     free(command);
     fclose(fpProgram);

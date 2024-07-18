@@ -38,8 +38,7 @@ void helpPred(void);
 void helpRemove(void);
 
 uint8_t checkRemove(int argc, char *argv[]);
-const char *getDir(int argc, char *argv[], uint8_t _Offset);
-
+void getDir(char *argv[], uint8_t _Offset, char *_FilePath);
 extern const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM];
 
 #endif

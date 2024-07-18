@@ -66,7 +66,7 @@ void subcommNew(const char *program) {
         errorHandler(ERROR_MEMORY);
 
     // Skip the INSTALL_LINE to get to the commands
-    fseek(fpNew, INSTALL_LENGTH + 1, SEEK_SET);
+    fseek(fpNew, INSTALL_LENGTH, SEEK_SET);
     // "+ 1" for the '\n'
 
     uint8_t boolCommandEnd = 0;
