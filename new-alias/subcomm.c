@@ -3,6 +3,13 @@
 #include "subcomm.h"
 #include "new-alias.h"
 
+const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM] = {
+    { SUBCOMM_HELP1, SUBCOMM_HELP2 },
+    { SUBCOMM_NEW1, SUBCOMM_NEW2 },
+    { SUBCOMM_REMOVE1, SUBCOMM_REMOVE2 },
+    { SUBCOMM_LIST1, SUBCOMM_LIST2 }
+};
+
 void helpPred(void) {
     puts("New-alias is a command to manage the personal alias in an easier way.\n");    
 
