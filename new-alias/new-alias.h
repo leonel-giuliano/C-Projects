@@ -1,6 +1,9 @@
 #ifndef __NEW_ALIAS_H__
 #define __NEW_ALIAS_H__
 
+#define COMM "new-alias"
+
+
 // Arguments
 #define ARGC_MIN 3
 #define ARGC_MAX 5
