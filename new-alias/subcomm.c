@@ -10,6 +10,26 @@ const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM] = {
     { SUBCOMM_LIST1, SUBCOMM_LIST2 }
 };
 
+
+// Check usage per subcommand
+void checkNew(int argc, char *argv[], flags_t *flags) {
+    // It determines the offset of the arguments in the case
+    // that it was called without subcommand
+    uint8_t offset = (!flags->HAS_SUBCOMM && IX_SUBCOMM_PRED == IX_SUBCOMM_NEW) ? 1 : 0;
+
+    
+}
+
+void checkRemove(int argc, char *argv[], flags_t *flags) {
+
+}
+
+void checkList(int argc, char *argv[], flags_t *flags) {
+
+}
+
+
+// Functions inside the subcommands
 void helpPred(void) {
     puts("New-alias is a command to manage the personal alias in an easier way.\n");    
 

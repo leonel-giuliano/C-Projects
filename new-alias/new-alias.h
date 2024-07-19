@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 
+#include "subcomm.h"
 
 // Name of the command
 #define COMM "new-alias"
@@ -11,6 +12,16 @@
 // Arguments
 #define ARGC_MIN 3
 #define ARGC_MAX 5
+
+typedef enum {
+    IX_COMM,
+    IX_SUBCOMM,
+    IX_SC_ALIAS,
+    IX_SC_PATH,
+
+    IX_ALIAS = 1,
+    IX_PATH
+}argvIx_t;
 
 
 // Error events
@@ -25,6 +36,8 @@ typedef enum {
 #define HAS_SUBCOMM flags.flag2
 
 typedef union {
+    uint8_t data;
+
     struct {
         unsigned int flag0 : 1;
         unsigned int flag1 : 1;
@@ -35,11 +48,9 @@ typedef union {
         unsigned int flag6 : 1;
         unsigned int flag7 : 1;
     }flags;
-
-    uint8_t data;
 }flags_t;
 
-
+subcommIx_t checkUsage(int argc, char *argv[], flags_t *_Flags);
 void errorHandler(error_t _ErrorEvent);
 
 #endif

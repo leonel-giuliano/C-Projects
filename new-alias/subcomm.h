@@ -1,6 +1,10 @@
 #ifndef __NEW_ALIAS_SUBCOMM_H__
 #define __NEW_ALIAS_SUBCOMM_H__
 
+#include <string.h>
+
+#include "new-alias.h"
+
 // Subcommands array
 #define AMOUNT_SUBCOMM 4
 #define SAME_SUBCOMM 2
@@ -32,7 +36,17 @@ typedef enum {
 #define SUBCOMM_LIST2 "--list"
 
 
+// Check if the argument is a subcommand
+#define CMP_SUBCOMM(arg, ix_subcomm) !strcmp(arg, subcommArray[ix_subcomm][IX_SUBCOMM1]) || !strcmp(arg, subcommArray[ix_subcomm][IX_SUBCOMM2])
+
+
 extern const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM];
+
+
+// Check usage per subcommand
+void checkNew(int argc, char *argv[], flags_t *flags);
+void checkRemove(int argc, char *argv[], flags_t *flags);
+void checkList(int argc, char *argv[], flags_t *flags);
 
 
 // Functions inside the subcommands
