@@ -10,7 +10,9 @@
 
 
 // Arguments
-#define ARGC_MIN 3
+// Ex: comm --list
+#define ARGC_MIN 2
+// Ex: comm --new alias "path" --help
 #define ARGC_MAX 5
 
 typedef enum {

@@ -7,8 +7,12 @@
 
 // Arguments
 #define ARGC_NEW_MIN 4
+#define ARGC_REMOVE_MIN 3
+#define ARGC_LIST_MIN 2
 
 #define ARGC_NEW_MAX 4
+#define ARGC_REMOVE_MAX 3
+#define ARGC_LIST_MAX 2
 
 // Subcommands array
 #define AMOUNT_SUBCOMM 4

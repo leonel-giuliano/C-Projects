@@ -23,7 +23,7 @@ void checkNew(int argc, char *argv[], flags_t *flags) {
     uint8_t offset = (!flags->HAS_SUBCOMM && IX_SUBCOMM_PRED == IX_SUBCOMM_NEW) ? 1 : 0;
 
     // In a case like: comm example "/home/" q
-    if(argc > ARGC_NEW_MIN - offset) flags->BAD_USAGE = 1;
+    if(argc < ARGC_NEW_MIN - offset || argc > ARGC_NEW_MAX - offset) flags->BAD_USAGE = 1;
 
     // Check if the path is correctly written ("" or '')
     const char path[] = argv[IX_SC_PATH - offset];
@@ -36,11 +36,17 @@ void checkNew(int argc, char *argv[], flags_t *flags) {
 }
 
 void checkRemove(int argc, char *argv[], flags_t *flags) {
+    // Usage:
+    // comm --remove alias
 
+    if(argc < ARGC_REMOVE_MIN || argc > ARGC_REMOVE_MAX) flags->BAD_USAGE = 1;
 }
 
 void checkList(int argc, char *argv[], flags_t *flags) {
+    // Usage:
+    // comm --list
 
+    if(argc < ARGC_LIST_MIN || argc > ARGC_LIST_MAX) flags->BAD_USAGE = 1;
 }
 
 
