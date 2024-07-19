@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 #include "subcomm.h"
 #include "new-alias.h"
@@ -13,11 +14,25 @@ const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM] = {
 
 // Check usage per subcommand
 void checkNew(int argc, char *argv[], flags_t *flags) {
+    // Usage:
+    // comm alias "path"
+    // comm --new alias 'path'
+
     // It determines the offset of the arguments in the case
     // that it was called without subcommand
     uint8_t offset = (!flags->HAS_SUBCOMM && IX_SUBCOMM_PRED == IX_SUBCOMM_NEW) ? 1 : 0;
 
-    
+    // In a case like: comm example "/home/" q
+    if(argc > ARGC_NEW_MIN - offset) flags->BAD_USAGE = 1;
+
+    // Check if the path is correctly written ("" or '')
+    const char path[] = argv[IX_SC_PATH - offset];
+    size_t pathLength = strlen(path);
+    if(
+        (path[0] != '"' || path[pathLength] != '"')
+            &&
+        (path[0] != '\'' || path[pathLength] != '\'')
+    ) flags->BAD_USAGE = 1;
 }
 
 void checkRemove(int argc, char *argv[], flags_t *flags) {

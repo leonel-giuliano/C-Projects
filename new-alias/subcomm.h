@@ -5,6 +5,11 @@
 
 #include "new-alias.h"
 
+// Arguments
+#define ARGC_NEW_MIN 4
+
+#define ARGC_NEW_MAX 4
+
 // Subcommands array
 #define AMOUNT_SUBCOMM 4
 #define SAME_SUBCOMM 2
