@@ -26,9 +26,26 @@ typedef enum {
 }argvIx_t;
 
 
+// Strings
+#define PATH_MAX 4096
+#define LINE_MAX 8192
+
+#define BASH_FILE "/.bashrc-test"
+#define BASH_TEMP "/.bashrc-temp"
+#define ALIAS_COMMENT "# Personal Alias"
+
+
+// Loops
+#define LOOP_BASH 4096
+
+
 // Error events
 typedef enum {
-    ERROR_ARG
+    ERROR_ARG,
+
+    ERROR_OPEN_BASH,
+    ERROR_BASH_TEMP,
+    ERROR_MEMORY
 }error_t;
 
 

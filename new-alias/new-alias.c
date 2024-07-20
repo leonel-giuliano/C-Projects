@@ -13,6 +13,13 @@ int main (int argc, char *argv[]) {
     // and tells which subcommand to use
     subcommIx_t subcomm = checkUsage(argc, argv, &flags);
 
+    // The "help" subcommand has priority
+    if(flags.HAS_SUBCOMM_HELP)
+        subcommHelp(argv[IX_SUBCOMM], flags);
+    // Then, checks for a bad usage
+    else if(flags.BAD_USAGE) errorHandler(ERROR_ARG);
+    // Then, the pred. function
+
     return 0;
 }
 
@@ -65,7 +72,6 @@ subcommIx_t checkUsage(int argc, char *argv[], flags_t *flags) {
         // case that the subcommand "help" was used
     }
 
-
     // Check the usage depending on the subcommand found
     if(!flags->HAS_SUBCOMM_HELP && !flags->BAD_USAGE)
         checkSubcomm[subcomm - 1](argc, argv, flags);
@@ -81,6 +87,18 @@ void errorHandler(error_t error) {
         case ERROR_ARG:
             puts("There was a bad usage.\n");
             helpPred();
+            break;
+
+        case ERROR_OPEN_BASH:
+            puts("There was a problem when trying to read the bash.");
+            break;
+
+        case ERROR_BASH_TEMP:
+            puts("There was a problem when trying to create a copy of the bash.");
+            break;
+
+        case ERROR_MEMORY:
+            puts("There was a problem when allocating.");
             break;
 
         default:

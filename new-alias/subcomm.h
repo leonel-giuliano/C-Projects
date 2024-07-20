@@ -64,6 +64,11 @@ void checkRemove(int argc, char *argv[], flags_t *flags);
 void checkList(int argc, char *argv[], flags_t *flags);
 
 
+// Subcommands
+void subcommHelp(subcommIx_t _Subcommand, flags_t _Flags);
+void subcommNew(const char *_AliasName, const char *_CodeOrPath);
+
+
 // Functions inside the subcommands
 void helpPred(void);
 void helpNew(void);
