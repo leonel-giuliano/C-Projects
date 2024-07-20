@@ -38,7 +38,7 @@
 
 
 // Check if the argument is a subcommand
-#define CMP_SUBCOMM(arg, ix_subcomm) !strcmp(arg, subcommArray[ix_subcomm][IX_SUBCOMM1]) || !strcmp(arg, subcommArray[ix_subcomm][IX_SUBCOMM2])
+#define CMP_SUBCOMM(arg, subcommIx) !strcmp(arg, subcommArray[subcommIx][IX_SUBCOMM1]) || !strcmp(arg, subcommArray[subcommIx][IX_SUBCOMM2])
 
 
 // Subcommands array
@@ -64,6 +64,7 @@ extern const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM];
 
 
 #include "new-alias.h"
+#include "option.h"
 
 // Check usage per subcommand
 void checkNew(int argc, char *argv[], flags_t *flags);
@@ -73,9 +74,9 @@ void checkList(int argc, char *argv[], flags_t *flags);
 
 
 // Subcommands
-void subcommPred(char *argv[]);
+void subcommPred(char *argv[], optionIx_t _OptionIx, flags_t _Flags);
 void subcommHelp(subcommIx_t _Subcommand, flags_t _Flags);
-void subcommNew(const char *_AliasName, const char *_CodeOrPath);
+void subcommNew(const char *_AliasName, const char *_CodeOrPath, optionIx_t _OptionIx);
 
 
 // Functions inside the subcommands

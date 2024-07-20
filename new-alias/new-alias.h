@@ -44,8 +44,18 @@ typedef enum {
     IX_SC_CODE = IX_SC_OPTION,
 
     IX_ALIAS = IX_SUBCOMM,
-    IX_CODE
+    IX_OPTION,
+    IX_OP_CODE,
+
+    IX_CODE = IX_OP_CODE
 }argvIx_t;
+
+#define COMM_FUNCTIONS 2
+
+typedef enum {
+    IX_COMM_SUBCOMM,
+    IX_COMM_OPTION
+}commIx_t;
 
 
 // Strings
@@ -74,9 +84,13 @@ typedef enum {
 
 
 #include "subcomm.h"
+#include "option.h"
 
 
-subcommIx_t checkUsage(int argc, char *argv[], flags_t *_Flags);
+void checkUsage(int argc, char *argv[], flags_t *_Flags, uint8_t *_CommandArray);
 void errorHandler(error_t _ErrorEvent);
+
+
+extern const char *optionArray[AMOUNT_OPTION][SAME_OPTION];
 
 #endif

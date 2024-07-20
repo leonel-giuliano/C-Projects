@@ -1,12 +1,18 @@
 #ifndef __NEW_ALIAS_OPTION_H__
 #define __NEW_ALIAS_OPTION_H__
 
+#include <string.h>
+
 // Options
 #define OPTION_STATIC1 "-s"
 #define OPTION_DYNAMIC1 "-d"
 
 #define OPTION_STATIC2 "--static"
 #define OPTION_DYNAMIC2 "--dynamic"
+
+
+// Check if the argument is an option
+#define CMP_OPTION(arg, optionIx) !strcmp(arg, optionArray[optionIx][IX_OPTION1]) || !strcmp(arg, optionArray[optionIx][IX_OPTION2])
 
 
 // Options array
@@ -24,13 +30,6 @@ typedef enum {
     IX_OPTION1,
     IX_OPTION2
 }sameOptionIx_t;
-
-const char *optionArray[AMOUNT_OPTION][SAME_OPTION] = {
-    { OPTION_STATIC1, OPTION_STATIC2 },
-    { OPTION_DYNAMIC1, OPTION_DYNAMIC2 }
-};
-
-extern const char *optionArray[AMOUNT_OPTION][SAME_OPTION];
 
 
 #endif

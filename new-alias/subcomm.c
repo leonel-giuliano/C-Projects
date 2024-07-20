@@ -30,15 +30,10 @@ void checkNew(int argc, char *argv[], flags_t *flags) {
     // In a case like: comm example "/home/" q
     if(argc < ARGC_NEW_MIN - offset || argc > ARGC_NEW_MAX - offset) flags->BAD_USAGE = 1;
 
-    // Check if the path is correctly written if it is a dynamic link
-    const char *path = argv[IX_SC_CODE - offset];
-    size_t pathLength = strlen(path);
+    // Checks if there was more arguments than needed without using options
+    if(argc > ARGC_NEW_MIN - offset && !flags->HAS_OPTION) flags->BAD_USAGE = 1;
 
-    if(
-        (path[0] == '\'' && path[pathLength] != '\'')
-            ||
-        (path[0] != '\'' && path[pathLength] == '\'')
-    ) flags->BAD_USAGE = 1;
+    (void)argv;
 }
 
 void checkEdit(int argc, char *argv[], flags_t *flags) {
@@ -46,6 +41,8 @@ void checkEdit(int argc, char *argv[], flags_t *flags) {
     // comm --edit alias
 
     if(argc < ARGC_EDIT_MIN || argc > ARGC_EDIT_MAX) flags->BAD_USAGE = 1;
+
+    if(argc > ARGC_EDIT_MIN && !flags->HAS_OPTION) flags->BAD_USAGE = 1;
 
     (void)argv;
 }
@@ -56,6 +53,8 @@ void checkRemove(int argc, char *argv[], flags_t *flags) {
 
     if(argc < ARGC_REMOVE_MIN || argc > ARGC_REMOVE_MAX) flags->BAD_USAGE = 1;
 
+    if(flags->HAS_OPTION) flags->BAD_USAGE = 1;
+
     (void)argv;
 }
 
@@ -65,13 +64,17 @@ void checkList(int argc, char *argv[], flags_t *flags) {
 
     if(argc < ARGC_LIST_MIN || argc > ARGC_LIST_MAX) flags->BAD_USAGE = 1;
 
+    if(flags->HAS_OPTION) flags->BAD_USAGE = 1;
+
     (void)argv;
 }
 
 
 // Subcommands
-void subcommPred(char *argv[]) {
-    subcommNew(argv[IX_ALIAS], argv[IX_CODE]);
+void subcommPred(char *argv[], optionIx_t option, flags_t flags) {
+    uint8_t offset = (!flags.HAS_OPTION) ? 1 : 0;
+
+    subcommNew(argv[IX_ALIAS], argv[IX_OP_CODE - offset], option);
 }
 
 void subcommHelp(subcommIx_t subcomm, flags_t flags) {
@@ -93,7 +96,7 @@ void subcommHelp(subcommIx_t subcomm, flags_t flags) {
     helpSubcomm[ix]();
 }
 
-void subcommNew(const char *alias, const char *code) {
+void subcommNew(const char *alias, const char *code, optionIx_t option) {
     // Get the path of the bash to edit
     char bashPath[PATH_MAX] = "";
     strcpy(bashPath, getenv("HOME"));

@@ -3,6 +3,12 @@
 
 #include "new-alias.h"
 #include "subcomm.h"
+#include "option.h"
+
+const char *optionArray[AMOUNT_OPTION][SAME_OPTION] = {
+    { OPTION_STATIC1, OPTION_STATIC2 },
+    { OPTION_DYNAMIC1, OPTION_DYNAMIC2 }
+};
 
 int main (int argc, char *argv[]) {
     if(argc < ARGC_MIN || argc > ARGC_MAX) errorHandler(ERROR_ARG);
@@ -11,17 +17,20 @@ int main (int argc, char *argv[]) {
 
     // Makes the flags activate depending on the usage
     // and tells which subcommand to use
-    subcommIx_t subcomm = checkUsage(argc, argv, &flags);
+    uint8_t comm[COMM_FUNCTIONS];
+    checkUsage(argc, argv, &flags, comm);
 
     // The subcommand "help" has priority
-    if(flags.HAS_SUBCOMM_HELP) subcommHelp(subcomm, flags);
+    if(flags.HAS_SUBCOMM_HELP) subcommHelp(comm[IX_COMM_SUBCOMM], flags);
     else if(flags.BAD_USAGE) errorHandler(ERROR_ARG);
-    else if(!flags.HAS_SUBCOMM) subcommPred(argv);
+    else if(!flags.HAS_SUBCOMM) subcommPred(argv, comm[IX_COMM_OPTION], flags);
 
     // Lastly, all the other subcommands
-    else switch(subcomm) {
+    else switch(comm[IX_COMM_SUBCOMM]) {
         case IX_SUBCOMM_NEW:
-            subcommNew(argv[IX_SC_ALIAS], argv[IX_SC_CODE]);
+            uint8_t offset = (!flags.HAS_OPTION) ? 1 : 0;
+
+            subcommNew(argv[IX_SC_ALIAS], argv[IX_SC_OP_CODE - offset], comm[IX_COMM_OPTION]);
             break;
 
         default:
@@ -32,9 +41,13 @@ int main (int argc, char *argv[]) {
     return 0;
 }
 
-subcommIx_t checkUsage(int argc, char *argv[], flags_t *flags) {
-    // Indicates which subcommand has
+void checkUsage(int argc, char *argv[], flags_t *flags, uint8_t *comm) {
+    // To indicate the subcommand and the option
     subcommIx_t subcomm = IX_SUBCOMM_PRED;
+    optionIx_t option = IX_OPTION_PRED;
+
+    comm[IX_COMM_SUBCOMM] = subcomm;
+    comm[IX_COMM_OPTION] = option;
 
     // Pointer to function to check which subcomm is
     void (*checkSubcomm[])(int argc, char *argv[], flags_t *flags) = {
@@ -44,8 +57,9 @@ subcommIx_t checkUsage(int argc, char *argv[], flags_t *flags) {
         checkList
     };
 
-    // Check for the subcommands in the arguments
+    // Check the usage of every argument
     for(uint8_t i = IX_COMM + 1; i < argc; i++) {
+        // Check for the subcommands
         for(subcommIx_t j = 0; j < AMOUNT_SUBCOMM; j++) {
             uint8_t boolSubcomm = CMP_SUBCOMM(argv[i], j);
 
@@ -79,14 +93,33 @@ subcommIx_t checkUsage(int argc, char *argv[], flags_t *flags) {
         // The subcommand "help" skips all of the checking
         // If there is a bad usage, it keeps checking in the
         // case that the subcommand "help" was used
+
+        // Check for the options
+        for(optionIx_t j = 0; j < AMOUNT_OPTION; j++) {
+            uint8_t boolOption = CMP_OPTION(argv[i], j);
+            uint8_t offset = (!flags->HAS_SUBCOMM) ? 1 : 0;
+
+            // Check if the option is in the right position
+            if(i == IX_SC_OPTION - offset && boolOption) {
+                flags->HAS_OPTION = 1;
+                option = j;
+
+                break;
+            }
+
+            // Check if it was elsewhere
+            else if(boolOption) {
+                flags->BAD_USAGE = 1;
+                
+                break;
+            }
+        }
     }
 
     // Check the usage depending on the subcommand found
     if(!flags->HAS_SUBCOMM_HELP && !flags->BAD_USAGE)
         checkSubcomm[subcomm - 1](argc, argv, flags);
     // The "- 1" is because the subcommand "help" doesn't need to be checked
-
-    return subcomm;
 }
 
 void errorHandler(error_t error) {
