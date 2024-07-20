@@ -30,7 +30,7 @@ void checkNew(int argc, char *argv[], flags_t *flags) {
     if(argc < ARGC_NEW_MIN - offset || argc > ARGC_NEW_MAX - offset) flags->BAD_USAGE = 1;
 
     // Check if the path is correctly written ("" or '')
-    const char path[] = argv[IX_SC_CODE - offset];
+    const char *path = argv[IX_SC_CODE - offset];
     size_t pathLength = strlen(path);
     if(
         (path[0] != '"' || path[pathLength] != '"')
@@ -44,6 +44,8 @@ void checkEdit(int argc, char *argv[], flags_t *flags) {
     // comm --edit alias
 
     if(argc < ARGC_EDIT_MIN || argc > ARGC_EDIT_MAX) flags->BAD_USAGE = 1;
+
+    (void)argv;
 }
 
 void checkRemove(int argc, char *argv[], flags_t *flags) {
@@ -51,6 +53,8 @@ void checkRemove(int argc, char *argv[], flags_t *flags) {
     // comm --remove alias
 
     if(argc < ARGC_REMOVE_MIN || argc > ARGC_REMOVE_MAX) flags->BAD_USAGE = 1;
+
+    (void)argv;
 }
 
 void checkList(int argc, char *argv[], flags_t *flags) {
@@ -58,10 +62,16 @@ void checkList(int argc, char *argv[], flags_t *flags) {
     // comm --list
 
     if(argc < ARGC_LIST_MIN || argc > ARGC_LIST_MAX) flags->BAD_USAGE = 1;
+
+    (void)argv;
 }
 
 
 // Subcommands
+void subcommPred(char *argv[]) {
+    subcommNew(argv[IX_ALIAS], argv[IX_CODE]);
+}
+
 void subcommHelp(subcommIx_t subcomm, flags_t flags) {
     // Determinates the function to execute
     subcommIx_t ix = subcomm;
@@ -83,7 +93,8 @@ void subcommHelp(subcommIx_t subcomm, flags_t flags) {
 
 void subcommNew(const char *alias, const char *code) {
     // Get the path of the bash to edit
-    char bashPath[PATH_MAX] = getenv("HOME");
+    char bashPath[PATH_MAX] = "";
+    strcat(bashPath, getenv("HOME"));
     strcat(bashPath, BASH_FILE);
 
     // Opens the bash only to read because the way of editing
@@ -93,7 +104,8 @@ void subcommNew(const char *alias, const char *code) {
         errorHandler(ERROR_OPEN_BASH);
 
     // Get the path for the temporal
-    char tempPath[PATH_MAX] = getenv("HOME");
+    char tempPath[PATH_MAX] = "";
+    strcat(tempPath, getenv("HOME"));
     strcat(tempPath, BASH_TEMP);
 
     // Creates a temporal file in order to add the alias and

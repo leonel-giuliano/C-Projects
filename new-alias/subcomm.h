@@ -3,8 +3,6 @@
 
 #include <string.h>
 
-#include "new-alias.h"
-
 // Arguments
 #define ARGC_NEW_MIN 4
 #define ARGC_EDIT_MIN 4
@@ -57,6 +55,8 @@ typedef enum {
 extern const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM];
 
 
+#include "new-alias.h"
+
 // Check usage per subcommand
 void checkNew(int argc, char *argv[], flags_t *flags);
 void checkEdit(int argc, char *argv[], flags_t *flags);
@@ -65,6 +65,7 @@ void checkList(int argc, char *argv[], flags_t *flags);
 
 
 // Subcommands
+void subcommPred(char *argv[]);
 void subcommHelp(subcommIx_t _Subcommand, flags_t _Flags);
 void subcommNew(const char *_AliasName, const char *_CodeOrPath);
 

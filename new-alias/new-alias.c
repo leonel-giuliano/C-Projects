@@ -13,12 +13,21 @@ int main (int argc, char *argv[]) {
     // and tells which subcommand to use
     subcommIx_t subcomm = checkUsage(argc, argv, &flags);
 
-    // The "help" subcommand has priority
-    if(flags.HAS_SUBCOMM_HELP)
-        subcommHelp(argv[IX_SUBCOMM], flags);
-    // Then, checks for a bad usage
+    // The subcommand "help" has priority
+    if(flags.HAS_SUBCOMM_HELP) subcommHelp(subcomm, flags);
     else if(flags.BAD_USAGE) errorHandler(ERROR_ARG);
-    // Then, the pred. function
+    else if(!flags.HAS_SUBCOMM) subcommPred(argv);
+
+    // Lastly, all the other subcommands
+    else switch(subcomm) {
+        case IX_SUBCOMM_NEW:
+            subcommNew(argv[IX_SC_ALIAS], argv[IX_SC_CODE]);
+            break;
+
+        default:
+            errorHandler(ERROR_SUBCOMM);
+            break;
+    }
 
     return 0;
 }
@@ -99,6 +108,10 @@ void errorHandler(error_t error) {
 
         case ERROR_MEMORY:
             puts("There was a problem when allocating.");
+            break;
+
+        case ERROR_SUBCOMM:
+            puts("[DEBUG] There was a problem trying to choose the subcommand.");
             break;
 
         default:
