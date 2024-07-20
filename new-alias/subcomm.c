@@ -95,7 +95,7 @@ void subcommHelp(subcommIx_t subcomm, flags_t flags) {
 void subcommNew(const char *alias, const char *code) {
     // Get the path of the bash to edit
     char bashPath[PATH_MAX] = "";
-    strcat(bashPath, getenv("HOME"));
+    strcpy(bashPath, getenv("HOME"));
     strcat(bashPath, BASH_FILE);
 
     // Opens the bash only to read because the way of editing
@@ -106,7 +106,7 @@ void subcommNew(const char *alias, const char *code) {
 
     // Get the path for the temporal
     char tempPath[PATH_MAX] = "";
-    strcat(tempPath, getenv("HOME"));
+    strcpy(tempPath, getenv("HOME"));
     strcat(tempPath, BASH_TEMP);
 
     // Creates a temporal file in order to add the alias and
