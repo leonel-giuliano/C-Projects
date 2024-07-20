@@ -149,7 +149,9 @@ void subcommNew(const char *alias, const char *code, optionIx_t option) {
     // [DEBUG]: add a function to add the alias comment if it wasn't found
 
     // Add the alias
-    fprintf(fpTemp, "alias %s=\"%s\"\n", alias, code);
+    // The character depends on the option chosen
+    char ch = (option == IX_OPTION_STATIC) ? '"' : '\'';
+    fprintf(fpTemp, "alias %s=%c%s%c\n", alias, ch, code, ch);
 
     // Copies the next lines from the bash
     loopBash = 0;
