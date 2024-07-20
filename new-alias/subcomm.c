@@ -19,7 +19,7 @@ const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM] = {
 
 
 // Check usage per subcommand
-void checkNew(int argc, char *argv[], flags_t *flags) {
+void checkNew(int argc, flags_t *flags) {
     // Usage:
     // comm alias "path"
     // comm --new alias 'path'
@@ -33,41 +33,33 @@ void checkNew(int argc, char *argv[], flags_t *flags) {
 
     // Checks if there was more arguments than needed without using options
     if(argc > ARGC_NEW_MIN - offset && !flags->HAS_OPTION) flags->BAD_USAGE = 1;
-
-    (void)argv;
 }
 
-void checkEdit(int argc, char *argv[], flags_t *flags) {
+void checkEdit(int argc, flags_t *flags) {
     // Usage:
     // comm --edit alias
 
     if(argc < ARGC_EDIT_MIN || argc > ARGC_EDIT_MAX) flags->BAD_USAGE = 1;
 
     if(argc > ARGC_EDIT_MIN && !flags->HAS_OPTION) flags->BAD_USAGE = 1;
-
-    (void)argv;
 }
 
-void checkRemove(int argc, char *argv[], flags_t *flags) {
+void checkRemove(int argc, flags_t *flags) {
     // Usage:
     // comm --remove alias
 
     if(argc < ARGC_REMOVE_MIN || argc > ARGC_REMOVE_MAX) flags->BAD_USAGE = 1;
 
     if(flags->HAS_OPTION) flags->BAD_USAGE = 1;
-
-    (void)argv;
 }
 
-void checkList(int argc, char *argv[], flags_t *flags) {
+void checkList(int argc, flags_t *flags) {
     // Usage:
     // comm --list
 
     if(argc < ARGC_LIST_MIN || argc > ARGC_LIST_MAX) flags->BAD_USAGE = 1;
 
     if(flags->HAS_OPTION) flags->BAD_USAGE = 1;
-
-    (void)argv;
 }
 
 

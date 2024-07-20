@@ -69,10 +69,10 @@ extern const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM];
 
 
 // Check usage per subcommand
-void checkNew(int argc, char *argv[], flags_t *flags);
-void checkEdit(int argc, char *argv[], flags_t *flags);
-void checkRemove(int argc, char *argv[], flags_t *flags);
-void checkList(int argc, char *argv[], flags_t *flags);
+void checkNew(int argc, flags_t *flags);
+void checkEdit(int argc, flags_t *flags);
+void checkRemove(int argc, flags_t *flags);
+void checkList(int argc, flags_t *flags);
 
 
 // Subcommands

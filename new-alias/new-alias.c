@@ -52,7 +52,7 @@ void checkUsage(int argc, char *argv[], flags_t *flags, uint8_t *comm) {
     optionIx_t option = IX_OPTION_PRED;
 
     // Pointer to function to check which subcomm is
-    void (*checkSubcomm[])(int argc, char *argv[], flags_t *flags) = {
+    void (*checkSubcomm[])(int argc, flags_t *flags) = {
         checkNew,
         checkEdit,
         checkRemove,
@@ -120,7 +120,7 @@ void checkUsage(int argc, char *argv[], flags_t *flags, uint8_t *comm) {
 
     // Check the usage depending on the subcommand found
     if(!flags->HAS_SUBCOMM_HELP && !flags->BAD_USAGE)
-        checkSubcomm[subcomm - 1](argc, argv, flags);
+        checkSubcomm[subcomm - 1](argc, flags);
     // The "- 1" is because the subcommand "help" doesn't need to be checked
 
     comm[IX_COMM_SUBCOMM] = subcomm;
