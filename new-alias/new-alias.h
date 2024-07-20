@@ -50,7 +50,7 @@ typedef enum {
 
 #define BASH_FILE "/.bashrc-test"
 #define BASH_TEMP "/.bashrc-temp"
-#define ALIAS_COMMENT "# Personal Alias"
+#define ALIAS_COMMENT "# Personal Alias\n"
 
 
 // Loops

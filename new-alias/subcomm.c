@@ -29,19 +29,15 @@ void checkNew(int argc, char *argv[], flags_t *flags) {
     // In a case like: comm example "/home/" q
     if(argc < ARGC_NEW_MIN - offset || argc > ARGC_NEW_MAX - offset) flags->BAD_USAGE = 1;
 
-    // Check if the path is correctly written ("" or '')
+    // Check if the path is correctly written if it is a dynamic link
     const char *path = argv[IX_SC_CODE - offset];
     size_t pathLength = strlen(path);
+
     if(
-        (*path != '"' || *path + pathLength * sizeof(char) != '"')
-            &&
-        (*path != '\'' || *path + pathLength * sizeof(char) != '\'')
-    ) {
-        flags->BAD_USAGE = 1;
-        puts(argv[IX_SC_CODE]);
-    }
-    // This way of checking the char is because the argv gives
-    // back a pointer instead of a fixed string array
+        (path[0] == '\'' && path[pathLength] != '\'')
+            ||
+        (path[0] != '\'' && path[pathLength] == '\'')
+    ) flags->BAD_USAGE = 1;
 }
 
 void checkEdit(int argc, char *argv[], flags_t *flags) {
@@ -148,8 +144,8 @@ void subcommNew(const char *alias, const char *code) {
 
     // [DEBUG]: add a function to add the alias comment if it wasn't found
 
-    // Adds the new alias inside the temporal
-    fprintf(fpTemp, "alias %s=%s\n", alias, code);
+    // Add the alias
+    fprintf(fpTemp, "alias %s=\"%s\"\n", alias, code);
 
     // Copies the next lines from the bash
     loopBash = 0;
@@ -193,7 +189,8 @@ void helpPred(void) {
 
     puts("CODE:");
     puts("\tThis is only used when adding a new alias");
-    puts("\tIs needed the whole path ('/home/usr/...') and it has to be written down with \" if it's a static link or with ' if it's a dynamic link");
+    puts("\tIt can be either a command or a path");
+    puts("\tIf it's a command, with the '' would be enough, but the path is a static one (\"\") if written without quotes or a dynamic one if written with ''");
 }
 
 void helpNew(void) {
@@ -204,7 +201,8 @@ void helpNew(void) {
     puts("\tCreates a new alias after giving it a path or a command");
 
     puts("CODE:");
-    puts("\tIs needed the whole path ('/home/usr/...') and it has to be written down with \" if it's a static link or with ' if it's a dynamic link\n");
+    puts("\tIt can be either a command or a path");
+    puts("\tIf it's a command, with the '' would be enough, but the path is a static one (\"\") if written without quotes or a dynamic one if written with ''\n");
 
     puts("EXAMPLE:");
     printf("\t%s %s desk \"/home/usr/Desktop\"\n", COMM, SUBCOMM_NEW2);
@@ -219,7 +217,8 @@ void helpEdit(void) {
     puts("\tIt gives back an error message in the case the alias wasn't found\n");    
 
     puts("CODE:");
-    puts("\tIs needed the whole path ('/home/usr/...') and it has to be written down with \" if it's a static link or with ' if it's a dynamic link\n");
+    puts("\tIt can be either a command or a path");
+    puts("\tIf it's a command, with the '' would be enough, but the path is a static one (\"\") if written without quotes or a dynamic one if written with ''\n");
 
     puts("EXAMPLE:");
     printf("\t%s %s desk \"/home/usr/Desktop/desk\"\n", COMM, SUBCOMM_EDIT2);
