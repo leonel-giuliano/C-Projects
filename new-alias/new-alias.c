@@ -20,6 +20,9 @@ int main (int argc, char *argv[]) {
     uint8_t comm[COMM_FUNCTIONS];
     checkUsage(argc, argv, &flags, comm);
 
+    // Know the offset if there was an option used
+    uint8_t offset = (!flags.HAS_OPTION) ? 1 : 0;
+
     // The subcommand "help" has priority
     if(flags.HAS_SUBCOMM_HELP) subcommHelp(comm[IX_COMM_SUBCOMM], flags);
     else if(flags.BAD_USAGE) errorHandler(ERROR_ARG);
@@ -28,9 +31,11 @@ int main (int argc, char *argv[]) {
     // Lastly, all the other subcommands
     else switch(comm[IX_COMM_SUBCOMM]) {
         case IX_SUBCOMM_NEW:
-            uint8_t offset = (!flags.HAS_OPTION) ? 1 : 0;
-
             subcommNew(argv[IX_SC_ALIAS], argv[IX_SC_OP_CODE - offset], comm[IX_COMM_OPTION]);
+            break;
+
+        case IX_SUBCOMM_EDIT:
+            subcommEdit(argv[IX_SC_ALIAS], argv[IX_SC_OP_CODE - offset], comm[IX_COMM_OPTION]);
             break;
 
         default:

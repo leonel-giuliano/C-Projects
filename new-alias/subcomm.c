@@ -113,6 +113,33 @@ void subcommNew(const char *alias, const char *code, optionIx_t option) {
     );
 }
 
+void subcommEdit(const char *alias, const char *code, optionIx_t option) {
+    // Choose the quote depending on the option
+    char ch = (option == IX_OPTION_STATIC) ? '"' : '\'';
+
+    // Allocate the string that is going to be search inside the file
+    char *searchStr;
+    size_t aliasLength = strlen(alias);
+    if((searchStr = (char *)malloc((aliasLength + ALIAS_LENGTH) * sizeof(char))) == NULL)
+        errorHandler(ERROR_MEMORY);
+
+    // Connect the "alias " + aliasName + "="
+    strcpy(searchStr, "alias ");
+    strcat(searchStr, alias);
+    // This is to go to the last char and the "- 1" because of \0
+    searchStr[aliasLength + ALIAS_LENGTH - 1] = '=';
+
+    // This function basically does everything needed
+    writeAlias(
+        searchStr,
+        aliasLength + ALIAS_LENGTH - 1,
+        "%c%s%c\n",
+        ch,
+        code,
+        ch
+    );
+}
+
 
 // Functions inside the subcommands
 void helpPred(void) {
@@ -255,8 +282,13 @@ void writeAlias(const char *searchStr, size_t nSearch, const char *print, ...) {
         // printing the line twice inside the temporal
         if(feof(fpBash)) break;
 
+        // In the case that it was found, exit the loop
+        if(!strncmp(line, searchStr, nSearch)) break;
+
         fputs(line, fpTemp);
-    } while(strncmp(line, searchStr, nSearch) && loopBash != LOOP_BASH);
+    } while(loopBash != LOOP_BASH);
+
+    fputs(searchStr, fpTemp);
 
     // Get the arguments to print
     va_list(args);

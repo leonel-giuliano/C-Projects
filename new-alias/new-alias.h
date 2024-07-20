@@ -62,6 +62,8 @@ typedef enum {
 #define PATH_MAX 4096
 #define LINE_MAX 8192
 #define ALIAS_COMMENT_LENGTH 18
+// "alias =" Without the \0
+#define ALIAS_LENGTH 7
 
 #define BASH_FILE "/.bashrc-test"
 #define BASH_TEMP "/.bashrc-temp"

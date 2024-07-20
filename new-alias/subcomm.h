@@ -79,6 +79,7 @@ void checkList(int argc, char *argv[], flags_t *flags);
 void subcommPred(char *argv[], optionIx_t _OptionIx, flags_t _Flags);
 void subcommHelp(subcommIx_t _Subcommand, flags_t _Flags);
 void subcommNew(const char *_AliasName, const char *_CodeOrPath, optionIx_t _OptionIx);
+void subcommEdit(const char *_AliasName, const char *_CodeOrPath, optionIx_t _OptionIx);
 
 
 // Functions inside the subcommands
