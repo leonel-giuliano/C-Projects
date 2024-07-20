@@ -23,6 +23,7 @@ subcommIx_t checkUsage(int argc, char *argv[], flags_t *flags) {
     // Pointer to function to check which subcomm is
     void (*checkSubcomm[])(int argc, char *argv[], flags_t *flags) = {
         checkNew,
+        checkEdit,
         checkRemove,
         checkList
     };

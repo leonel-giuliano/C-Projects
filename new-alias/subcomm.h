@@ -7,20 +7,23 @@
 
 // Arguments
 #define ARGC_NEW_MIN 4
+#define ARGC_EDIT_MIN 4
 #define ARGC_REMOVE_MIN 3
 #define ARGC_LIST_MIN 2
 
 #define ARGC_NEW_MAX 4
+#define ARGC_EDIT_MAX 4
 #define ARGC_REMOVE_MAX 3
 #define ARGC_LIST_MAX 2
 
 // Subcommands array
-#define AMOUNT_SUBCOMM 4
+#define AMOUNT_SUBCOMM 5
 #define SAME_SUBCOMM 2
 
 typedef enum {
     IX_SUBCOMM_HELP,
     IX_SUBCOMM_NEW,
+    IX_SUBCOMM_EDIT,
     IX_SUBCOMM_REMOVE,
     IX_SUBCOMM_LIST,
 
@@ -36,11 +39,13 @@ typedef enum {
 // Subcommands
 #define SUBCOMM_HELP1 "-h"
 #define SUBCOMM_NEW1 "-n"
+#define SUBCOMM_EDIT1 "-e"
 #define SUBCOMM_REMOVE1 "-r"
 #define SUBCOMM_LIST1 "-l"
 
 #define SUBCOMM_HELP2 "--help"
 #define SUBCOMM_NEW2 "--new"
+#define SUBCOMM_EDIT2 "--edit"
 #define SUBCOMM_REMOVE2 "--remove"
 #define SUBCOMM_LIST2 "--list"
 
@@ -54,6 +59,7 @@ extern const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM];
 
 // Check usage per subcommand
 void checkNew(int argc, char *argv[], flags_t *flags);
+void checkEdit(int argc, char *argv[], flags_t *flags);
 void checkRemove(int argc, char *argv[], flags_t *flags);
 void checkList(int argc, char *argv[], flags_t *flags);
 
@@ -61,6 +67,7 @@ void checkList(int argc, char *argv[], flags_t *flags);
 // Functions inside the subcommands
 void helpPred(void);
 void helpNew(void);
+void helpEdit(void);
 void helpRemove(void);
 void helpList(void);
 

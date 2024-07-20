@@ -7,6 +7,7 @@
 const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM] = {
     { SUBCOMM_HELP1, SUBCOMM_HELP2 },
     { SUBCOMM_NEW1, SUBCOMM_NEW2 },
+    { SUBCOMM_EDIT1, SUBCOMM_EDIT2 },
     { SUBCOMM_REMOVE1, SUBCOMM_REMOVE2 },
     { SUBCOMM_LIST1, SUBCOMM_LIST2 }
 };
@@ -35,6 +36,13 @@ void checkNew(int argc, char *argv[], flags_t *flags) {
     ) flags->BAD_USAGE = 1;
 }
 
+void checkEdit(int argc, char *argv[], flags_t *flags) {
+    // Usage:
+    // comm --edit alias
+
+    if(argc < ARGC_EDIT_MIN || argc > ARGC_EDIT_MAX) flags->BAD_USAGE = 1;
+}
+
 void checkRemove(int argc, char *argv[], flags_t *flags) {
     // Usage:
     // comm --remove alias
@@ -56,6 +64,7 @@ void subcommHelp(subcommIx_t subcomm) {
     void (*helpSubcomm[])(void) = {
         helpPred,
         helpNew,
+        helpEdit,
         helpRemove,
         helpList
     };
@@ -72,6 +81,7 @@ void helpPred(void) {
     puts("SUBCOMMANDS:");
     printf("\t%s, %s:\tPrints the information about the command\n", SUBCOMM_HELP1, SUBCOMM_HELP2);
     printf("\t%s, %s:\t(Pred. subcommand) Adds a new alias\n", SUBCOMM_NEW1, SUBCOMM_NEW2);
+    printf("\t%s, %s:\tEdits the code of an already existing alias\n", SUBCOMM_EDIT1, SUBCOMM_EDIT2);
     printf("\t%s, %s:\tRemoves an existing alias\n", SUBCOMM_REMOVE1, SUBCOMM_REMOVE2);
     printf("\t%s, %s:\tLists all personal alias\n", SUBCOMM_LIST1, SUBCOMM_LIST2);
     putchar('\n');
@@ -80,7 +90,7 @@ void helpPred(void) {
 
     puts("CODE:");
     puts("\tThis is only used when adding a new alias");
-    puts("\tIs needed the whole path ('/home/usr/...') and it has to be written down with \" if it's a static link or with ' if it's a dynamic link\n");
+    puts("\tIs needed the whole path ('/home/usr/...') and it has to be written down with \" if it's a static link or with ' if it's a dynamic link");
 }
 
 void helpNew(void) {
@@ -94,7 +104,22 @@ void helpNew(void) {
     puts("\tIs needed the whole path ('/home/usr/...') and it has to be written down with \" if it's a static link or with ' if it's a dynamic link\n");
 
     puts("EXAMPLE:");
-    printf("\t%s %s desk \"/home/usr/Desktop\"", COMM, SUBCOMM_NEW2);
+    printf("\t%s %s desk \"/home/usr/Desktop\"\n", COMM, SUBCOMM_NEW2);
+}
+
+void helpEdit(void) {
+    puts("USAGE:");
+    printf("\t%s %s [alias] [code]\n\n", COMM, SUBCOMM_EDIT2);
+
+    puts("DESCRIPTION:");
+    puts("\tEdits the code or path of an already existing alias");
+    puts("\tIt gives back an error message in the case the alias wasn't found\n");    
+
+    puts("CODE:");
+    puts("\tIs needed the whole path ('/home/usr/...') and it has to be written down with \" if it's a static link or with ' if it's a dynamic link\n");
+
+    puts("EXAMPLE:");
+    printf("\t%s %s desk \"/home/usr/Desktop/desk\"\n", COMM, SUBCOMM_EDIT2);
 }
 
 void helpRemove(void) {
@@ -103,9 +128,10 @@ void helpRemove(void) {
 
     puts("DESCRIPTION:");
     puts("\tRemoves a given alias\n");
+    puts("\tIt gives back an error message in the case the alias wasn't found\n");    
 
     puts("EXAMPLE:");
-    printf("\t%s %s desk", COMM, SUBCOMM_REMOVE2);
+    printf("\t%s %s desk\n", COMM, SUBCOMM_REMOVE2);
 }
 
 void helpList(void) {
