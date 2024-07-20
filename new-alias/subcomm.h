@@ -86,4 +86,7 @@ void helpEdit(void);
 void helpRemove(void);
 void helpList(void);
 
+void writeAlias(const char *_SearchStrInBash, size_t _SearchStrLength, const char *_PrintLine);
+
+
 #endif

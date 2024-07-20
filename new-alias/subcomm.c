@@ -267,3 +267,79 @@ void helpList(void) {
     puts("\tdesk=\"/home/usr/Desktop\"");
     puts("\topen-desk='cd \"/home/usr/Desktop\"");
 }
+
+void writeAlias(const char *searchStr, size_t nSearch, const char *print) {
+    // Get the path of the bash to edit
+    char bashPath[PATH_MAX] = "";
+    strcpy(bashPath, getenv("HOME"));
+    strcat(bashPath, BASH_FILE);
+
+    // Opens the bash only to read because the way of editing
+    // the file in between lines makes a copy of the bash needed
+    FILE *fpBash = NULL;
+    if((fpBash = fopen(bashPath, "r")) == NULL)
+        errorHandler(ERROR_OPEN_BASH);
+
+    // Get the path for the temporal
+    char tempPath[PATH_MAX] = "";
+    strcpy(tempPath, getenv("HOME"));
+    strcat(tempPath, BASH_TEMP);
+
+    // Creates a temporal file in order to add the alias and
+    // keeping all the other info
+    FILE *fpTemp = NULL;
+    if((fpTemp = fopen(tempPath, "w")) == NULL) {    // Add the alias
+    // The character depends on the option chosen
+
+        fclose(fpBash);
+
+        errorHandler(ERROR_BASH_TEMP);
+    }
+
+    // Reads line per line to search for the ALIAS_COMMENT
+    // Also, copies every line in the temporal file
+    char *line = NULL;
+    size_t lineLength = LINE_MAX;
+    if((line = (char *)malloc(lineLength * sizeof(char))) == NULL) {
+        fclose(fpBash);
+        fclose(fpTemp);
+
+        errorHandler(ERROR_MEMORY);
+    }
+
+    size_t loopBash = 0;
+    do {
+        loopBash++;
+
+        getline(&line, &lineLength, fpBash);
+
+        // Check if the end of the file was reached to avoid
+        // printing the line twice inside the temporal
+        if(feof(fpBash)) break;
+
+        fputs(line, fpTemp);
+    } while(strncmp(line, searchStr, nSearch) && loopBash != LOOP_BASH);
+
+    fprintf(fpTemp, print);
+
+    // Copies the next lines from the bash
+    loopBash = 0;
+    do {
+        loopBash++;
+
+        getline(&line, &lineLength, fpBash);
+
+        // Check if the end of the file was reached to avoid
+        // printing the line twice inside the temporal
+        if(feof(fpBash)) break;
+
+        fputs(line, fpTemp);
+    } while(loopBash != LOOP_BASH);
+
+    fclose(fpBash);
+    fclose(fpTemp);
+
+    // Make the temporal file the bash file
+    remove(bashPath);
+    rename(tempPath, bashPath);
+}
