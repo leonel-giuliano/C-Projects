@@ -1,6 +1,7 @@
 #ifndef __NEW_ALIAS_SUBCOMM_H__
 #define __NEW_ALIAS_SUBCOMM_H__
 
+#include <stdarg.h>
 #include <string.h>
 
 // Arguments
@@ -66,6 +67,7 @@ extern const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM];
 #include "new-alias.h"
 #include "option.h"
 
+
 // Check usage per subcommand
 void checkNew(int argc, char *argv[], flags_t *flags);
 void checkEdit(int argc, char *argv[], flags_t *flags);
@@ -86,7 +88,6 @@ void helpEdit(void);
 void helpRemove(void);
 void helpList(void);
 
-void writeAlias(const char *_SearchStrInBash, size_t _SearchStrLength, const char *_PrintLine);
-
+void writeAlias(const char *_SearchStr, size_t _SearchLength, const char *_PrintLine, ...);
 
 #endif
