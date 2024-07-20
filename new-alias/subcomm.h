@@ -4,34 +4,23 @@
 #include <string.h>
 
 // Arguments
+// comm --new alias path
 #define ARGC_NEW_MIN 4
+// comm --edit alias path
 #define ARGC_EDIT_MIN 4
+// comm --remove alias
 #define ARGC_REMOVE_MIN 3
+// comm --list
 #define ARGC_LIST_MIN 2
 
-#define ARGC_NEW_MAX 4
-#define ARGC_EDIT_MAX 4
+// comm --new alias --static path
+#define ARGC_NEW_MAX 5
+// comm --edit alias --dynamic path
+#define ARGC_EDIT_MAX 5
+// comm --remove alias
 #define ARGC_REMOVE_MAX 3
+// comm --list
 #define ARGC_LIST_MAX 2
-
-// Subcommands array
-#define AMOUNT_SUBCOMM 5
-#define SAME_SUBCOMM 2
-
-typedef enum {
-    IX_SUBCOMM_HELP,
-    IX_SUBCOMM_NEW,
-    IX_SUBCOMM_EDIT,
-    IX_SUBCOMM_REMOVE,
-    IX_SUBCOMM_LIST,
-
-    IX_SUBCOMM_PRED = IX_SUBCOMM_NEW
-}subcommIx_t;
-
-typedef enum {
-    IX_SUBCOMM1,
-    IX_SUBCOMM2
-}sameSubcommIx_t;
 
 
 // Subcommands
@@ -51,6 +40,25 @@ typedef enum {
 // Check if the argument is a subcommand
 #define CMP_SUBCOMM(arg, ix_subcomm) !strcmp(arg, subcommArray[ix_subcomm][IX_SUBCOMM1]) || !strcmp(arg, subcommArray[ix_subcomm][IX_SUBCOMM2])
 
+
+// Subcommands array
+#define AMOUNT_SUBCOMM 5
+#define SAME_SUBCOMM 2
+
+typedef enum {
+    IX_SUBCOMM_HELP,
+    IX_SUBCOMM_NEW,
+    IX_SUBCOMM_EDIT,
+    IX_SUBCOMM_REMOVE,
+    IX_SUBCOMM_LIST,
+
+    IX_SUBCOMM_PRED = IX_SUBCOMM_NEW
+}subcommIx_t;
+
+typedef enum {
+    IX_SUBCOMM1,
+    IX_SUBCOMM2
+}sameSubcommIx_t;
 
 extern const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM];
 

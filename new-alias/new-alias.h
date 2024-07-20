@@ -7,6 +7,7 @@
 #define HAS_SUBCOMM_HELP flags.flag0
 #define BAD_USAGE flags.flag1
 #define HAS_SUBCOMM flags.flag2
+#define HAS_OPTION flags.flag3
 
 typedef union {
     uint8_t data;
@@ -28,18 +29,21 @@ typedef union {
 
 
 // Arguments
-// Ex: comm --list
+// Ex: comm --help
 #define ARGC_MIN 2
-// Ex: comm --new alias "path" --help
-#define ARGC_MAX 5
+// Ex: comm --new alias --static path --help
+#define ARGC_MAX 6
 
 typedef enum {
     IX_COMM,
     IX_SUBCOMM,
     IX_SC_ALIAS,
-    IX_SC_CODE,
+    IX_SC_OPTION,
+    IX_SC_OP_CODE,
 
-    IX_ALIAS = 1,
+    IX_SC_CODE = IX_SC_OPTION,
+
+    IX_ALIAS = IX_SUBCOMM,
     IX_CODE
 }argvIx_t;
 

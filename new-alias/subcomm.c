@@ -6,6 +6,7 @@
 
 #include "subcomm.h"
 #include "new-alias.h"
+#include "option.h"
 
 const char *subcommArray[AMOUNT_SUBCOMM][SAME_SUBCOMM] = {
     { SUBCOMM_HELP1, SUBCOMM_HELP2 },
@@ -175,7 +176,7 @@ void helpPred(void) {
     puts("New-alias is a command to manage the personal alias in an easier way.\n");    
 
     puts("USAGE:");
-    printf("\t%s <subcommand> [alias] [code]\n\n", COMM);
+    printf("\t%s <subcommand> [alias] <option> [code]\n\n", COMM);
 
     puts("SUBCOMMANDS:");
     printf("\t%s, %s:\tPrints the information about the command\n", SUBCOMM_HELP1, SUBCOMM_HELP2);
@@ -187,41 +188,53 @@ void helpPred(void) {
 
     puts("ALIAS:\tIs just the name of the alias\n");
 
+    puts("OPTION:");
+    printf("\t%s, %s:\t(Pred. option) Makes the code a static link (\"\")\n", OPTION_STATIC1, OPTION_STATIC2);
+    printf("\t%s, %s:\tMakes the code a dynamic link ('')\n", OPTION_DYNAMIC1, OPTION_DYNAMIC2);
+    putchar('\n');
+
     puts("CODE:");
     puts("\tThis is only used when adding a new alias");
     puts("\tIt can be either a command or a path");
-    puts("\tIf it's a command, with the '' would be enough, but the path is a static one (\"\") if written without quotes or a dynamic one if written with ''");
 }
 
 void helpNew(void) {
     puts("USAGE:");
-    printf("\t%s %s [alias] [code]\n\n", COMM, SUBCOMM_NEW2);
+    printf("\t%s %s [alias] <option> [code]\n\n", COMM, SUBCOMM_NEW2);
 
     puts("DESCRIPTION:");
     puts("\tCreates a new alias after giving it a path or a command");
 
+    puts("OPTION:");
+    printf("\t%s, %s:\t(Pred. option) Makes the code a static link (\"\")\n", OPTION_STATIC1, OPTION_STATIC2);
+    printf("\t%s, %s:\tMakes the code a dynamic link ('')\n", OPTION_DYNAMIC1, OPTION_DYNAMIC2);
+    putchar('\n');
+
     puts("CODE:");
     puts("\tIt can be either a command or a path");
-    puts("\tIf it's a command, with the '' would be enough, but the path is a static one (\"\") if written without quotes or a dynamic one if written with ''\n");
 
     puts("EXAMPLE:");
-    printf("\t%s %s desk \"/home/usr/Desktop\"\n", COMM, SUBCOMM_NEW2);
+    printf("\t%s %s desk %s /home/usr/Desktop\n", COMM, SUBCOMM_NEW2, OPTION_STATIC2);
 }
 
 void helpEdit(void) {
     puts("USAGE:");
-    printf("\t%s %s [alias] [code]\n\n", COMM, SUBCOMM_EDIT2);
+    printf("\t%s %s [alias] <option> [code]\n\n", COMM, SUBCOMM_EDIT2);
 
     puts("DESCRIPTION:");
     puts("\tEdits the code or path of an already existing alias");
     puts("\tIt gives back an error message in the case the alias wasn't found\n");    
 
+    puts("OPTION:");
+    printf("\t%s, %s:\t(Pred. option) Makes the code a static link (\"\")\n", OPTION_STATIC1, OPTION_STATIC2);
+    printf("\t%s, %s:\tMakes the code a dynamic link ('')\n", OPTION_DYNAMIC1, OPTION_DYNAMIC2);
+    putchar('\n');
+
     puts("CODE:");
     puts("\tIt can be either a command or a path");
-    puts("\tIf it's a command, with the '' would be enough, but the path is a static one (\"\") if written without quotes or a dynamic one if written with ''\n");
 
     puts("EXAMPLE:");
-    printf("\t%s %s desk \"/home/usr/Desktop/desk\"\n", COMM, SUBCOMM_EDIT2);
+    printf("\t%s %s desk --dynamic /home/usr/Desktop/desk", COMM, SUBCOMM_EDIT2);
 }
 
 void helpRemove(void) {
