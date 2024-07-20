@@ -19,10 +19,10 @@ typedef enum {
     IX_COMM,
     IX_SUBCOMM,
     IX_SC_ALIAS,
-    IX_SC_PATH,
+    IX_SC_CODE,
 
     IX_ALIAS = 1,
-    IX_PATH
+    IX_CODE
 }argvIx_t;
 
 

@@ -60,5 +60,8 @@ void checkList(int argc, char *argv[], flags_t *flags);
 
 // Functions inside the subcommands
 void helpPred(void);
+void helpNew(void);
+void helpRemove(void);
+void helpList(void);
 
 #endif
