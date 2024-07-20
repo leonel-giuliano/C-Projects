@@ -33,10 +33,15 @@ void checkNew(int argc, char *argv[], flags_t *flags) {
     const char *path = argv[IX_SC_CODE - offset];
     size_t pathLength = strlen(path);
     if(
-        (path[0] != '"' || path[pathLength] != '"')
+        (*path != '"' || *path + pathLength * sizeof(char) != '"')
             &&
-        (path[0] != '\'' || path[pathLength] != '\'')
-    ) flags->BAD_USAGE = 1;
+        (*path != '\'' || *path + pathLength * sizeof(char) != '\'')
+    ) {
+        flags->BAD_USAGE = 1;
+        puts(argv[IX_SC_CODE]);
+    }
+    // This way of checking the char is because the argv gives
+    // back a pointer instead of a fixed string array
 }
 
 void checkEdit(int argc, char *argv[], flags_t *flags) {
