@@ -21,6 +21,6 @@ typedef struct {
 // Detects in which category does every argument correspond
 // The ... arguments have to be a const *str[] as a list of the operations
 // This should have a NULL value in the end
-uint8_t detectArgs(int _NumOfArguments, char *_Arguments[], argOperation_t *_ListOfValues, uint8_t _NumOfOperations, ...);
+void detectArgs(int _NumOfArguments, char *_Arguments[], argOperation_t *_ListOfValues, uint8_t _NumOfOperations, ...);
 
 #endif

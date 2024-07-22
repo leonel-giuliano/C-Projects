@@ -6,7 +6,7 @@ LDFLAGS = -shared -Wl,-soname,libdetect-args.so.1
 # Source and target files
 SRC = libdetect-args.c
 OBJ = libdetect-args.o
-TARGET = libdetect-args.so.1.0.0
+TARGET = libdetect-args.so.1.0.1
 
 # Default target
 all: $(TARGET)
