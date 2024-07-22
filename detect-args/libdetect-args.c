@@ -39,7 +39,7 @@ uint8_t detectArgs(int argc, char *argv[], argOperation_t *list, uint8_t numOp, 
         // Repeat the amount of operations passed
         for(uint8_t j = 0; j < numOp; j++) {
             // Get the string array and the lenght
-            const char **strArray = va_arg(op, char **);
+            const char **strArray = va_arg(op, const char **);
             uint8_t strLen = strArrayLen(strArray);
             uint8_t boolFound = 0;
 
