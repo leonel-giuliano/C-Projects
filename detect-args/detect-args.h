@@ -25,13 +25,11 @@ typedef union {
     } flag;
 }flags_t;
 
-static flags_t flags;
-
 
 // Functions
 
 // Detects in which category does every argument correspond
-// _AllPosibleValues: Command - Option
+// _AllPosibleValues: Command - Option "co"
 void detectArgs(int _NumOfArguments, char *_Arguments[], const char *_AllPossibleValues, ...);
 
 #endif
