@@ -24,12 +24,7 @@ uint8_t strArrayLen(const char **strArray) {
 
 
 // Functions
-uint8_t detectArgs(int argc, char *argv[], argOperation_t *list, uint8_t numOp, ...) {
-    // An array of values that tells the operation of an argument
-    // depending on the position of the operations given
-    if((list = (argOperation_t *)calloc(numOp, sizeof(argOperation_t))) == NULL)
-        return EXIT_FAILURE;
-
+void detectArgs(int argc, char *argv[], argOperation_t *list, uint8_t numOp, ...) {
     // Initialize the list of operations
     va_list(op);
     va_start(op, numOp);
@@ -69,6 +64,4 @@ uint8_t detectArgs(int argc, char *argv[], argOperation_t *list, uint8_t numOp, 
     }
 
     va_end(op);
-
-    return EXIT_SUCCESS;
 }
