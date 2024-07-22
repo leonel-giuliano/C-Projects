@@ -4,32 +4,22 @@
 #include <stdint.h>
 
 
-// Flags
-#define HAS_INTERRUPTION flag.flag0
-#define BAD_USAGE flag.flag1
-#define HAS_COMMAND flag.flag2
-#define HAS_OPTION flag.flag3
+// Argument data
+#define NO_OPERATION 0
 
-typedef union {
-    uint8_t data;
+typedef struct {
+    // Index of the type of operation used
+    uint8_t type;
 
-    struct {
-        unsigned int flag0 : 1;
-        unsigned int flag1 : 1;
-        unsigned int flag2 : 1;
-        unsigned int flag3 : 1;
-        unsigned int flag4 : 1;
-        unsigned int flag5 : 1;
-        unsigned int flag6 : 1;
-        unsigned int flag7 : 1;
-    } flag;
-}flags_t;
+    // Specific index of the operation used in the operation list
+    uint8_t operation;
+}argOperation_t;
 
 
 // Functions
 
 // Detects in which category does every argument correspond
 // _AllPosibleValues: Command - Option "co"
-void detectArgs(int _NumOfArguments, char *_Arguments[], const char *_AllPossibleValues, ...);
+uint8_t detectArgs(int _NumOfArguments, char *_Arguments[], argOperation_t *_ListOfValues, uint8_t _NumOfOperations, ...);
 
 #endif
