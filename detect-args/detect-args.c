@@ -11,7 +11,7 @@
 #define LOOP_ARRAY 255
 
 // Inside functions
-uint8_t strArrLen(const char **strArr) {
+uint8_t strArrLen(char **strArr) {
     // Count the amount of strings by searching for NULL
     uint8_t i = 0;
     uint8_t loopArray = 0;
@@ -42,7 +42,7 @@ uint8_t detectArgs(int argc, char *argv[], argOperation_t *argOp, uint8_t nOp, .
 
     va_end(op);
 
-    // Check the arguments one by one
+    // Check the arguments one by one-build
     // Skip the command
     for(uint8_t i = 1; i < argc; i++) {
         // Iterate through the list of operations
