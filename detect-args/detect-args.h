@@ -6,6 +6,10 @@
 
 
 // Operations data
+
+// Indicates the type wasn't found
+#define NO_OPERATION 0
+
 typedef struct {
     // Indicates the index of the type of operation
     uint8_t type;
