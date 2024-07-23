@@ -129,29 +129,29 @@ detect-args/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/detect-args.dir/build.make CMakeFiles/detect-args.dir/build
 .PHONY : detect-args/fast
 
-libdetect-args.o: libdetect-args.c.o
-.PHONY : libdetect-args.o
+detect-args.o: detect-args.c.o
+.PHONY : detect-args.o
 
 # target to build an object file
-libdetect-args.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/detect-args.dir/build.make CMakeFiles/detect-args.dir/libdetect-args.c.o
-.PHONY : libdetect-args.c.o
+detect-args.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/detect-args.dir/build.make CMakeFiles/detect-args.dir/detect-args.c.o
+.PHONY : detect-args.c.o
 
-libdetect-args.i: libdetect-args.c.i
-.PHONY : libdetect-args.i
+detect-args.i: detect-args.c.i
+.PHONY : detect-args.i
 
 # target to preprocess a source file
-libdetect-args.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/detect-args.dir/build.make CMakeFiles/detect-args.dir/libdetect-args.c.i
-.PHONY : libdetect-args.c.i
+detect-args.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/detect-args.dir/build.make CMakeFiles/detect-args.dir/detect-args.c.i
+.PHONY : detect-args.c.i
 
-libdetect-args.s: libdetect-args.c.s
-.PHONY : libdetect-args.s
+detect-args.s: detect-args.c.s
+.PHONY : detect-args.s
 
 # target to generate assembly for a file
-libdetect-args.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/detect-args.dir/build.make CMakeFiles/detect-args.dir/libdetect-args.c.s
-.PHONY : libdetect-args.c.s
+detect-args.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/detect-args.dir/build.make CMakeFiles/detect-args.dir/detect-args.c.s
+.PHONY : detect-args.c.s
 
 # Help Target
 help:
@@ -162,9 +162,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... detect-args"
-	@echo "... libdetect-args.o"
-	@echo "... libdetect-args.i"
-	@echo "... libdetect-args.s"
+	@echo "... detect-args.o"
+	@echo "... detect-args.i"
+	@echo "... detect-args.s"
 .PHONY : help
 
 

@@ -31,6 +31,11 @@ int main(int argc, char *argv[]) {
     argOperation_t argOp[AMOUNT_OPERATION];
     detectArgs(argc, argv, &argOp, AMOUNT_OPERATION, comm, opt1, opt2);
 
+    for(int i = 1; i < argc; i++) {
+        printf("Type: %d\n", argOp[i - 1].type);
+        printf("Operation: %d\n\n", argOp[i - 1].operation);
+    }
+
     return 0;
 }
 
