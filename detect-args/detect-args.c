@@ -74,4 +74,5 @@ uint8_t detectArgs(int argc, char *argv[], argOperation_t *argOp, uint8_t nOp, .
     }
 
     free(operations);
+    return EXIT_SUCCESS;
 }
