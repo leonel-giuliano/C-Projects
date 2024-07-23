@@ -14,7 +14,7 @@
 
 #define AMOUNT_OPERATION 3
 
-typedef enum {
+enum {
     IX_NONE,
     IX_COMMAND,
     IX_OPTION1,
