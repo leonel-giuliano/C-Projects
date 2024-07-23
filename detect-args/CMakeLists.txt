@@ -1,28 +1,34 @@
-cmake_minimum_required(VERSION 3.10)
-project(DetectArgs C)
+cmake_minimum_required(VERSION 3.0)
+project(DetectArgs)
 
-# Specify the version of the library
-set(LIB_VERSION "1.0.0")
-set(LIB_SOVERSION "1")
+# Set the version number
+set(LIBRARY_VERSION 1.0.0)
+set(LIBRARY_SONAME 1)
 
-# Add the source file
-set(SOURCES detect-args.c)
+# Specify the source file
+set(SOURCE_FILE detect-args.c)
 
-# Compile the source file into a shared library
-add_library(detect-args SHARED ${SOURCES})
+# Set the library output name and version
+set(LIBRARY_NAME detect-args)
+set(LIBRARY_OUTPUT_NAME ${LIBRARY_NAME})
+set(LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
-# Set the version properties
-set_target_properties(detect-args PROPERTIES 
-    VERSION ${LIB_VERSION}
-    SOVERSION ${LIB_SOVERSION}
+# Create the shared library
+add_library(${LIBRARY_NAME} SHARED ${SOURCE_FILE})
+
+# Set the library version and soname
+set_target_properties(${LIBRARY_NAME} PROPERTIES
+    VERSION ${LIBRARY_VERSION}
+    SOVERSION ${LIBRARY_SONAME}
+    OUTPUT_NAME ${LIBRARY_OUTPUT_NAME}
 )
 
-# Specify the output name of the shared library
-set_target_properties(detect-args PROPERTIES 
-    OUTPUT_NAME "detect-args"
+# Specify the output directory for the library
+set_target_properties(${LIBRARY_NAME} PROPERTIES
+    LIBRARY_OUTPUT_DIRECTORY ${LIBRARY_OUTPUT_DIRECTORY}
 )
 
-# Position Independent Code
-set_target_properties(detect-args PROPERTIES 
+# Position-independent code
+set_target_properties(${LIBRARY_NAME} PROPERTIES
     POSITION_INDEPENDENT_CODE ON
 )
