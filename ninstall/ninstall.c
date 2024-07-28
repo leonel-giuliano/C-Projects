@@ -1,57 +1,86 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>
+#include <string.h>
 
 #include "ninstall.h"
-#include "detect-args.h"
-
+#include "subcommands.h"
 
 int main(int argc, char *argv[]) {
     if(argc < ARGC_MIN || argc > ARGC_MAX) errorHandler(ERROR_ARG);
 
-    // Set all the list of operations
-    const char *command[] = {
-        "new",
-        "edit",
-        "remove",
-        "show",
-        NULL
-    };
+    // Number that indicates the command
+    subcommSelected_t subcommSelected = checkArg(argv[ARGV_SUBCOMM_OR_FILE]);
 
-    const char *option1[] = {
-        "-h",
-        "-l",
-        NULL
-    };
+    // Subcommand depending on the parameter called
+    switch(subcommSelected) {
+        case HELP_SELECTED:
+            subcommHelp();
+            break;
 
-    const char *option2[] = {
-        "--help",
-        "--list",
-        NULL
-    };
+        case NONE_SELECTED:
+            subcommNew(argv[ARGV_SUBCOMM_OR_FILE]);
+            break;
 
-    // Check the arguments operations
-    argOperation_t argOp[AMOUNT_OPERATION];
-    uint8_t detectError = detectArgs(argc, argv, argOp, AMOUNT_OPERATION, command, option1, option2);
-    if(detectError) errorHandler(ERROR_MEMORY);
+        case NEW_SELECTED:
+            subcommNew(argv[ARGV_FILE]);
+            break;
+
+        case EDIT_SELECTED:
+            subcommEdit(argv[ARGV_FILE]);
+            break;
+
+        case LIST_SELECTED:
+            subcommList();
+            break;
+
+        default:
+            errorHandler(ERROR_CALL);
+            break;
+    }
 
     return 0;
 }
 
-void errorHandler(error_t error) {
+subcommSelected_t checkArg(char *subcomm) {
+    subcommSelected_t result = NONE_SELECTED;
+
+    // Checks if there is a subcommand
+    if(!strcmp(subcomm, HELP_SUBCOMM1) || !strcmp(subcomm, HELP_SUBCOMM2))
+        result = HELP_SELECTED;
+    else if(!strcmp(subcomm, NEW_SUBCOMM1) || !strcmp(subcomm, NEW_SUBCOMM2))
+        result = NEW_SELECTED;
+    else if(!strcmp(subcomm, EDIT_SUBCOMM1) || !strcmp(subcomm, EDIT_SUBCOMM2))
+        result = EDIT_SELECTED;
+    else if(!strcmp(subcomm, LIST_SUBCOMM1) || !strcmp(subcomm, LIST_SUBCOMM2))
+        result = LIST_SELECTED;
+
+    // Returns "NONE_SELECTED" if it didn't enter any if statement
+    return result;
+}
+
+void errorHandler(errorEvent_t error) {
     printf("ERROR: ");
 
     switch(error) {
         case ERROR_ARG:
-            puts("There was a bad usage when using ninstall.\n");
+            printf("The program wasn't called in the right way.\n\n");
+            subcommHelp();
+            break;
+
+        case ERROR_CALL:
+            puts("[DEBUG] problem with the subcomm selected.");
+            break;
+
+        case ERROR_NEW_FILE:
+            puts("There was a problem creating the file.");
+            break;
+
+        case ERROR_DIR:
+            puts("There was a problem trying to read the list.");
             break;
 
         case ERROR_MEMORY:
-            perror("There was a problem when allocating memory.");
-            break;
-
-        default:
-            perror("[DEBUG] strange outcome from the errorHandler.");
+            puts("There was a problem allocating memory.");
             break;
     }
 
