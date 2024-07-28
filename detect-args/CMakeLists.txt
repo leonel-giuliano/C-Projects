@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.0)
 project(DetectArgs)
 
 # Set the version number
-set(LIBRARY_VERSION 1.0.1)
+set(LIBRARY_VERSION 1.0.2)
 set(LIBRARY_SONAME 1)
 
 # Specify the source file

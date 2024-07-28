@@ -33,7 +33,7 @@ uint8_t detectArgs(int argc, char *argv[], argOperation_t *argOp, uint8_t nOp, .
 
     // Callocate the array of the list of operations
     char ***operations;
-    if((operations = (char ***)calloc(nOp, sizeof(char **))) == NULL)
+    if((operations = (char ***)malloc(nOp * sizeof(char **))) == NULL)
         return EXIT_FAILURE;
 
     // Save the list of operations
