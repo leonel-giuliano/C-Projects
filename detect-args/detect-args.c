@@ -33,17 +33,14 @@ exitArg_t detectArgs(int argc, char *argv[], flags_t *flags, uint8_t numOp, argO
     // This is really in a case of bad usage
     if(numOp > MAX_OP_TYPE) return EXIT_ARG_FAILURE;
 
+    // Allocate the array of the list of operations
+    char ***operations;
+    if((operations = (char ***)malloc(numOp * sizeof(char **))) == NULL)
+        return EXIT_ARG_FAILURE;
+
     // Initialize the list
     va_list(op);
     va_start(op, numOp);
-
-    // Callocate the array of the list of operations
-    char ***operations;
-    if((operations = (char ***)malloc(numOp * sizeof(char **))) == NULL) {
-        va_end(op);
-
-        return EXIT_ARG_FAILURE;
-    }
 
     // Save the list of operations
     for(uint8_t i = 0; i < numOp; i++)
