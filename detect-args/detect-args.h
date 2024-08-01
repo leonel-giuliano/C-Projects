@@ -21,8 +21,7 @@ typedef struct {
 
 // Flags
 
-#define BAD_USAGE argFlags.flag0
-#define HAS_INTERRUPT argFlags.flag7
+#define bad_usage argFlags.flag0
 
 typedef union {
     uint8_t data;
@@ -38,7 +37,6 @@ typedef union {
         unsigned int flag7 : 1;
     } argFlags;
 }argFlags_t;
-
 
 // Functions
 
