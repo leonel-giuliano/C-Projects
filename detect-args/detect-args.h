@@ -51,6 +51,7 @@ typedef union {
 // This command tells the type and the operation of every argument
 // The max ammount of posible type of operations is 7 to use the flags
 // The ... should be all char *str[] and have a NULL at the end
-uint8_t detectArgs(int argc, char *argv[], flags_t *_ArgFlags, uint8_t _NumTypeOperations, argOperation_t *_ArgOperations, ...);
+exitArg_t detectArgs(int argc, char *argv[], flags_t *_ArgFlags, uint8_t _NumTypeOperations, argOperation_t *_ArrayArgOperations, ...);
+
 
 #endif
