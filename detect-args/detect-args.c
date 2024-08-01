@@ -29,7 +29,7 @@ uint8_t strArrLen(char **strArr) {
 
 // Functions
 
-exitArg_t detectArgs(int argc, char *argv[], argFlags_t *flags, uint8_t numOp, argOperation_t *argOp, ...) {
+exitArg_t detectArgs(int argc, char *argv[], flags_t *flags, uint8_t numOp, argOperation_t *argOp, ...) {
     // This is really in a case of bad usage
     if(numOp > MAX_OP_TYPE) return EXIT_ARG_FAILURE;
 
