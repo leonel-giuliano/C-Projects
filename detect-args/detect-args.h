@@ -19,6 +19,27 @@ typedef struct {
 }argOperation_t;
 
 
+// Flags
+
+#define BAD_USAGE argFlags.flag0
+#define HAS_INTERRUPT argFlags.flag7
+
+typedef union {
+    uint8_t data;
+
+    struct {
+        unsigned int flag0 : 1;
+        unsigned int flag1 : 1;
+        unsigned int flag2 : 1;
+        unsigned int flag3 : 1;
+        unsigned int flag4 : 1;
+        unsigned int flag5 : 1;
+        unsigned int flag6 : 1;
+        unsigned int flag7 : 1;
+    } argFlags;
+}argFlags_t;
+
+
 // Functions
 
 // This command tells the type and the operation of every argument

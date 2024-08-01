@@ -76,3 +76,15 @@ uint8_t detectArgs(int argc, char *argv[], argOperation_t *argOp, uint8_t nOp, .
     free(operations);
     return EXIT_SUCCESS;
 }
+
+void checkArgs(int argc, argOperation_t *argOp, uint8_t nOp) {
+    argFlags_t flags = { 0 };
+
+    // Iterate thorugh every argument
+    for(uint8_t i = 0; i < argc - 1; i++) {
+        // Checks if it the operation was recognised
+        if(argOp[i].type != NO_OPERATION)
+            // Activates the flag depending on the order the operations were listed
+            flags.data |= 1 << argOp[i].type;
+    }
+}
