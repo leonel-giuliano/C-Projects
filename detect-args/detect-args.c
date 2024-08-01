@@ -7,6 +7,9 @@
 #include "detect-args.h"
 
 
+// Indicates the max amount of operation types
+#define MAX_OP_TYPE 7
+
 // Loops
 #define LOOP_ARRAY 255
 
@@ -26,18 +29,24 @@ uint8_t strArrLen(char **strArr) {
 
 // Functions
 
-uint8_t detectArgs(int argc, char *argv[], argOperation_t *argOp, uint8_t nOp, ...) {
+exitArg_t detectArgs(int argc, char *argv[], argFlags_t *flags, uint8_t numOp, argOperation_t *argOp, ...) {
+    // This is really in a case of bad usage
+    if(numOp > MAX_OP_TYPE) return EXIT_ARG_FAILURE;
+
     // Initialize the list
     va_list(op);
-    va_start(op, nOp);
+    va_start(op, numOp);
 
     // Callocate the array of the list of operations
     char ***operations;
-    if((operations = (char ***)malloc(nOp * sizeof(char **))) == NULL)
-        return EXIT_FAILURE;
+    if((operations = (char ***)malloc(numOp * sizeof(char **))) == NULL) {
+        va_end(op);
+
+        return EXIT_ARG_FAILURE;
+    }
 
     // Save the list of operations
-    for(uint8_t i = 0; i < nOp; i++)
+    for(uint8_t i = 0; i < numOp; i++)
         operations[i] = va_arg(op, char **);
 
     va_end(op);
@@ -46,27 +55,31 @@ uint8_t detectArgs(int argc, char *argv[], argOperation_t *argOp, uint8_t nOp, .
     // Skip the command
     for(uint8_t i = 1; i < argc; i++) {
         // Iterate through the list of operations
-        for(uint8_t j = 0; j < nOp; j++) {
+        for(uint8_t j = 0; j < numOp; j++) {
             uint8_t arrLen = strArrLen(operations[j]);
-            uint8_t boolFound = 0;
+            uint8_t wasFound = 0;
 
             // Compare the argument with every operation
             for(uint8_t k = 0; k < arrLen; k++) {
                 if(!strcmp(argv[i], operations[j][k])) {
+                    wasFound = 1;
+
                     // The "+ 1" is to take into account the NO_OPERATION
                     argOp[i - 1].type = j + 1;
                     argOp[i - 1].operation = k;
-                    boolFound = 1;
+
+                    // Activates the ix flag if the type was found
+                    flags->data |= 1 << (j + 1);
 
                     break;
                 }
             }
 
             // Stop checking for the argument if it was found
-            if(boolFound) break;
+            if(wasFound) break;
 
             // Else, give a NO_OPERATION in the case that it wasn't found anywhere
-            else if(j == nOp - 1) {
+            else if(j == numOp - 1) {
                 argOp[i - 1].type = NO_OPERATION;
                 argOp[i - 1].operation = NO_OPERATION;
             }
@@ -74,19 +87,5 @@ uint8_t detectArgs(int argc, char *argv[], argOperation_t *argOp, uint8_t nOp, .
     }
 
     free(operations);
-    return EXIT_SUCCESS;
-}
-
-argFlags_t checkArgs(int argc, argOperation_t *argOp) {
-    argFlags_t flags = { 0 };
-
-    // Iterate thorugh every argument
-    for(uint8_t i = 0; i < argc - 1; i++) {
-        // Checks if it the operation was recognised
-        if(argOp[i].type != NO_OPERATION)
-            // Activates the flag depending on the order the operations were listed
-            flags.data |= 1 << argOp[i].type;
-    }
-
-    return flags;
+    return EXIT_ARG_SUCCESS;
 }
