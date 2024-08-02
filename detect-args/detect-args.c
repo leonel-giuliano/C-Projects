@@ -61,6 +61,7 @@ flags_t detectArgs(int argc, char *argv[], uint8_t numOp, argOperation_t *argOp,
                     argOp[i - 1].operation = k;
 
                     // Activates the ix flag if the type was found
+                    // The first one is used for the bad usage
                     flags.data |= 1 << (j + 1);
 
                     break;
