@@ -29,26 +29,21 @@ uint8_t strArrLen(char **strArr) {
 
 // Functions
 
-exitArg_t detectArgs(int argc, char *argv[], flags_t *flags, uint8_t numOp, argOperation_t *argOp, ...) {
-    // This is really in a case of bad usage
-    if(numOp > MAX_OP_TYPE) return EXIT_ARG_FAILURE;
-
-    // Allocate the array of the list of operations
-    char ***operations;
-    if((operations = (char ***)malloc(numOp * sizeof(char **))) == NULL)
-        return EXIT_ARG_FAILURE;
+flags_t detectArgs(int argc, char *argv[], uint8_t numOp, argOperation_t *argOp, ...) {
+    flags_t flags = { 0 };
 
     // Initialize the list
     va_list(op);
     va_start(op, numOp);
 
     // Save the list of operations
+    char ***operations[MAX_OP_TYPE];
     for(uint8_t i = 0; i < numOp; i++)
         operations[i] = va_arg(op, char **);
 
     va_end(op);
 
-    // Check the arguments one by one-build
+    // Check the arguments one by one
     // Skip the command
     for(uint8_t i = 1; i < argc; i++) {
         // Iterate through the list of operations
@@ -66,7 +61,7 @@ exitArg_t detectArgs(int argc, char *argv[], flags_t *flags, uint8_t numOp, argO
                     argOp[i - 1].operation = k;
 
                     // Activates the ix flag if the type was found
-                    flags->data |= 1 << (j + 1);
+                    flags.data |= 1 << (j + 1);
 
                     break;
                 }
@@ -83,6 +78,5 @@ exitArg_t detectArgs(int argc, char *argv[], flags_t *flags, uint8_t numOp, argO
         }
     }
 
-    free(operations);
-    return EXIT_ARG_SUCCESS;
+    return flags;
 }

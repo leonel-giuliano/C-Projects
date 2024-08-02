@@ -10,13 +10,6 @@
 // Indicates the type wasn't found
 #define NO_OPERATION 0
 
-// Possible outputs of detectArgs
-typedef enum {
-    EXIT_ARG_SUCCESS,
-    EXIT_ARG_FAILURE,
-    EXIT_ARG_MEMORY
-}exitArg_t;
-
 typedef struct {
     // Indicates the index of the type of operation
     uint8_t type;
@@ -51,7 +44,7 @@ typedef union {
 // This command tells the type and the operation of every argument
 // The max ammount of posible type of operations is 7 to use the flags
 // The ... should be all char *str[] and have a NULL at the end
-exitArg_t detectArgs(int argc, char *argv[], flags_t *_ArgFlags, uint8_t _NumTypeOperations, argOperation_t *_ArrayArgOperations, ...);
+flags_t detectArgs(int argc, char *argv[], uint8_t _NumTypeOperations, argOperation_t *_ArrayArgOperations, ...);
 
 
 #endif
