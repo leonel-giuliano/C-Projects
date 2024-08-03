@@ -21,9 +21,9 @@ typedef struct {
 
 // Flags
 
-#define bad_usage flags.flag0
+#define bad_usage argFlags.flags.flag0
 
-typedef union _flags_t {
+union _argFlags {
     uint8_t data;
 
     struct {
@@ -36,7 +36,9 @@ typedef union _flags_t {
         unsigned int flag6 : 1;
         unsigned int flag7 : 1;
     } flags;
-}flags_t;
+};
+
+extern union _argFlags argFlags;
 
 
 // Functions
@@ -45,7 +47,7 @@ typedef union _flags_t {
 // The max ammount of posible type of operations is 7 to use the flags
 // The ammount of operations inside a type goes up to 255
 // The ... should be all char *str[] and have a NULL at the end
-flags_t detectArgs(int argc, char *argv[], uint8_t _NumTypeOperations, argOperation_t *_ArrayArgOperations, ...);
+void detectArgs(int argc, char *argv[], uint8_t _NumTypeOperations, argOperation_t *_ArrayArgOperations, ...);
 
 
 #endif

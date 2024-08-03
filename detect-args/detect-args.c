@@ -13,6 +13,11 @@
 // Loops
 #define LOOP_ARRAY 255
 
+
+// Flags for the arguments
+union _argFlags argFlags = { 0 };
+
+
 // Inside functions
 uint8_t strArrLen(char **strArr) {
     // Count the amount of strings by searching for NULL
@@ -29,9 +34,7 @@ uint8_t strArrLen(char **strArr) {
 
 // Functions
 
-flags_t detectArgs(int argc, char *argv[], uint8_t numOp, argOperation_t *argOp, ...) {
-    flags_t flags = { 0 };
-
+void detectArgs(int argc, char *argv[], uint8_t numOp, argOperation_t *argOp, ...) {
     // Initialize the list
     va_list(op);
     va_start(op, argOp);
@@ -62,7 +65,7 @@ flags_t detectArgs(int argc, char *argv[], uint8_t numOp, argOperation_t *argOp,
 
                     // Activates the ix flag if the type was found
                     // The first one is used for the bad usage
-                    flags.data |= 1 << (j + 1);
+                    argFlags.data |= 1 << (j + 1);
 
                     break;
                 }
@@ -78,6 +81,4 @@ flags_t detectArgs(int argc, char *argv[], uint8_t numOp, argOperation_t *argOp,
             }
         }
     }
-
-    return flags;
 }
