@@ -23,7 +23,7 @@ typedef struct {
 
 #define bad_usage argFlags.flags.flag0
 
-union _argFlags {
+union _flags {
     uint8_t data;
 
     struct {
@@ -38,7 +38,7 @@ union _argFlags {
     } flags;
 };
 
-extern union _argFlags argFlags;
+extern union _flags argFlags;
 
 
 // Functions
