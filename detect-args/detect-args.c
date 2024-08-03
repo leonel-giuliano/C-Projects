@@ -34,10 +34,10 @@ flags_t detectArgs(int argc, char *argv[], uint8_t numOp, argOperation_t *argOp,
 
     // Initialize the list
     va_list(op);
-    va_start(op, numOp);
+    va_start(op, argOp);
 
     // Save the list of operations
-    char ***operations[MAX_OP_TYPE];
+    char **operations[MAX_OP_TYPE];
     for(uint8_t i = 0; i < numOp; i++)
         operations[i] = va_arg(op, char **);
 
