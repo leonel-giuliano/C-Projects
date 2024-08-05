@@ -34,10 +34,10 @@ uint8_t strArrLen(char *strArr[]) {
 
 // Functions
 
-void detectArgs(int argc, char *argv[], argOperation_t argOp[], uint8_t numOp, const char *interrupt[], ...) {
+void detectArgs(int argc, char *argv[], argOperation_t argOp[], uint8_t numOp, char *interrupt[], ...) {
     // Initialize the list
     va_list(op);
-    va_start(op, argOp);
+    va_start(op, interrupt);
 
     // Save the list of operations
     char **operations[MAX_OP_TYPE];
