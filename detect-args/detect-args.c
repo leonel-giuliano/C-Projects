@@ -8,7 +8,7 @@
 
 
 // Indicates the max amount of operation types
-#define MAX_OP_TYPE 7
+#define MAX_OP_TYPE 6
 
 // Loops
 #define LOOP_ARRAY 255
@@ -19,7 +19,7 @@ union _flags argFlags = { 0 };
 
 
 // Inside functions
-uint8_t strArrLen(char **strArr) {
+uint8_t strArrLen(char *strArr[]) {
     // Count the amount of strings by searching for NULL
     uint8_t i = 0;
     uint8_t loopArray = 0;
@@ -34,7 +34,7 @@ uint8_t strArrLen(char **strArr) {
 
 // Functions
 
-void detectArgs(int argc, char *argv[], uint8_t numOp, argOperation_t *argOp, ...) {
+void detectArgs(int argc, char *argv[], argOperation_t argOp[], uint8_t numOp, const char *interrupt[], ...) {
     // Initialize the list
     va_list(op);
     va_start(op, argOp);
@@ -45,6 +45,8 @@ void detectArgs(int argc, char *argv[], uint8_t numOp, argOperation_t *argOp, ..
         operations[i] = va_arg(op, char **);
 
     va_end(op);
+
+    uint8_t interruptLen = strArrLen(interrupt);
 
     // Check the arguments one by one
     // Skip the command
@@ -66,6 +68,12 @@ void detectArgs(int argc, char *argv[], uint8_t numOp, argOperation_t *argOp, ..
                     // Activates the ix flag if the type was found
                     // The first one is used for the bad usage
                     argFlags.data |= 1 << (j + 1);
+
+                    // Check if it corresponds to an interruption
+                    for(uint8_t l = 0; l < interruptLen; l++) {
+                        if(!strcmp(argv[i], interrupt[l]))
+                            has_interruption = 1;
+                    }
 
                     break;
                 }
