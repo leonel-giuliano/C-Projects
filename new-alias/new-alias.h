@@ -13,7 +13,13 @@
 
 
 // Operations
+
 #define AMOUNT_OPERATION 3
+
+// Operation flags
+#define has_comm argFlags.flags.flag1
+#define has_option1 argFlags.flags.flag2
+#define has_option2 argFlags.flags.flag3
 
 
 // Error events
@@ -24,7 +30,8 @@ typedef enum {
 
 // Functions
 
-void initFlags(int argc, char *argv[], argOperation_t *_ArrayArgOperations);
+// Initialize the flags depending on the arguments given
+void initFlags(int argc, char *argv[], argOperation_t _ArrayArgOperations[]);
 void errorHandler(error_t _ErrorEvent);
 
 

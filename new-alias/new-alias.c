@@ -3,6 +3,7 @@
 
 #include "new-alias.h"
 #include "detect-args.h"
+#include "comm.h"
 
 
 int main(int argc, char *argv[]) {
@@ -15,7 +16,7 @@ int main(int argc, char *argv[]) {
     return 0;
 }
 
-void initFlags(int argc, char *argv[], argOperation_t *argOp) {
+void initFlags(int argc, char *argv[], argOperation_t argOp[]) {
     const char *comm[] = {
         "new",
         "edit",
@@ -39,6 +40,13 @@ void initFlags(int argc, char *argv[], argOperation_t *argOp) {
     };
 
     detectArgs(argc, argv, AMOUNT_OPERATION, argOp, comm, option1, option2);
+}
+
+void checkUsage(int argc, argOperation_t argOp[]) {
+    // This points to the function depending on the operation selected
+    void (*checkF[])(int, argOperation_t []) = {
+        checkHelp
+    };
 }
 
 void errorHandler(error_t error) {
