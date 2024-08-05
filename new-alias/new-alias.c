@@ -39,7 +39,13 @@ void initFlags(int argc, char *argv[], argOperation_t argOp[]) {
         NULL
     };
 
-    detectArgs(argc, argv, AMOUNT_OPERATION, argOp, comm, option1, option2);
+    const char *interrupt[] = {
+        "-h",
+        "--help",
+        NULL
+    };
+
+    detectArgs(argc, argv, argOp, AMOUNT_OPERATION, interrupt, comm, option1, option2);
 }
 
 void checkUsage(int argc, argOperation_t argOp[]) {
@@ -47,6 +53,24 @@ void checkUsage(int argc, argOperation_t argOp[]) {
     void (*checkF[])(int, argOperation_t []) = {
         checkHelp
     };
+
+    uint8_t ix;
+
+    if(has_interruption) ix = 0;
+
+    else if(has_comm) {
+        // Check which is the ix of the operation
+        for(uint8_t i = 0; i < argc - 1; i++) {
+            if(argOp[i].type == OP_COMM) {
+                // The "+ 1" is for the interruption
+                ix = argOp[i].operation + 1;
+
+                break;
+            }
+        }
+    }
+
+    checkF[ix](argc, argOp);
 }
 
 void errorHandler(error_t error) {
