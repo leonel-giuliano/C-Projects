@@ -15,7 +15,7 @@
 
 
 // Flags for the arguments
-union _flags argFlags = { 0 };
+union _argFlags_t argFlags = { 0 };
 
 
 // Inside functions
