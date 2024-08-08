@@ -28,9 +28,20 @@ enum {
 };
 
 
+// Check ix
+typedef enum {
+    CHECK_INTERRUPT,
+    CHECK_NEW,
+    CHECK_EDIT,
+    CHECK_REMOVE,
+    CHECK_LIST
+}check_t;
+
+
 // Error events
 typedef enum {
-    ERROR_ARG
+    ERROR_ARG,
+    ERROR_DETECT
 }error_t;
 
 

@@ -49,28 +49,36 @@ void initFlags(int argc, char *argv[], argOperation_t argOp[]) {
 }
 
 void checkUsage(int argc, argOperation_t argOp[]) {
-    // This points to the function depending on the operation selected
-    void (*checkF[])(int, argOperation_t []) = {
-        checkHelp
-    };
+    check_t check;
 
-    uint8_t ix;
-
-    if(has_interruption) ix = 0;
+    if(has_interruption) check = CHECK_INTERRUPT;
 
     else if(has_comm) {
         // Check which is the ix of the operation
         for(uint8_t i = 0; i < argc - 1; i++) {
             if(argOp[i].type == OP_COMM) {
                 // The "+ 1" is for the interruption
-                ix = argOp[i].operation + 1;
+                check = argOp[i].operation + 1;
 
                 break;
             }
         }
     }
 
-    checkF[ix](argc, argOp);
+    // Decide which check function to use depending on the args
+    void (*checkF)(int, argOperation_t *) = NULL;
+    switch(check) {
+        case CHECK_INTERRUPT:
+            checkF = checkHelp;
+            break;
+
+        default:
+            // printf("Check statement value: %d\n", check);
+            errorHandler(ERROR_DETECT);
+            break;
+    }
+
+    checkF(argc, argOp);
 }
 
 void errorHandler(error_t error) {
@@ -79,6 +87,10 @@ void errorHandler(error_t error) {
     switch(error) {
         case ERROR_ARG:
             puts("There was a bad usage of the command.");
+            break;
+
+        case ERROR_DETECT:
+            puts("[DEBUG] Strange outcome from the detectArgs function.");
             break;
 
         default:
