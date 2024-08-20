@@ -6,10 +6,10 @@
 
 // Arguments
 
-// Ex: new-alias list
+// Ex: new-alias --help
 #define ARGC_MIN 2
-// Ex: new-alias new name path
-#define ARGC_MAX 4
+// Ex: new-alias new name path option --help
+#define ARGC_MAX 6
 
 
 // Operations
