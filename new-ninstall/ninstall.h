@@ -10,6 +10,11 @@
 #define ARGC_MAX 4
 
 
+// Operations
+
+#define AMOUNT_OP 3
+
+
 // Error events
 typedef enum {
     ERROR_ARG
