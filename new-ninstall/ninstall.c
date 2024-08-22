@@ -48,17 +48,9 @@ op_t checkFlags(int argc, argOperation_t argOp[]) {
     void (*checkF)(int, argOperation_t[]) = NULL;
 
     if(has_interruption) op = OP_INTERRUPT;
-    else if(has_comm) {
-        // Search for a command
-        for(uint8_t i = 0; i < argc - 1; i++) {
-            if(argOp[i].type == OP_COMM) {
-                // "+ 1" for the OP_INTERRUPT
-                op = argOp[i].operation + 1;
-
-                break;
-            }
-        }
-    }
+    else if(has_comm && argOp[IX_COMM - 1].type == OP_COMM)
+        // The "+ 1" is bc of the interruption
+        op = argOp[IX_COMM - 1].operation + 1;
 
     /* ADD A FUNCTION TO GIVE checkF A VALUE */
     checkF(argc, argOp);

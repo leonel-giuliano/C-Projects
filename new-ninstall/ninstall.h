@@ -20,6 +20,8 @@
 #define has_option1 argFlags.flags.flag2
 #define has_option2 argFlags.flags.flag3
 
+#define IX_COMM 1
+
 // Ix type of the operations
 enum {
     OP_COMM = 1,
