@@ -50,6 +50,8 @@ typedef enum {
 void initFlags(int argc, char *argv[], argOperation_t _ArrayArgOperations[]);
 // Calls the check functions depending on the operation
 op_t checkFlags(int argc, argOperation_t _ArrayArgOperations[]);
+// Selects the check function for the pointer
+void selectCheck(void (*_CheckFunction)(int, argOperation_t []), op_t _Operation);
 void errorHandler(error_t _ErrorEvent);
 
 

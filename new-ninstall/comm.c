@@ -1,7 +1,8 @@
 #include <stdint.h>
 
-#include "comm.h"
 #include "detect-args.h"
+
+#include "comm.h"
 #include "ninstall.h"
 
 

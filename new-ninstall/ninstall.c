@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "ninstall.h"
 #include "detect-args.h"
+
+#include "ninstall.h"
+#include "comm.h"
 
 
 int main(int argc, char *argv[]) {
@@ -52,11 +54,28 @@ op_t checkFlags(int argc, argOperation_t argOp[]) {
         // The "+ 1" is bc of the interruption
         op = argOp[IX_COMM - 1].operation + 1;
 
-    /* ADD A FUNCTION TO GIVE checkF A VALUE */
-    checkF(argc, argOp);
+    selectCheck(checkF, op);
+    if(!has_interruption) checkF(argc, argOp);
 
+    /* ADD A WAY TO KNOW THE COMMAND WHEN THERE IS AN INTERRUPT */
     // Returns the pred value in case nothing was found
     return op;
+}
+
+void selectCheck(void (*checkF)(int, argOperation_t []), op_t op) {
+    switch(op) {
+        case OP_NEW:
+            checkF = checkNew;
+            break;
+
+        case OP_EDIT:
+            checkF = checkEdit;
+            break;
+
+        case OP_LIST:
+            checkF = checkList;
+            break;
+    }
 }
 
 void errorHandler(error_t error) {
