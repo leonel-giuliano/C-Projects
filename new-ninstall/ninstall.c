@@ -42,6 +42,31 @@ void initFlags(int argc, char *argv[], argOperation_t argOp[]) {
     detectArgs(argc, argv, argOp, AMOUNT_OP, interrupt, comm, option1, option2);
 }
 
+op_t checkFlags(int argc, argOperation_t argOp[]) {
+    op_t op = OP_PRED;
+    // Pointer to the function depending on the operations
+    void (*checkF)(int, argOperation_t[]) = NULL;
+
+    if(has_interruption) op = OP_INTERRUPT;
+    else if(has_comm) {
+        // Search for a command
+        for(uint8_t i = 0; i < argc - 1; i++) {
+            if(argOp[i].type == OP_COMM) {
+                // "+ 1" for the OP_INTERRUPT
+                op = argOp[i].operation + 1;
+
+                break;
+            }
+        }
+    }
+
+    /* ADD A FUNCTION TO GIVE checkF A VALUE */
+    checkF(argc, argOp);
+
+    // Returns the pred value in case nothing was found
+    return op;
+}
+
 void errorHandler(error_t error) {
     printf("ERROR: ");
 
