@@ -31,8 +31,10 @@ set_target_properties(${LIB_NAME} PROPERTIES
     LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib
 )
 
-# Create a symbolic link for the soname
-add_custom_command(TARGET ${LIB_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E create_symlink
-    ${LIB_NAME}.${LIB_VERSION} ${LIB_NAME}.${LIB_VERSION_MAJOR}
-)
+if(NOT WIN32)
+    # Create a symbolic link for the soname
+    add_custom_command(TARGET ${LIB_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E create_symlink
+        ${LIB_NAME}.${LIB_VERSION} ${LIB_NAME}.${LIB_VERSION_MAJOR}
+    )
+endif()
