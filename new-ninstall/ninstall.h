@@ -31,7 +31,6 @@ enum {
 
 // Tells which operation is going to be used
 typedef enum {
-    OP_INTERRUPT,
     OP_NEW,
     OP_EDIT,
     OP_LIST,

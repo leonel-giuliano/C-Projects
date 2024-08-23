@@ -49,16 +49,18 @@ op_t checkFlags(int argc, argOperation_t argOp[]) {
     // Pointer to the function depending on the operations
     void (*checkF)(int, argOperation_t[]) = NULL;
 
-    if(has_interruption) op = OP_INTERRUPT;
-    else if(has_comm && argOp[IX_COMM - 1].type == OP_COMM)
+    if(has_comm && argOp[IX_COMM - 1].type == OP_COMM)
         // The "+ 1" is bc of the interruption
         op = argOp[IX_COMM - 1].operation + 1;
 
-    selectCheck(checkF, op);
-    if(!has_interruption) checkF(argc, argOp);
+    // Calls the check function
+    if(!has_interruption) {
+        selectCheck(checkF, op);
+        checkF(argc, argOp);
+    }
 
-    /* ADD A WAY TO KNOW THE COMMAND WHEN THERE IS AN INTERRUPT */
     // Returns the pred value in case nothing was found
+    // If it has an interruption, it returns the command
     return op;
 }
 
