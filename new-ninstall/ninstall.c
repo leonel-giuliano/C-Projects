@@ -35,7 +35,7 @@ void initFlags(int argc, char *argv[], argOperation_t argOp[]) {
         NULL
     };
 
-    const char *interrupt[] = {
+    char *interrupt[] = {
         "-h",
         "--help",
         NULL
