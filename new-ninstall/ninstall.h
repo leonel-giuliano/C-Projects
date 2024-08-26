@@ -1,6 +1,8 @@
 #ifndef __NINSTALL_H__
 #define __NINSTALL_H__
 
+#include <stdint.h>
+
 #include "detect-args.h"
 
 
@@ -30,19 +32,21 @@ enum {
 };
 
 // Tells which operation is going to be used
-typedef enum {
+typedef uint8_t op_t;
+enum {
     OP_NEW,
     OP_EDIT,
     OP_LIST,
 
     OP_PRED = OP_NEW
-}op_t;
+};
 
 
 // Error events
-typedef enum {
+typedef uint8_t error_t;
+enum {
     ERROR_ARG
-}error_t;
+};
 
 // Works with the values of the argOp array to tell the type of operation per argument
 // It also changes the global flags
