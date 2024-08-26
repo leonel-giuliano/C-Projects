@@ -53,8 +53,7 @@ op_t checkFlags(int argc, argOperation_t argOp[]) {
         op = argOp[IX_COMM - 1].operation + 1;
 
     // Calls the check function
-    if(!has_interruption)
-        selectCheck(argc, argOp, op);
+    if(!has_interruption) selectCheck(argc, argOp, op);
 
     // Returns the pred value in case nothing was found
     // If it has an interruption, it returns the command

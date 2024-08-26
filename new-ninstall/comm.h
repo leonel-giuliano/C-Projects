@@ -21,11 +21,24 @@
 #define ARG_LIST_MAX 2
 
 
+// Commands
+
+void helpComm(op_t _Operation);
+
+
 // Check Functions
 
 void checkNew(int argc, argOperation_t _ArrayArgOperations[]);
 void checkEdit(int argc, argOperation_t _ArrayArgOperations[]);
 void checkList(int argc, argOperation_t _ArrayArgOperations[]);
+
+
+// Help functions
+
+void helpPred();
+void helpNew();
+void helpEdit();
+void helpList();
 
 
 #endif
