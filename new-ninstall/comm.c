@@ -43,6 +43,12 @@ void newComm(const char *program) {
     fputs("# Installation\n\n", fpProgram);
     fputs("# Uninstallation", fpProgram);
 
+    // Use the command nano for the file
+    char nano[PATH_MAX + NANO_LEN];
+    strcpy(nano, "nano ");
+    strcat(nano, programPath);
+    system(nano);
+
     fclose(fpProgram);
 }
 

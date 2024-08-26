@@ -26,6 +26,8 @@
 #define BOLD_ON "\033[1m"
 #define BOLD_OFF "\033[0m"
 
+#define NANO_LEN 6
+
 
 #include "ninstall.h"
 
