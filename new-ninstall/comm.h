@@ -27,6 +27,9 @@
 #define BOLD_OFF "\033[0m"
 
 
+#include "ninstall.h"
+
+
 // Commands
 
 void helpComm(op_t _Operation);
@@ -35,6 +38,7 @@ void helpComm(op_t _Operation);
 // Inside functions
 
 void printBold(const char *_String);
+void getProgramPath(char *_Buffer, const char *_ProgramName);
 
 
 // Check Functions

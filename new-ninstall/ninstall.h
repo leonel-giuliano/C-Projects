@@ -45,7 +45,8 @@ enum {
 // Error events
 typedef uint8_t error_t;
 enum {
-    ERROR_ARG
+    ERROR_ARG,
+    ERROR_HOME
 };
 
 // Works with the values of the argOp array to tell the type of operation per argument

@@ -1,5 +1,8 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <limits.h>
 #include <stdint.h>
+#include <string.h>
 
 #include "detect-args.h"
 
@@ -29,11 +32,45 @@ void helpComm(op_t op) {
     }
 }
 
+void newComm(const char *program) {
+    char programPath[PATH_MAX];
+    getProgramPath(programPath, program);
+
+    // Creates the file for the program (or erases the content of the file)
+    FILE *fpProgram = NULL;
+    if(fpProgram = fopen(programPath, "w+"));
+
+    fputs("# Installation\n\n", fpProgram);
+    fputs("# Uninstallation", fpProgram);
+
+    fclose(fpProgram);
+}
+
 
 // Inside functions
 
 void printBold(const char *str) {
     printf("%s%s%s", BOLD_ON, str, BOLD_OFF);
+}
+
+void getProgramPath(char *path, const char *program) {
+    char *home = getenv("HOME");
+
+    // In case the enviroment couldn't be passed
+    if(home == NULL) errorHandler(ERROR_HOME);
+
+    // Save the ninstall folder path
+    strncpy(path, home, PATH_MAX - 1);
+    path[PATH_MAX - 1] = '\0';
+
+    size_t pathLen = strlen(path);
+    strncat(path, "/ninstall/", PATH_MAX - pathLen - 1);
+
+    pathLen = strlen(path);
+    strncat(path, program, PATH_MAX - pathLen - 1);
+
+    pathLen = strlen(path);
+    strncat(path, ".list", PATH_MAX - pathLen - 1);
 }
 
 

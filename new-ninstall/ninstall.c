@@ -14,7 +14,11 @@ int main(int argc, char *argv[]) {
     argOperation_t argOp[ARGC_MAX - 1] = { NO_OPERATION };
     initFlags(argc, argv, argOp);
 
+    // Show the operation used in ix
     op_t op = checkFlags(argc, argOp);
+
+    // In this case, the op is the command used with '--help'
+    if(has_interruption) helpComm(op);
 
     return 0;
 }
@@ -85,7 +89,13 @@ void errorHandler(error_t error) {
 
     switch(error) {
         case ERROR_ARG:
-            puts("Bad usage of the function.");
+            puts("Bad usage of the function.\n");
+            helpPred();
+            break;
+
+        case ERROR_HOME:
+            puts("The home path couldn't be found.");
+            puts("Make sure the $HOME is declared.");
             break;
 
         default:
