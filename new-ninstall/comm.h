@@ -21,9 +21,20 @@
 #define ARG_LIST_MAX 2
 
 
+// Text
+
+#define BOLD_ON "\033[1m"
+#define BOLD_OFF "\033[0m"
+
+
 // Commands
 
 void helpComm(op_t _Operation);
+
+
+// Inside functions
+
+void printBold(const char *_String);
 
 
 // Check Functions
