@@ -14,6 +14,8 @@ int main(int argc, char *argv[]) {
     argOperation_t argOp[ARGC_MAX - 1] = { NO_OPERATION };
     initFlags(argc, argv, argOp);
 
+    op_t op = checkFlags(argc, argOp);
+
     return 0;
 }
 
@@ -46,27 +48,24 @@ void initFlags(int argc, char *argv[], argOperation_t argOp[]) {
 
 op_t checkFlags(int argc, argOperation_t argOp[]) {
     op_t op = OP_PRED;
-    // Pointer to the function depending on the operations
-    void (*checkF)(int, argOperation_t[]) = NULL;
 
     if(has_comm && argOp[IX_COMM - 1].type == OP_COMM)
-        // The "+ 1" is bc of the interruption
         op = argOp[IX_COMM - 1].operation + 1;
 
     // Calls the check function
-    if(!has_interruption) {
-        selectCheck(checkF, op);
-        checkF(argc, argOp);
-    }
+    if(!has_interruption)
+        selectCheck(argc, argOp, op);
 
     // Returns the pred value in case nothing was found
     // If it has an interruption, it returns the command
     return op;
 }
 
-void selectCheck(void (*checkF)(int, argOperation_t []), op_t op) {
+void selectCheck(int argc, argOperation_t argOp[], op_t op) {
+    void (*checkF)(int, argOperation_t []) = NULL;
+
     switch(op) {
-        case OP_NEW:
+        case OP_PRED ... OP_NEW:
             checkF = checkNew;
             break;
 
@@ -78,6 +77,8 @@ void selectCheck(void (*checkF)(int, argOperation_t []), op_t op) {
             checkF = checkList;
             break;
     }
+
+    checkF(argc, argOp);
 }
 
 void errorHandler(error_t error) {

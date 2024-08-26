@@ -34,11 +34,11 @@ enum {
 // Tells which operation is going to be used
 typedef uint8_t op_t;
 enum {
+    OP_PRED,
+    
     OP_NEW,
     OP_EDIT,
     OP_LIST,
-
-    OP_PRED = OP_NEW
 };
 
 
@@ -53,8 +53,8 @@ enum {
 void initFlags(int argc, char *argv[], argOperation_t _ArrayArgOperations[]);
 // Calls the check functions depending on the operation
 op_t checkFlags(int argc, argOperation_t _ArrayArgOperations[]);
-// Selects the check function for the pointer
-void selectCheck(void (*_CheckFunction)(int, argOperation_t []), op_t _Operation);
+// Selects the check function
+void selectCheck(int argc, argOperation_t _ArrayArgOperations[], op_t _Operation);
 void errorHandler(error_t _ErrorEvent);
 
 
