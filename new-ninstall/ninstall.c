@@ -19,6 +19,15 @@ int main(int argc, char *argv[]) {
 
     // In this case, the op is the command used with '--help'
     if(has_interruption) helpComm(op);
+    else switch(op) {
+        case OP_PRED:
+            newComm(argv[ARG_PROGRAM]);
+            break;
+
+        case OP_NEW:
+            newComm(argv[ARG_COMM_PROGRAM]);
+            break;
+    }
 
     return 0;
 }
@@ -96,6 +105,10 @@ void errorHandler(error_t error) {
         case ERROR_HOME:
             puts("The home path couldn't be found.");
             puts("Make sure the $HOME is declared.");
+            break;
+
+        case ERROR_MEMORY:
+            perror("There was a problem allocating memory.");
             break;
 
         default:

@@ -1,6 +1,9 @@
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
+#include <linux/limits.h>
 #include <stdint.h>
 #include <string.h>
 
@@ -40,14 +43,18 @@ void newComm(const char *program) {
     FILE *fpProgram = NULL;
     if(fpProgram = fopen(programPath, "w+"));
 
-    fputs("# Installation\n\n", fpProgram);
-    fputs("# Uninstallation", fpProgram);
+    fputs("# Installation\n\n\n", fpProgram);
+    fputs("# Uninstallation\n", fpProgram);
+    fflush(fpProgram);
 
     // Use the command nano for the file
     char nano[PATH_MAX + NANO_LEN];
     strcpy(nano, "nano ");
-    strcat(nano, programPath);
+    strncat(nano, programPath, PATH_MAX - NANO_LEN - 1);
     system(nano);
+
+    // Execute all the command lines
+    exeInstallation(fpProgram);
 
     fclose(fpProgram);
 }
@@ -77,6 +84,38 @@ void getProgramPath(char *path, const char *program) {
 
     pathLen = strlen(path);
     strncat(path, ".list", PATH_MAX - pathLen - 1);
+}
+
+void exeInstallation(FILE *fp) {
+    // Skip to the first line of the installation commands
+    // The "+ 1" is because of the '\n'
+    fseek(fp, INSTALL_LEN + 1, SEEK_SET);
+
+    // Variables to get an entire line
+    char *command = NULL;
+    size_t commLen = PATH_MAX;
+    ssize_t nread;
+    // Repeat command per command
+    while((nread = getline(&command, &commLen, fp)) != -1 && strcmp(command, "# Uninstallation\n")) {
+        if(!strcmp(command, "\n")) continue;
+
+        // Get rid of the '\n'
+        size_t len = strlen(command);
+        command[len - 1] = '\0';
+
+        printf("Executing '%s':\n", command);
+        system(command);
+        putchar('\n');
+    }
+
+    if(nread == -1) {
+        free(command);
+        fclose(fp);
+
+        errorHandler(ERROR_MEMORY);
+    }
+
+    free(command);
 }
 
 

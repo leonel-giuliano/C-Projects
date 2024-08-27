@@ -13,6 +13,14 @@
 // ninstall new app --help
 #define ARGC_MAX 4
 
+enum {
+    ARG_SCRIPT,
+    ARG_PROGRAM,
+
+    ARG_COMM = 1,
+    ARG_COMM_PROGRAM
+};
+
 
 // Operations
 
@@ -46,7 +54,8 @@ enum {
 typedef uint8_t error_t;
 enum {
     ERROR_ARG,
-    ERROR_HOME
+    ERROR_HOME,
+    ERROR_MEMORY
 };
 
 // Works with the values of the argOp array to tell the type of operation per argument

@@ -23,10 +23,15 @@
 
 // Text
 
-#define BOLD_ON "\033[1m"
-#define BOLD_OFF "\033[0m"
+#define BOLD_ON "\e[1m"
+#define BOLD_OFF "\e[0m"
 
-#define NANO_LEN 6
+// "nano "
+#define NANO_LEN 5
+// "# Installation"
+#define INSTALL_LEN 14
+// "# Uninstallation"
+#define UNINSTALL_LEN 16
 
 
 #include "ninstall.h"
@@ -35,12 +40,14 @@
 // Commands
 
 void helpComm(op_t _Operation);
+void newComm(const char *_ProgramName);
 
 
 // Inside functions
 
 void printBold(const char *_String);
 void getProgramPath(char *_Buffer, const char *_ProgramName);
+void exeInstallation(FILE *_Stream);
 
 
 // Check Functions
