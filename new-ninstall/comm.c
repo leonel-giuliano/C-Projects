@@ -1,10 +1,14 @@
 #define _GNU_SOURCE
 
+#ifdef __linux__
+#include <linux/limits.h>
+#else
+#include <limits.h>
+#endif
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <dirent.h>
-#include <limits.h>
-#include <linux/limits.h>
 #include <stdint.h>
 #include <string.h>
 
@@ -67,7 +71,6 @@ void editComm(const char *program) {
     // Tries to read the file of the program
     FILE *fpProgram = NULL;
     if((fpProgram = fopen(programPath, "r+")) == NULL) errorHandler(ERROR_FILE);
-void listComm() {
 
     // Use the command nano for the file
     char nano[PATH_MAX + NANO_LEN];
@@ -101,6 +104,8 @@ void listComm() {
 
         puts(dirFile->d_name);
     }
+
+    closedir(dir);
 }
 
 
