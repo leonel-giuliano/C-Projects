@@ -32,6 +32,8 @@
 #define INSTALL_LEN 14
 // "# Uninstallation"
 #define UNINSTALL_LEN 16
+// ".list"
+#define TYPE_LEN 5
 
 
 #include "ninstall.h"
@@ -42,6 +44,7 @@
 void helpComm(op_t _Operation);
 void newComm(const char *_ProgramName);
 void editComm(const char *_ProgramName);
+void listComm();
 
 
 // Inside functions

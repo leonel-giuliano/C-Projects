@@ -2,6 +2,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <dirent.h>
 #include <limits.h>
 #include <linux/limits.h>
 #include <stdint.h>
@@ -66,6 +67,7 @@ void editComm(const char *program) {
     // Tries to read the file of the program
     FILE *fpProgram = NULL;
     if((fpProgram = fopen(programPath, "r+")) == NULL) errorHandler(ERROR_FILE);
+void listComm() {
 
     // Use the command nano for the file
     char nano[PATH_MAX + NANO_LEN];
@@ -74,6 +76,31 @@ void editComm(const char *program) {
     system(nano);
 
     fclose(fpProgram);
+}
+
+void listComm() {
+    char path[PATH_MAX];
+    char *home = getenv("HOME");
+    if(home == NULL) errorHandler(ERROR_HOME);
+
+    int nchar = snprintf(path, PATH_MAX, "%s/ninstall", home);
+    if(nchar < 0 || nchar >= PATH_MAX) errorHandler(ERROR_PATH);
+
+    // Open the ninstall folder
+    DIR *dir = NULL;
+    struct dirent *dirFile = NULL;
+    if((dir = opendir(path)) == NULL) errorHandler(ERROR_FILE);
+
+    // Iterate through every file
+    while((dirFile = readdir(dir)) != NULL) {
+        if(!strcmp(dirFile->d_name, ".") || !strcmp(dirFile->d_name, "..")) continue;
+
+        // Print the name without the '.list'
+        size_t len = strlen(dirFile->d_name);
+        dirFile->d_name[len - TYPE_LEN - 1] = '\0';
+
+        puts(dirFile->d_name);
+    }
 }
 
 
