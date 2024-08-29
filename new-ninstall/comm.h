@@ -41,6 +41,7 @@
 
 void helpComm(op_t _Operation);
 void newComm(const char *_ProgramName);
+void editComm(const char *_ProgramName);
 
 
 // Inside functions

@@ -56,6 +56,7 @@ enum {
     ERROR_ARG,
     ERROR_HOME,
     ERROR_PATH,
+    ERROR_FILE,
     ERROR_MEMORY
 };
 

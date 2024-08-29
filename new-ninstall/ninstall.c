@@ -27,6 +27,10 @@ int main(int argc, char *argv[]) {
         case OP_NEW:
             newComm(argv[ARG_COMM_PROGRAM]);
             break;
+
+        case OP_EDIT:
+            editComm(argv[ARG_COMM_PROGRAM]);
+            break;
     }
 
     return 0;
@@ -109,6 +113,10 @@ void errorHandler(error_t error) {
 
         case ERROR_PATH:
             puts("It seems that the ninstall folder path is too large.");
+            break;
+
+        case ERROR_FILE:
+            perror("Failed to open the indicated program file.");
             break;
 
         case ERROR_MEMORY:

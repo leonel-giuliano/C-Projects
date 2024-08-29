@@ -41,7 +41,7 @@ void newComm(const char *program) {
 
     // Creates the file for the program (or erases the content of the file)
     FILE *fpProgram = NULL;
-    if(fpProgram = fopen(programPath, "w+"));
+    if((fpProgram = fopen(programPath, "w+")) == NULL) errorHandler(ERROR_FILE);
 
     fputs("# Installation\n\n\n", fpProgram);
     fputs("# Uninstallation\n", fpProgram);
@@ -50,11 +50,28 @@ void newComm(const char *program) {
     // Use the command nano for the file
     char nano[PATH_MAX + NANO_LEN];
     strcpy(nano, "nano ");
-    strncat(nano, programPath, PATH_MAX - NANO_LEN - 1);
+    strncat(nano, programPath, PATH_MAX - 1);
     system(nano);
 
     // Execute all the command lines
     exeInstallation(fpProgram);
+
+    fclose(fpProgram);
+}
+
+void editComm(const char *program) {
+    char programPath[PATH_MAX];
+    getProgramPath(programPath, program);
+
+    // Tries to read the file of the program
+    FILE *fpProgram = NULL;
+    if((fpProgram = fopen(programPath, "r+")) == NULL) errorHandler(ERROR_FILE);
+
+    // Use the command nano for the file
+    char nano[PATH_MAX + NANO_LEN];
+    strcpy(nano, "nano ");
+    strncat(nano, programPath, PATH_MAX - 1);
+    system(nano);
 
     fclose(fpProgram);
 }
