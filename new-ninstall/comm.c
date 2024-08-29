@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <dirent.h>
+#include <stdarg.h>
 #include <stdint.h>
 #include <string.h>
 
@@ -42,7 +43,7 @@ void helpComm(op_t op) {
 
 void newComm(const char *program) {
     char programPath[PATH_MAX];
-    getProgramPath(programPath, program);
+    getProgramPath(programPath, "/%s.list", program);
 
     // Creates the file for the program (or erases the content of the file)
     FILE *fpProgram = NULL;
@@ -66,7 +67,7 @@ void newComm(const char *program) {
 
 void editComm(const char *program) {
     char programPath[PATH_MAX];
-    getProgramPath(programPath, program);
+    getProgramPath(programPath, "/%s.list", program);
 
     // Tries to read the file of the program
     FILE *fpProgram = NULL;
@@ -83,11 +84,7 @@ void editComm(const char *program) {
 
 void listComm() {
     char path[PATH_MAX];
-    char *home = getenv("HOME");
-    if(home == NULL) errorHandler(ERROR_HOME);
-
-    int nchar = snprintf(path, PATH_MAX, "%s/ninstall", home);
-    if(nchar < 0 || nchar >= PATH_MAX) errorHandler(ERROR_PATH);
+    getProgramPath(path);
 
     // Open the ninstall folder
     DIR *dir = NULL;
@@ -115,12 +112,17 @@ void printBold(const char *str) {
     printf("%s%s%s", BOLD_ON, str, BOLD_OFF);
 }
 
-void getProgramPath(char *path, const char *program) {
+void getProgramPath(char *path, ...) {
+    va_list arg;
+    va_start(arg, path);
+
     char *home = getenv("HOME");
     // In case the enviroment couldn't be passed
     if(home == NULL) errorHandler(ERROR_HOME);
 
-    int nchar = snprintf(path, PATH_MAX, "%s/ninstall/%s.list", home, program);
+    int nchar = vsnprintf(path, PATH_MAX, "%s/ninstall", arg);
+    va_end(arg);
+
     if(nchar < 0 || nchar >= PATH_MAX) errorHandler(ERROR_PATH);
 }
 

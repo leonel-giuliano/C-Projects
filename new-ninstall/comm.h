@@ -50,7 +50,7 @@ void listComm();
 // Inside functions
 
 void printBold(const char *_String);
-void getProgramPath(char *_Buffer, const char *_ProgramName);
+void getProgramPath(char *_Buffer, ...);
 void exeInstallation(FILE *_Stream);
 
 
