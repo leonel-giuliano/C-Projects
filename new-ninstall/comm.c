@@ -68,22 +68,11 @@ void printBold(const char *str) {
 
 void getProgramPath(char *path, const char *program) {
     char *home = getenv("HOME");
-
     // In case the enviroment couldn't be passed
     if(home == NULL) errorHandler(ERROR_HOME);
 
-    // Save the ninstall folder path
-    strncpy(path, home, PATH_MAX - 1);
-    path[PATH_MAX - 1] = '\0';
-
-    size_t pathLen = strlen(path);
-    strncat(path, "/ninstall/", PATH_MAX - pathLen - 1);
-
-    pathLen = strlen(path);
-    strncat(path, program, PATH_MAX - pathLen - 1);
-
-    pathLen = strlen(path);
-    strncat(path, ".list", PATH_MAX - pathLen - 1);
+    int nchar = snprintf(path, PATH_MAX, "%s/ninstall/%s.list", home, program);
+    if(nchar < 0 || nchar >= PATH_MAX) errorHandler(ERROR_PATH);
 }
 
 void exeInstallation(FILE *fp) {

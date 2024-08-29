@@ -55,6 +55,7 @@ typedef uint8_t error_t;
 enum {
     ERROR_ARG,
     ERROR_HOME,
+    ERROR_PATH,
     ERROR_MEMORY
 };
 

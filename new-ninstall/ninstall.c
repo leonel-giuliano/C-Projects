@@ -107,6 +107,10 @@ void errorHandler(error_t error) {
             puts("Make sure the $HOME is declared.");
             break;
 
+        case ERROR_PATH:
+            puts("It seems that the ninstall folder path is too large.");
+            break;
+
         case ERROR_MEMORY:
             perror("There was a problem allocating memory.");
             break;
