@@ -13,8 +13,16 @@
 
 enum {
     IX_ARGV_COMM,
-    IX_ARGV_FILE
+    IX_ARGV_OPTION,
+    IX_ARGV_OPTION_FILE,
+
+    IX_ARGV_FILE = IX_ARGV_OPTION
 };
+
+
+// Operations
+
+#define OP_AMOUNT 2
 
 
 // Errors
@@ -25,6 +33,7 @@ enum {
 };
 
 
+void initFlags(int argc, char *argv[], argOperation_t _ArrayArgOperations[]);
 void errorHandler(error_t _ErrorEvent, ...);
 
 

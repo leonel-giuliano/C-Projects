@@ -2,19 +2,56 @@
 #include <stdlib.h>
 #include <stdarg.h>
 
+#include "detect-args.h"
+
 #include "cat.h"
 
 
 int main(int argc, char *argv[]) {
     if(argc < ARGC_MIN && argc > ARGC_MAX) errorHandler(ERROR_ARG);
 
-    FILE *fp = NULL;
-    if((fp = fopen(argv[IX_ARGV_FILE], "r")) == NULL)
-        errorHandler(ERROR_FILE, argv[IX_ARGV_FILE]);
-
-    fclose(fp);
+    argOperation_t argOp[ARGC_MAX - 1];
+    initFlags(argc, argv, argOp);
 }
 
+
+void initFlags(int argc, char *argv[], argOperation_t argOp[]) {
+    const char *option1[] = {
+        "-A",
+        "-b",
+        "-e",
+        "-E",
+        "-n",
+        "-s",
+        "-t",
+        "-T",
+        "-u",
+        "-v",
+        NULL
+    };
+
+    const char *option2[] = {
+        "--show-all",
+        "--number-nonblank",
+        "",
+        "--show-ends",
+        "--number",
+        "--squeeze-blank",
+        "",
+        "--show-tabs",
+        "",
+        "--show-nonprinting",
+        NULL
+    };
+
+    char *flags[] = {
+        "--help",
+        "--version",
+        NULL
+    };
+
+    detectArgs(argc, argv, argOp, OP_AMOUNT, flags, option1, option2);
+}
 
 void errorHandler(error_t error, ...) {
     va_list arg;
