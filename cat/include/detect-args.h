@@ -9,8 +9,6 @@
 
 // Indicates the type wasn't found
 #define NO_OPERATION 0
-// Indicates the type is an interruption
-#define INTERRUPTION 1
 
 typedef struct {
     // Indicates the index of the type of operation
@@ -23,8 +21,7 @@ typedef struct {
 
 // Flags
 
-#define bad_usage argFlags.flags.flag0
-#define has_interruption argFlags.flags.flag1
+#define bad_usage argFlags.flags.flag7
 
 union _argFlags_t {
     uint8_t data;
@@ -50,7 +47,7 @@ extern union _argFlags_t argFlags;
 // The max ammount of posible type of operations is 6 to use the flags
 // The ammount of operations inside a type goes up to 255
 // The ... should be const all char *str[] and have a NULL at the end
-void detectArgs(int argc, char *argv[], argOperation_t _ArrayArgOperations[], uint8_t _NumTypeOperations, const char *_ArrayInterruptions[], ...);
+void detectArgs(int argc, char *argv[], argOperation_t _ArrayArgOperations[], uint8_t _NumTypeOperations, ...);
 
 
 #endif

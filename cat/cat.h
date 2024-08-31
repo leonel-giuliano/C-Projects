@@ -25,11 +25,35 @@ enum {
 // Operations
 
 #define OP_AMOUNT 2
+#define OPTION_AMOUNT 9
 
-// Same as 'has_interruption'
 #define has_flags argFlags.flags.flag0
 #define has_option1 argFlags.flags.flag1
 #define has_option2 argFlags.flags.flag2
+
+// Types
+enum {
+    TYPE_FLAG = 1,
+    TYPE_OPTION1,
+    TYPE_OPTION2
+};
+
+// Every function command index
+typedef uint8_t option_t;
+enum {
+    OPTION_PRED,
+    OPTION_SHOW_ALL,
+    OPTION_NONBLANK,
+    OPTION_NONPRINT,
+    OPTION_END,
+    OPTION_NUMBER,
+    OPTION_SQUEEZE_BLANK,
+    OPTION_NONPRINT_TAB,
+    OPTION_TAB,
+    OPTION_NONPRINT,
+
+    NO_OPTION
+};
 
 
 // Errors

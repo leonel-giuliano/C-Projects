@@ -36,7 +36,6 @@ void initFlags(int argc, char *argv[], argOperation_t argOp[]) {
         "-s",
         "-t",
         "-T",
-        "-u",
         "-v",
         NULL
     };
@@ -50,12 +49,20 @@ void initFlags(int argc, char *argv[], argOperation_t argOp[]) {
         "--squeeze-blank",
         "",
         "--show-tabs",
-        "",
         "--show-nonprinting",
         NULL
     };
 
     detectArgs(argc, argv, argOp, OP_AMOUNT, flags, option1, option2);
+}
+
+option_t checkFlags(int argc, argOperation_t argOp[]) {
+    // This indicates the option used
+    option_t op = (argOp[IX_ARGV_OPTION - 1].type != TYPE_FLAG)
+        ?   argOp[IX_ARGV_OPTION - 1].operation
+        :   NO_OPTION;
+
+    return op;
 }
 
 void errorHandler(error_t error, ...) {
