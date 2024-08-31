@@ -27,9 +27,9 @@ enum {
 #define OP_AMOUNT 2
 
 // Same as 'has_interruption'
-#define has_flags argFlags.flags.flag1
-#define has_option1 argFlags.flags.flag2
-#define has_option2 argFlags.flags.flag3
+#define has_flags argFlags.flags.flag0
+#define has_option1 argFlags.flags.flag1
+#define has_option2 argFlags.flags.flag2
 
 
 // Errors
