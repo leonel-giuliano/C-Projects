@@ -21,7 +21,7 @@ int main(int argc, char *argv[]) {
 
 
 void initFlags(int argc, char *argv[], argOperation_t argOp[]) {
-    char *flags[] = {
+    const char *flags[] = {
         "--help",
         "--version",
         NULL
@@ -55,9 +55,7 @@ void initFlags(int argc, char *argv[], argOperation_t argOp[]) {
         NULL
     };
 
-    // The flags are used twice so the index is also given
-    // and because both flags are interruptions
-    detectArgs(argc, argv, argOp, OP_AMOUNT, flags, flags, option1, option2);
+    detectArgs(argc, argv, argOp, OP_AMOUNT, flags, option1, option2);
 }
 
 void errorHandler(error_t error, ...) {

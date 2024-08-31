@@ -23,8 +23,7 @@ typedef struct {
 
 // Flags
 
-#define bad_usage argFlags.flags.flag0
-#define has_interruption argFlags.flags.flag1
+#define bad_usage argFlags.flags.flag7
 
 union _argFlags_t {
     uint8_t data;

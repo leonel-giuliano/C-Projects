@@ -67,11 +67,7 @@ void detectArgs(int argc, char *argv[], argOperation_t argOp[], uint8_t numOp, c
                     argOp[i - 1].operation = k;
 
                     // Activates the ix flag if the type was found
-                    // The first one is used for the bad usage
-                    argFlags.data |= 1 << (j + 1);
-
-                    // Check if it corresponds to an interruption
-                    if(j == 0) has_interruption = 1;
+                    argFlags.data |= 1 << j;
 
                     break;
                 }
