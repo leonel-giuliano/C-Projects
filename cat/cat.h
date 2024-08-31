@@ -5,6 +5,8 @@
 #include <stdarg.h>
 #include <stdint.h>
 
+#include "detect-args.h"
+
 
 // Arguments
 
@@ -23,6 +25,11 @@ enum {
 // Operations
 
 #define OP_AMOUNT 2
+
+// Same as 'has_interruption'
+#define has_flags argFlags.flags.flag1
+#define has_option1 argFlags.flags.flag2
+#define has_option2 argFlags.flags.flag3
 
 
 // Errors

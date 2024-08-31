@@ -10,12 +10,23 @@
 int main(int argc, char *argv[]) {
     if(argc < ARGC_MIN && argc > ARGC_MAX) errorHandler(ERROR_ARG);
 
+    // Detect the aguments operations
     argOperation_t argOp[ARGC_MAX - 1];
     initFlags(argc, argv, argOp);
+
+    /* FUNCTION TO CHECK USAGE */
+
+    return 0;
 }
 
 
 void initFlags(int argc, char *argv[], argOperation_t argOp[]) {
+    char *flags[] = {
+        "--help",
+        "--version",
+        NULL
+    };
+
     const char *option1[] = {
         "-A",
         "-b",
@@ -44,13 +55,9 @@ void initFlags(int argc, char *argv[], argOperation_t argOp[]) {
         NULL
     };
 
-    char *flags[] = {
-        "--help",
-        "--version",
-        NULL
-    };
-
-    detectArgs(argc, argv, argOp, OP_AMOUNT, flags, option1, option2);
+    // The flags are used twice so the index is also given
+    // and because both flags are interruptions
+    detectArgs(argc, argv, argOp, OP_AMOUNT, flags, flags, option1, option2);
 }
 
 void errorHandler(error_t error, ...) {
@@ -66,7 +73,7 @@ void errorHandler(error_t error, ...) {
 
         case ERROR_FILE:
             // Print file name
-            printf("%s: ", va_arg(arg, char **));
+            printf("%s: ", va_arg(arg, char *));
             puts("No such file or directory.");
             break;
 
