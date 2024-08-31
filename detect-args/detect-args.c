@@ -19,7 +19,7 @@ union _argFlags_t argFlags = { 0 };
 
 
 // Inside functions
-uint8_t strArrLen(char *strArr[]) {
+uint8_t strArrLen(const char *strArr[]) {
     // Count the amount of strings by searching for NULL
     uint8_t i = 0;
     uint8_t loopArray = 0;
@@ -34,19 +34,20 @@ uint8_t strArrLen(char *strArr[]) {
 
 // Functions
 
-void detectArgs(int argc, char *argv[], argOperation_t argOp[], uint8_t numOp, char *interrupt[], ...) {
+void detectArgs(int argc, char *argv[], argOperation_t argOp[], uint8_t numOp, const char *interrupt[], ...) {
     // Initialize the list
     va_list(op);
     va_start(op, interrupt);
 
     // Save the list of operations
-    char **operations[MAX_OP_TYPE];
-    for(uint8_t i = 0; i < numOp; i++)
-        operations[i] = va_arg(op, char **);
+    const char **operations[MAX_OP_TYPE];
+    // The first ix is used for the interruption
+    operations[0] = interrupt;
+
+    for(uint8_t i = 1; i < numOp; i++)
+        operations[i] = va_arg(op, const char **);
 
     va_end(op);
-
-    uint8_t interruptLen = strArrLen(interrupt);
 
     // Check the arguments one by one
     // Skip the command
@@ -70,10 +71,7 @@ void detectArgs(int argc, char *argv[], argOperation_t argOp[], uint8_t numOp, c
                     argFlags.data |= 1 << (j + 1);
 
                     // Check if it corresponds to an interruption
-                    for(uint8_t l = 0; l < interruptLen; l++) {
-                        if(!strcmp(argv[i], interrupt[l]))
-                            has_interruption = 1;
-                    }
+                    if(j == 0) has_interruption = 1;
 
                     break;
                 }
