@@ -10,8 +10,13 @@
 
 // Arguments
 
+// cat [file]
 #define ARGC_MIN 2
-#define ARGC_MAX 3
+// cat -A [file] --help
+#define ARGC_MAX 4
+
+// cat -A [file]
+#define OPTION_MAX 3
 
 enum {
     IX_ARGV_COMM,
@@ -38,7 +43,7 @@ enum {
     TYPE_OPTION2
 };
 
-// Every function command index
+// Every option command index
 typedef uint8_t option_t;
 enum {
     OPTION_PRED,
@@ -51,8 +56,6 @@ enum {
     OPTION_NONPRINT_TAB,
     OPTION_TAB,
     OPTION_NONPRINT,
-
-    NO_OPTION
 };
 
 
@@ -65,10 +68,10 @@ enum {
 
 
 // Calls the 'detectArgs' function to activate the flags
-void initFlags(int argc, char *argv[], argOperation_t _ArrayArgOperations[]);
+void initFlags(int argc, const char *argv[], argOperation_t _ArrayArgOperations[]);
 // Checks the flags and arguments to know if the usage was correct
 // and returns the option used
-option_t checkFlags(int argc, argOperation_t _ArrayArgOperations[]);
+option_t checkOption(int argc, argOperation_t _ArrayArgOperations[]);
 // Calls the option function
 void selectOption(const char *argv[], option_t _Option);
 void errorHandler(error_t _ErrorEvent, ...);

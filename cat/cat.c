@@ -16,7 +16,7 @@ int main(int argc, char *argv[]) {
     initFlags(argc, argv, argOp);
 
     // Get the option used and compare the flags
-    option_t option = checkFlags(argc, argOp);
+    option_t option = checkOption(argc, argOp);
     if(bad_usage) errorHandler(ERROR_ARG);
 
     selectOption(argv, option);
@@ -25,7 +25,7 @@ int main(int argc, char *argv[]) {
 }
 
 
-void initFlags(int argc, char *argv[], argOperation_t argOp[]) {
+void initFlags(int argc, const char *argv[], argOperation_t argOp[]) {
     const char *flags[] = {
         "--help",
         "--version",
@@ -61,11 +61,22 @@ void initFlags(int argc, char *argv[], argOperation_t argOp[]) {
     detectArgs(argc, argv, argOp, OP_AMOUNT, flags, option1, option2);
 }
 
-option_t checkFlags(int argc, argOperation_t argOp[]) {
+option_t checkOption(int argc, argOperation_t argOp[]) {
     // This indicates the option used
-    option_t op = (argOp[IX_ARGV_OPTION - 1].type != TYPE_FLAG)
-        ?   argOp[IX_ARGV_OPTION - 1].operation
-        :   NO_OPTION;
+    option_t op = argOp[IX_ARGV_OPTION - 1].operation;
+    // Offset given if it was used as pred.
+    uint8_t flagPred = (op == OPTION_PRED) ? 1 : 0;
+
+    // Check if the amount of arguments are correct
+    if(argc > OPTION_MAX - flagPred) bad_usage = 1;
+
+    // Check if there is more than one operation
+    if(
+        argc == OPTION_MAX - flagPred
+            &&
+        argOp[IX_ARGV_OPTION_FILE - flagPred].operation != NO_OPERATION
+    )
+        bad_usage = 1;
 
     return op;
 }
