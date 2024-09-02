@@ -14,7 +14,9 @@ int main(int argc, char *argv[]) {
     argOperation_t argOp[ARGC_MAX - 1];
     initFlags(argc, argv, argOp);
 
-    /* FUNCTION TO CHECK USAGE */
+    // Get the option used and compare the flags
+    option_t option = checkFlags(argc, argOp);
+    if(bad_usage) errorHandler(ERROR_ARG);
 
     return 0;
 }

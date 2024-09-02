@@ -61,7 +61,7 @@ void detectArgs(int argc, char *argv[], argOperation_t argOp[], uint8_t numOp, .
 
                     // The "+ 1" is to take into account the NO_OPERATION
                     argOp[i - 1].type = j + 1;
-                    argOp[i - 1].operation = k;
+                    argOp[i - 1].operation = k + 1;
 
                     // Activates the ix flag if the type was found
                     argFlags.data |= 1 << j;

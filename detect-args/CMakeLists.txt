@@ -6,7 +6,7 @@ project(DetectArgs C)
 # Set the version numbers
 set(LIB_VERSION_MAJOR 3)
 set(LIB_VERSION_MINOR 0)
-set(LIB_VERSION_PATCH 0)
+set(LIB_VERSION_PATCH 1)
 
 # Create the version string
 set(LIB_VERSION ${LIB_VERSION_MAJOR}.${LIB_VERSION_MINOR}.${LIB_VERSION_PATCH})
