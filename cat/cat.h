@@ -69,6 +69,8 @@ void initFlags(int argc, char *argv[], argOperation_t _ArrayArgOperations[]);
 // Checks the flags and arguments to know if the usage was correct
 // and returns the option used
 option_t checkFlags(int argc, argOperation_t _ArrayArgOperations[]);
+// Calls the option function
+void selectOption(FILE *fp, option_t option);
 void errorHandler(error_t _ErrorEvent, ...);
 
 

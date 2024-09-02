@@ -17,6 +17,11 @@ void helpFlag(option_t option) {
 
 // Options
 
+void showAllOption(FILE *fp) {
+    // Print every char one by one
+    char ch;
+    while((ch = getc(fp)) != EOF) putchar(ch);
+}
 
 
 // Help functions

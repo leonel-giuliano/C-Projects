@@ -3,6 +3,7 @@
 #include <stdarg.h>
 
 #include "detect-args.h"
+#include "operation.h"
 
 #include "cat.h"
 
@@ -17,6 +18,19 @@ int main(int argc, char *argv[]) {
     // Get the option used and compare the flags
     option_t option = checkFlags(argc, argOp);
     if(bad_usage) errorHandler(ERROR_ARG);
+
+    // Select the path that can change if the option wasn't given
+    const char path[] = (has_option1 || has_option2)
+        ?   argv[IX_ARGV_OPTION_FILE - 1]
+        :   argv[IX_ARGV_FILE - 1];
+
+    // Open the file for the options
+    FILE *fp;
+    if((fp = fopen(path, "r")) == NULL) errorHandler(ERROR_FILE);
+
+    selectOption(fp, option);
+
+    fclose(fp);
 
     return 0;
 }
@@ -65,6 +79,18 @@ option_t checkFlags(int argc, argOperation_t argOp[]) {
         :   NO_OPTION;
 
     return op;
+}
+
+void selectOption(FILE *fp, option_t option) {
+    void (*optionF)(FILE *) = NULL;
+
+    switch(option) {
+        case OPTION_PRED ... OPTION_SHOW_ALL:
+            optionF = showAllOption;
+            break;
+    }
+
+    optionF(fp);
 }
 
 void errorHandler(error_t error, ...) {

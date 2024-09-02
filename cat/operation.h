@@ -2,6 +2,9 @@
 #define __CAT_OPERATION_H__
 
 
+#include <stdio.h>
+
+
 // Strings
 
 #define BOLD_START "\e[1m"
@@ -17,6 +20,11 @@
 // Flags
 
 void helpFlag(option_t _Option);
+
+
+// Operations
+
+void showAllOption(FILE *_Stream);
 
 
 // Help functions
