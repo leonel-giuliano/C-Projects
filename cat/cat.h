@@ -70,7 +70,7 @@ void initFlags(int argc, char *argv[], argOperation_t _ArrayArgOperations[]);
 // and returns the option used
 option_t checkFlags(int argc, argOperation_t _ArrayArgOperations[]);
 // Calls the option function
-void selectOption(FILE *fp, option_t option);
+void selectOption(const char *argv[], option_t _Option);
 void errorHandler(error_t _ErrorEvent, ...);
 
 
