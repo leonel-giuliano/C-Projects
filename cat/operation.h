@@ -20,6 +20,7 @@
 // Flags
 
 void helpFlag(option_t _Option);
+void versionFlag();
 
 
 // Operations

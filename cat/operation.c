@@ -14,6 +14,10 @@ void helpFlag(option_t option) {
     }
 }
 
+void versionFlag() {
+    puts("Personal cat command for test.");
+}
+
 
 // Options
 

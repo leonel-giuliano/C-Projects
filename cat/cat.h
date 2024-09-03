@@ -43,7 +43,12 @@ enum {
     TYPE_OPTION2
 };
 
-// Every option command index
+typedef uint8_t flag_t;
+enum {
+    FLAG_HELP = 1,
+    FLAG_VERSION
+};
+
 typedef uint8_t option_t;
 enum {
     OPTION_PRED,
