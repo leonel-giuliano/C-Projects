@@ -32,7 +32,7 @@ enum {
 #define OP_AMOUNT 2
 #define OPTION_AMOUNT 9
 
-#define has_flags argFlags.flags.flag0
+#define has_flag argFlags.flags.flag0
 #define has_option1 argFlags.flags.flag1
 #define has_option2 argFlags.flags.flag2
 
@@ -74,8 +74,9 @@ enum {
 
 // Calls the 'detectArgs' function to activate the flags
 void initFlags(int argc, const char *argv[], argOperation_t _ArrayArgOperations[]);
-// Checks the flags and arguments to know if the usage was correct
-// and returns the option used
+// Returns the flag used
+flag_t checkFlag(int argc, argOperation_t argOp[]);
+// Checks if the usage was correct and returns the option used
 option_t checkOption(int argc, argOperation_t _ArrayArgOperations[]);
 // Calls the option function
 void selectOption(const char *argv[], option_t _Option);

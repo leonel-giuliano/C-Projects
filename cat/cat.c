@@ -61,6 +61,16 @@ void initFlags(int argc, const char *argv[], argOperation_t argOp[]) {
     detectArgs(argc, argv, argOp, OP_AMOUNT, flags, option1, option2);
 }
 
+flag_t checkFlag(int argc, argOperation_t argOp[]) {
+    flag_t flag;
+
+    // Search for the flag
+    for(uint8_t i = 0; i < argc - 1; i++)
+        if(argOp[i].type == TYPE_FLAG) flag = argOp[i].operation;
+
+    return flag;
+}
+
 option_t checkOption(int argc, argOperation_t argOp[]) {
     // This indicates the option used
     option_t op = argOp[IX_ARGV_OPTION - 1].operation;
