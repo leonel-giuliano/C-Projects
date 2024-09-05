@@ -16,6 +16,12 @@ int main(int argc, char *argv[]) {
     initFlags(argc, argv, argOp);
 
     // Get the option used and compare the flags
+    if(has_flag) {
+        flag_t flag = getFlag(argc, argOp);
+
+
+    }
+
     option_t option = checkOption(argc, argOp);
     if(bad_usage) errorHandler(ERROR_ARG);
 
@@ -61,7 +67,7 @@ void initFlags(int argc, const char *argv[], argOperation_t argOp[]) {
     detectArgs(argc, argv, argOp, OP_AMOUNT, flags, option1, option2);
 }
 
-flag_t checkFlag(int argc, argOperation_t argOp[]) {
+flag_t getFlag(int argc, argOperation_t argOp[]) {
     flag_t flag;
 
     // Search for the flag
@@ -71,7 +77,7 @@ flag_t checkFlag(int argc, argOperation_t argOp[]) {
     return flag;
 }
 
-option_t checkOption(int argc, argOperation_t argOp[]) {
+option_t getOption(int argc, argOperation_t argOp[]) {
     // This indicates the option used
     option_t op = argOp[IX_ARGV_OPTION - 1].operation;
     // Offset given if it was used as pred.
@@ -89,6 +95,13 @@ option_t checkOption(int argc, argOperation_t argOp[]) {
         bad_usage = 1;
 
     return op;
+}
+
+void selectFlag(flag_t flag, argOperation_t argOp[]) {
+    switch(flag) {
+        case FLAG_HELP:
+            option_t op = 
+    }
 }
 
 void selectOption(const char *argv[], option_t option) {
