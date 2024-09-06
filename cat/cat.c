@@ -18,8 +18,7 @@ int main(int argc, char *argv[]) {
     // Get the option used and compare the flags
     if(has_flag) {
         flag_t flag = getFlag(argc, argOp);
-
-
+        selectFlag(flag, argOp);
     }
 
     option_t option = checkOption(argc, argOp);
@@ -100,7 +99,16 @@ option_t getOption(int argc, argOperation_t argOp[]) {
 void selectFlag(flag_t flag, argOperation_t argOp[]) {
     switch(flag) {
         case FLAG_HELP:
-            option_t op = 
+            option_t op = (argOp[IX_ARGV_OPTION - 1].type == TYPE_FLAG)
+                ?   OPTION_PRED
+                :   argOp[IX_ARGV_OPTION - 1].operation;
+
+            helpFlag(op);
+            break;
+
+        case FLAG_VERSION:
+            versionFlag();
+            break;
     }
 }
 
