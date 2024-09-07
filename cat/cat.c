@@ -15,16 +15,17 @@ int main(int argc, char *argv[]) {
     argOperation_t argOp[ARGC_MAX - 1];
     initFlags(argc, argv, argOp);
 
-    // Get the option used and compare the flags
+    // Select the function depending on the flags
     if(has_flag) {
         flag_t flag = getFlag(argc, argOp);
+
         selectFlag(flag, argOp);
+    } else {
+        option_t option = getOption(argc, argOp);
+        if(bad_usage) errorHandler(ERROR_ARG);
+
+        selectOption(argv, option);
     }
-
-    option_t option = checkOption(argc, argOp);
-    if(bad_usage) errorHandler(ERROR_ARG);
-
-    selectOption(argv, option);
 
     return 0;
 }
@@ -70,8 +71,13 @@ flag_t getFlag(int argc, argOperation_t argOp[]) {
     flag_t flag;
 
     // Search for the flag
-    for(uint8_t i = 0; i < argc - 1; i++)
-        if(argOp[i].type == TYPE_FLAG) flag = argOp[i].operation;
+    for(uint8_t i = 0; i < argc - 1; i++) {
+        if(argOp[i].type == TYPE_FLAG) {
+            flag = argOp[i].operation;
+
+            break;
+        }
+    }
 
     return flag;
 }
