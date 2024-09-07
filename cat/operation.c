@@ -27,6 +27,23 @@ void showAllOption(FILE *fp) {
     while((ch = getc(fp)) != EOF) putchar(ch);
 }
 
+void numBlankOption(FILE *fp) {
+    // This will help to compare the lines
+    char ch0 = '\n', ch1;
+    size_t num = 0;
+
+    while((ch1 = getc(fp)) != EOF) {
+        // Print the num at the start of a new line
+        // but ignore it if it's an empty line
+        if(ch0 == '\n' && ch1 != '\n') printf("%llu\t", ++num);
+
+        putchar(ch1);
+
+        // Save the last char
+        ch0 = ch1;
+    }
+}
+
 
 // Help functions
 

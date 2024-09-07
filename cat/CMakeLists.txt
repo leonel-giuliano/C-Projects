@@ -12,7 +12,7 @@ include_directories(include)
 link_directories(lib)
 
 # Create an object file for cat.c
-add_library(cat_obj OBJECT cat.c)
+add_library(cat_obj OBJECT cat.c operation.c)
 
 # Add an executable target
 add_executable(cat $<TARGET_OBJECTS:cat_obj>)

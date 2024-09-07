@@ -26,6 +26,7 @@ void versionFlag();
 // Operations
 
 void showAllOption(FILE *_Stream);
+void numBlankOption(FILE *_Stream);
 
 
 // Help functions

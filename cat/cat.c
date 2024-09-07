@@ -3,9 +3,9 @@
 #include <stdarg.h>
 
 #include "detect-args.h"
-#include "operation.h"
 
 #include "cat.h"
+#include "operation.h"
 
 
 int main(int argc, char *argv[]) {
@@ -31,7 +31,7 @@ int main(int argc, char *argv[]) {
 }
 
 
-void initFlags(int argc, const char *argv[], argOperation_t argOp[]) {
+void initFlags(int argc, char *argv[], argOperation_t argOp[]) {
     const char *flags[] = {
         "--help",
         "--version",
@@ -118,21 +118,25 @@ void selectFlag(flag_t flag, argOperation_t argOp[]) {
     }
 }
 
-void selectOption(const char *argv[], option_t option) {
+void selectOption(char *argv[], option_t option) {
     // Select the path that can change if the option wasn't given
-    const char path[] = (has_option1 || has_option2)
-        ?   argv[IX_ARGV_OPTION_FILE - 1]
-        :   argv[IX_ARGV_FILE - 1];
+    uint8_t pathIx = (has_option1 || has_option2)
+        ?   IX_ARGV_OPTION_FILE - 1
+        :   IX_ARGV_FILE - 1;
 
     // Open the file for the options
     FILE *fp;
-    if((fp = fopen(path, "r")) == NULL) errorHandler(ERROR_FILE, path);
+    if((fp = fopen(argv[pathIx], "r")) == NULL) errorHandler(ERROR_FILE, argv[pathIx]);
 
     // Select the function depending on the option
     void (*optionF)(FILE *) = NULL;
     switch(option) {
         case OPTION_PRED ... OPTION_SHOW_ALL:
             optionF = showAllOption;
+            break;
+
+        case OPTION_NONBLANK:
+            optionF = numBlankOption;
             break;
     }
 

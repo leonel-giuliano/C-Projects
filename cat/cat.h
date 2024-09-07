@@ -54,7 +54,7 @@ enum {
     OPTION_PRED,
     OPTION_SHOW_ALL,
     OPTION_NONBLANK,
-    OPTION_NONPRINT,
+    OPTION_NONPRINT_END,
     OPTION_END,
     OPTION_NUMBER,
     OPTION_SQUEEZE_BLANK,
@@ -73,7 +73,8 @@ enum {
 
 
 // Calls the 'detectArgs' function to activate the flags
-void initFlags(int argc, const char *argv[], argOperation_t _ArrayArgOperations[]);
+void initFlags(int argc, char *argv[], argOperation_t _ArrayArgOperations[]);
+
 
 // Returns the flag used
 flag_t getFlag(int argc, argOperation_t argOp[]);
@@ -81,8 +82,13 @@ flag_t getFlag(int argc, argOperation_t argOp[]);
 // Checks if the usage was correct and returns the option used
 option_t getOption(int argc, argOperation_t _ArrayArgOperations[]);
 
+
+// Calls the flag function
+void selectFlag(flag_t flag, argOperation_t argOp[]);
+
 // Calls the option function
-void selectOption(const char *argv[], option_t _Option);
+void selectOption(char *argv[], option_t _Option);
+
 
 void errorHandler(error_t _ErrorEvent, ...);
 
