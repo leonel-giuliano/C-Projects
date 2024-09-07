@@ -16,7 +16,7 @@
 #define ARGC_MAX 4
 
 // cat -A [file]
-#define OPTION_MAX 3
+#define ARGC_OPTION_AMOUNT 3
 
 enum {
     IX_ARGV_COMM,

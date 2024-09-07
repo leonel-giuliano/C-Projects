@@ -25,6 +25,8 @@ void showAllOption(FILE *fp) {
     // Print every char one by one
     char ch;
     while((ch = getc(fp)) != EOF) putchar(ch);
+
+    putchar('\n');
 }
 
 void numBlankOption(FILE *fp) {
@@ -42,6 +44,8 @@ void numBlankOption(FILE *fp) {
         // Save the last char
         ch0 = ch1;
     }
+
+    putchar('\n');
 }
 
 
@@ -56,7 +60,7 @@ void helpPred() {
 
     PRINT_B("FLAGS:\n");
     puts("\t--help\tdisplay this help and exit");
-    puts("\t--version\toutput version and exit");
+    puts("\t--version\toutput version and exit\n");
 
     PRINT_B("OPTIONS:\n");
     puts("\t-A, --show-all\tequivalent to -vET");

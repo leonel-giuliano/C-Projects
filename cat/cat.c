@@ -89,14 +89,10 @@ option_t getOption(int argc, argOperation_t argOp[]) {
     uint8_t flagPred = (op == OPTION_PRED) ? 1 : 0;
 
     // Check if the amount of arguments are correct
-    if(argc > OPTION_MAX - flagPred) bad_usage = 1;
+    if(argc != ARGC_OPTION_AMOUNT - flagPred) bad_usage = 1;
 
     // Check if there is more than one operation
-    if(
-        argc == OPTION_MAX - flagPred
-            &&
-        argOp[IX_ARGV_OPTION_FILE - flagPred].operation != NO_OPERATION
-    )
+    if(argOp[IX_ARGV_OPTION_FILE - flagPred].operation != NO_OPERATION)
         bad_usage = 1;
 
     return op;
@@ -121,8 +117,8 @@ void selectFlag(flag_t flag, argOperation_t argOp[]) {
 void selectOption(char *argv[], option_t option) {
     // Select the path that can change if the option wasn't given
     uint8_t pathIx = (has_option1 || has_option2)
-        ?   IX_ARGV_OPTION_FILE - 1
-        :   IX_ARGV_FILE - 1;
+        ?   IX_ARGV_OPTION_FILE
+        :   IX_ARGV_FILE;
 
     // Open the file for the options
     FILE *fp;
@@ -153,7 +149,8 @@ void errorHandler(error_t error, ...) {
 
     switch(error) {
         case ERROR_ARG:
-            puts("Bad usage of the function.");
+            puts("Bad usage of the function.\n\n");
+            helpPred();
             break;
 
         case ERROR_FILE:

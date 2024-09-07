@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/c,visualstudiocode,cmake
 # Edit at https://www.toptal.com/developers/gitignore?templates=c,visualstudiocode,cmake
 
+# Personal
+*.txt
+
 ### C ###
 # Prerequisites
 *.d
@@ -40,7 +43,8 @@
 *.x86_64
 *.hex
 
-# Debug files
+# Debug files# Personal
+*.txt
 *.dSYM/
 *.su
 *.idb
@@ -48,11 +52,11 @@
 
 # Kernel Module Compile Results
 *.mod*
-*.cmd
+*.cmdFixed 
 .tmp_versions/
 modules.order
 Module.symvers
-Mkfile.old
+Mkfile.oldFixed 
 dkms.conf
 
 ### CMake ###
@@ -72,7 +76,8 @@ build
 ### CMake Patch ###
 # External projects
 *-prefix/
-
+# Personal
+*.txt
 ### VisualStudioCode ###
 */.vscode/*
 !.vscode/settings.json
