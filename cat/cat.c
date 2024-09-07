@@ -126,7 +126,7 @@ void selectOption(const char *argv[], option_t option) {
 
     // Open the file for the options
     FILE *fp;
-    if((fp = fopen(path, "r")) == NULL) errorHandler(ERROR_FILE);
+    if((fp = fopen(path, "r")) == NULL) errorHandler(ERROR_FILE, path);
 
     // Select the function depending on the option
     void (*optionF)(FILE *) = NULL;
