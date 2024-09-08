@@ -5,6 +5,7 @@
 #include "argop.h"
 
 #include "cat.h"
+#include "operation.h"
 
 
 int main(int argc, char *argv[]) {
@@ -14,6 +15,8 @@ int main(int argc, char *argv[]) {
     // The "- 1" is to ignore the command
     argOp_t argOp[ARGC_MAX - 1];
     initFlags(argc, argv, argOp);
+
+    if(bad_usage) errorHandler(ERROR_ARG);
 
     return 0;
 }
@@ -42,7 +45,7 @@ void initFlags(int argc, char *argv[], argOp_t argOp[]) {
 }
 
 
-/* Check functions */
+/* CHECK FUNCTIONS */
 
 flag_t checkFlag(int argc, argOp_t argOp[]) {
     flag_t flag;
@@ -79,7 +82,8 @@ option_t checkOption(int argc, char *argv[], argOp_t argOp[]) {
 void errorHandler(error_t error) {
     switch(error) {
         case ERROR_ARG:
-            puts("Bad usage of the cat function.");
+            puts("Bad usage of the cat function.\n");
+            helpPred();
             break;
 
         default:

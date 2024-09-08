@@ -5,7 +5,7 @@
 #include <stdint.h>
 
 
-/* Arguments */
+/* ARGUMENTS */
 
 // cat [file...]
 #define ARGC_MIN 2
@@ -21,7 +21,7 @@ enum {
 };
 
 
-/* Operations */
+/* OPERATIONS */
 
 #define OP_AMOUNT 3
 
@@ -52,7 +52,8 @@ enum {
 };
 
 
-// Error events
+/* ERROR EVENTS */
+
 typedef uint8_t error_t;
 enum {
     ERROR_ARG
@@ -64,7 +65,7 @@ enum {
 void initFlags(int argc, char *argv[], argOp_t _ArgOperations[]);
 
 
-/* Check functions */
+/* CHECK FUNCTIONS */
 
 // Returns an enum of the flag operation used
 flag_t checkFlag(int argc, argOp_t _ArgOperations[]);
