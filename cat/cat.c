@@ -61,7 +61,7 @@ flag_t checkFlag(int argc, argOp_t argOp[]) {
 
     // Search for the flag used
     for(uint8_t i = 0; i < argc - 1; i++) {
-        if(argOp[i].type == OP_OPTION1) {
+        if(argOp[i].type == OP_FLAG) {
             flag = argOp[i].operation;
 
             break;
@@ -107,7 +107,7 @@ void errorHandler(error_t error) {
     switch(error) {
         case ERROR_ARG:
             puts("Bad usage of the cat function.\n");
-            helpPred();
+            helpFlag();
             break;
 
         default:
