@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "argop.h"
 
@@ -38,6 +39,40 @@ void initFlags(int argc, char *argv[], argOp_t argOp[]) {
 
     // The "- 1" is because of the mult options
     checkArgs(argc, argv, argOp, OP_AMOUNT - 1, flags, option1);
+}
+
+
+/* Check functions */
+
+flag_t checkFlag(int argc, argOp_t argOp[]) {
+    flag_t flag;
+
+    // Search for the flag used
+    for(uint8_t i = 0; i < argc - 1; i++) {
+        if(argOp[i].type == OP_OPTION1) {
+            flag = argOp[i].operation;
+
+            break;
+        }
+    }
+
+    return flag;
+}
+
+option_t checkOption(int argc, char *argv[], argOp_t argOp[]) {
+    // Look for the option in a fixed place
+    option_t op = (has_option1) ? argOp[IX_OPTION_FILE - 1].type : argOp[IX_FILE - 1].type;
+
+    // Search there is no argument that uses a mult option
+    for(uint8_t i = 1; i < argc; i++) {
+        // Check if the arg has the min lenght
+        if(strlen(argv[i]) < 2) continue;
+
+        // Check if it is a mult option
+        if(argv[i][0] == '-' && argv[i][1] != '-') bad_usage = 1;
+    }
+
+    return op;
 }
 
 

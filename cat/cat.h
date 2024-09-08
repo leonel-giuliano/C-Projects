@@ -5,17 +5,51 @@
 #include <stdint.h>
 
 
-// Arguments
+/* Arguments */
 
 // cat [file...]
 #define ARGC_MIN 2
 // cat -A [file...]
 #define ARGC_MAX 3
 
+enum {
+    IX_COMM,
+    IX_OPTION,
+    IX_OPTION_FILE,
 
-// Operations
+    IX_FILE = IX_OPTION_FILE - 1
+};
+
+
+/* Operations */
 
 #define OP_AMOUNT 3
+
+#define has_flag argFlags.flags.flag0
+#define has_option1 argFlags.flags.flag1
+
+enum {
+    OP_FLAG = 1,
+    OP_OPTION1
+};
+
+typedef uint8_t flag_t;
+enum {
+    FLAG_HELP = 1,
+    FLAG_VERSION
+};
+
+typedef uint8_t option_t;
+enum {
+    OPTION_PRED,
+    OPTION_ALL,
+    OPTION_NUM_NONBLANK,
+    OPTION_END,
+    OPTION_NUM,
+    OPTION_SQZ_BLANK,
+    OPTION_TAB,
+    OPTION_NONPRINT
+};
 
 
 // Error events
@@ -28,6 +62,17 @@ enum {
 // Contains the operations array and calls for 'checkArgs()'
 // This function doesn't check for the mult options
 void initFlags(int argc, char *argv[], argOp_t _ArgOperations[]);
+
+
+/* Check functions */
+
+// Returns an enum of the flag operation used
+flag_t checkFlag(int argc, argOp_t _ArgOperations[]);
+
+// Returns an enum of the option operation used
+// and also checks for a bad usage
+option_t checkOption(int argc, char *argv[], argOp_t _ArgOperations[]);
+
 
 void errorHandler(error_t _ErrorEvent);
 
