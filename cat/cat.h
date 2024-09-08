@@ -9,8 +9,8 @@
 
 // cat [file...]
 #define ARGC_MIN 2
-// cat -A [file...]
-#define ARGC_MAX 3
+// cat [option]... [file]... --help
+#define ARGC_MAX 4
 
 enum {
     IX_COMM,
@@ -73,6 +73,12 @@ flag_t checkFlag(int argc, argOp_t _ArgOperations[]);
 // Returns an enum of the option operation used
 // and also checks for a bad usage
 option_t checkOption(int argc, char *argv[], argOp_t _ArgOperations[]);
+
+
+/* SELECT FUNCTIONS */
+
+// Executes the flag command given
+void selectFlag(flag_t _Flag);
 
 
 void errorHandler(error_t _ErrorEvent);

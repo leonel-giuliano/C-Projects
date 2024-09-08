@@ -16,7 +16,16 @@ int main(int argc, char *argv[]) {
     argOp_t argOp[ARGC_MAX - 1];
     initFlags(argc, argv, argOp);
 
+    // This is in case there was more than one operation used
+    // excluding the mult operations
     if(bad_usage) errorHandler(ERROR_ARG);
+
+    // The flags takes priority over the other operations
+    if(has_flag) {
+        flag_t flag = checkFlag(argc, argOp);
+
+        selectFlag(flag);
+    }
 
     return 0;
 }
@@ -76,6 +85,21 @@ option_t checkOption(int argc, char *argv[], argOp_t argOp[]) {
     }
 
     return op;
+}
+
+
+/* SELECT FUNCTIONS */
+
+void selectFlag(flag_t flag) {
+    switch(flag) {
+        case FLAG_HELP:
+            helpFlag();
+            break;
+
+        case FLAG_VERSION:
+            versionFlag();
+            break;
+    }
 }
 
 
