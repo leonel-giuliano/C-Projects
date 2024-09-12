@@ -53,5 +53,40 @@ void multOp(multOpFlags_t multOpFlags, const char *name) {
     FILE *fp = NULL;
     if((fp = fopen(name, "r")) == NULL) errorHandler(ERROR_FILE, name);
 
+    // Used for '-n' or '-b'
+    size_t line = 0;
+
+    // Starts being equal to '\n' to compare in the case of '-b'
+    char lastCh = '\n', newCh;
+    while((newCh = getc(fp)) != EOF) {
+        // In case there is a new line
+        if(newCh == '\n') {
+            // Check respective option with the property
+            if(
+                has_mult_b && lastCh != '\n'
+                    ||
+                // This is to overwrite '-n' if '-b'
+                !has_mult_b && has_mult_n
+            )
+                printf("%llu\t", ++line);
+        }
+
+        // Print end of the line $ before the char in '-E'
+        if(has_mult_E && newCh == '\n') putchar('$');
+
+        // Change the output in the '-T' and '-v' for TAB
+        if((has_mult_T || has_mult_v) && newCh == '\t') printf("^I");
+
+        // Do not print blank space with '-s'
+        else if(!(has_mult_s && lastCh == '\n' && newCh == '\n'))
+            putchar(newCh);
+
+
+        // Save the last char for later
+        lastCh = newCh;
+    }
+
+    putchar('\n');
+
     fclose(fp);
 }

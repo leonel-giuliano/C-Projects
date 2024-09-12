@@ -99,7 +99,6 @@ void initFlags(int argc, char *argv[], argOp_t _ArgOperations[]);
 
 // Returns an enum of the flag operation used
 flag_t checkFlag(int argc, argOp_t _ArgOperations[]);
-
 // Returns an enum of the option operation used
 // and also checks for a bad usage
 option_t checkOption(int argc, char *argv[], argOp_t _ArgOperations[]);
@@ -109,6 +108,8 @@ option_t checkOption(int argc, char *argv[], argOp_t _ArgOperations[]);
 
 // Executes the flag command given
 void selectFlag(flag_t _Flag);
+// Sets the flags depending on the options and executes the program
+void selectMultOption(int argc, char *argv[]);
 
 
 void errorHandler(error_t _ErrorEvent, ...);
