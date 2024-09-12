@@ -75,7 +75,7 @@ void multOp(multOpFlags_t multOpFlags, const char *name) {
         if(has_mult_E && newCh == '\n') putchar('$');
 
         // Change output for '-v'
-        if(has_mult_v && newCh >= CARET_ALPHABET_START && newCh <= CARET_ALPHABET_END) {
+        if(has_mult_v && newCh >= CARET_ALPHABET_START && newCh <= CARET_ALPHABET_END && newCh != '\t') {
             newCh += ASCII_TO_CARET;
 
             putchar('^');
