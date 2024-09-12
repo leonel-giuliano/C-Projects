@@ -74,11 +74,15 @@ void multOp(multOpFlags_t multOpFlags, const char *name) {
         // Print end of the line $ before the char in '-E'
         if(has_mult_E && newCh == '\n') putchar('$');
 
-        // Change the output in the '-T' and '-v' for TAB
-        if((has_mult_T || has_mult_v) && newCh == '\t') printf("^I");
+        // Change the output in the '-T' for TAB
+        if(has_mult_T && newCh == '\t') {
+            newCh = 'I';
+            
+            putchar('^');
+        }
 
         // Do not print blank space with '-s'
-        else if(!(has_mult_s && lastCh == '\n' && newCh == '\n'))
+        if(!(has_mult_s && lastCh == '\n' && newCh == '\n'))
             putchar(newCh);
 
 
