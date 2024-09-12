@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdarg.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -177,17 +178,27 @@ void selectMultOption(int argc, char *argv[]) {
 }
 
 
-void errorHandler(error_t error) {
+void errorHandler(error_t error, ...) {
+    va_list arg;
+    va_start(arg, error);
+
     switch(error) {
         case ERROR_ARG:
             puts("Bad usage of the cat function.\n");
             helpFlag();
+
+            break;
+
+        case ERROR_FILE:
+            printf("cat: %s: File doesn't exits.\n", va_arg(arg, const char *));
             break;
 
         default:
             perror("Unkown error.");
             break;
     }
+
+    va_end(arg);
 
     exit(EXIT_FAILURE);
 }

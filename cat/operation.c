@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 #include "operation.h"
+#include "cat.h"
 
 
 /* FLAGS */
@@ -43,4 +44,14 @@ void versionFlag() {
     puts("This is free software: you are free to change and redistribute it.");
     puts("There is NO WARRANTY, to the extent permitted by law.\n");
     puts("Written by Torbjorn Granlund and Richard M. Stallman.");
+}
+
+
+/* OPTIONS */
+
+void multOp(multOpFlags_t multOpFlags, const char *name) {
+    FILE *fp = NULL;
+    if((fp = fopen(name, "r")) == NULL) errorHandler(ERROR_FILE, name);
+
+    fclose(fp);
 }

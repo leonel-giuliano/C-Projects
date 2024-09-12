@@ -85,7 +85,8 @@ typedef union {
 
 typedef uint8_t error_t;
 enum {
-    ERROR_ARG
+    ERROR_ARG,
+    ERROR_FILE
 };
 
 
@@ -110,7 +111,7 @@ option_t checkOption(int argc, char *argv[], argOp_t _ArgOperations[]);
 void selectFlag(flag_t _Flag);
 
 
-void errorHandler(error_t _ErrorEvent);
+void errorHandler(error_t _ErrorEvent, ...);
 
 
 #endif
