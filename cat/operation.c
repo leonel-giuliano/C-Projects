@@ -74,17 +74,23 @@ void multOp(multOpFlags_t multOpFlags, const char *name) {
         // Print end of the line $ before the char in '-E'
         if(has_mult_E && newCh == '\n') putchar('$');
 
-        // Change the output in the '-T' for TAB
-        if(has_mult_T && newCh == '\t') {
+        // Change output for '-v'
+        if(has_mult_v && newCh >= CARET_ALPHABET_START && newCh <= CARET_ALPHABET_END) {
+            newCh += ASCII_TO_CARET;
+
+            putchar('^');
+        }
+
+        // Change the output in the '-T' for TAB and skip comprobation for '-v'
+        else if(has_mult_T && newCh == '\t') {
             newCh = 'I';
-            
+
             putchar('^');
         }
 
         // Do not print blank space with '-s'
         if(!(has_mult_s && lastCh == '\n' && newCh == '\n'))
             putchar(newCh);
-
 
         // Save the last char for later
         lastCh = newCh;

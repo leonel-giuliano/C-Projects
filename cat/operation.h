@@ -12,6 +12,8 @@
 
 // Distance between the ascii num and the caret notation
 #define ASCII_TO_CARET 64
+#define CARET_ALPHABET_START 1
+#define CARET_ALPHABET_END 26
 
 // Function to print the text in bold
 #define PRINT_BOLD(str) printf("%s%s%s", BOLD_ON, str, BOLD_OFF);
