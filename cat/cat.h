@@ -51,6 +51,30 @@ enum {
     OPTION_NONPRINT
 };
 
+// Flags for the mult options
+
+#define has_mult_b multOpFlags.flags.flag0
+#define has_mult_E multOpFlags.flags.flag1
+#define has_mult_n multOpFlags.flags.flag2
+#define has_mult_s multOpFlags.flags.flag3
+#define has_mult_T multOpFlags.flags.flag4
+#define has_mult_v multOpFlags.flags.flag5
+
+typedef union {
+    struct {
+        unsigned int flag0 : 1;
+        unsigned int flag1 : 1;
+        unsigned int flag2 : 1;
+        unsigned int flag3 : 1;
+        unsigned int flag4 : 1;
+        unsigned int flag5 : 1;
+        unsigned int flag6 : 1;
+        unsigned int flag7 : 1;
+    } flags;
+
+    uint8_t data;
+} multOpFlags_t;
+
 
 /* ERROR EVENTS */
 

@@ -77,11 +77,9 @@ option_t checkOption(int argc, char *argv[], argOp_t argOp[]) {
 
     // Search there is no argument that uses a mult option
     for(uint8_t i = 1; i < argc; i++) {
-        // Check if the arg has the min lenght
-        if(strlen(argv[i]) < 2) continue;
-
+        // Check if the arg has the min lenght "-x"
         // Check if it is a mult option
-        if(argv[i][0] == '-' && argv[i][1] != '-') bad_usage = 1;
+        if(strlen(argv[i]) >= 2 && argv[i][0] == '-' && argv[i][1] != '-') bad_usage = 1;
     }
 
     return op;
@@ -100,6 +98,35 @@ void selectFlag(flag_t flag) {
             versionFlag();
             break;
     }
+}
+
+void selectMultOption(int argc, char *argv[]) {    
+    size_t multOpLen = strlen(argv[IX_OPTION]);
+    multOpFlags_t multOpFlags = { 0 };
+
+    // Iterate through every char of the mult option
+    for(uint8_t i = 1; i < multOpLen; i++) {
+        // Check the value of the char
+        switch(argv[IX_OPTION][i]) {
+            case 'A':
+                if(has_mult_v || has_mult_E || has_mult_T)
+                    bad_usage = 1;
+
+                has_mult_v = 1;
+                has_mult_E = 1;
+                has_mult_T = 1;
+
+                break;
+
+            case 'b':
+                if(has_mult_b) bad_usage = 1;
+                has_mult_b = 1;
+
+                break;
+        }
+    }
+
+    if(bad_usage) errorHandler(ERROR_ARG);
 }
 
 
