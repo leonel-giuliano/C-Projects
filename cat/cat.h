@@ -25,6 +25,11 @@ enum {
 
 #define OP_AMOUNT 3
 
+// "-x"
+#define MULT_OP_MIN_LEN 2
+// "-bEnsTv"
+#define MULT_OP_MAX_LEN 7
+
 #define has_flag argFlags.flags.flag0
 #define has_option1 argFlags.flags.flag1
 

@@ -16,16 +16,14 @@ int main(int argc, char *argv[]) {
     argOp_t argOp[ARGC_MAX - 1];
     initFlags(argc, argv, argOp);
 
-    // This is in case there was more than one operation used
-    // excluding the mult operations
-    if(bad_usage) errorHandler(ERROR_ARG);
-
     // The flags takes priority over the other operations
     if(has_flag) {
         flag_t flag = checkFlag(argc, argOp);
 
         selectFlag(flag);
     }
+
+    if(bad_usage) errorHandler(ERROR_ARG);
 
     return 0;
 }
@@ -79,7 +77,8 @@ option_t checkOption(int argc, char *argv[], argOp_t argOp[]) {
     for(uint8_t i = 1; i < argc; i++) {
         // Check if the arg has the min lenght "-x"
         // Check if it is a mult option
-        if(strlen(argv[i]) >= 2 && argv[i][0] == '-' && argv[i][1] != '-') bad_usage = 1;
+        if(strlen(argv[i]) >= MULT_OP_MIN_LEN && argv[i][0] == '-' && argv[i][1] != '-')
+            bad_usage = 1;
     }
 
     return op;
@@ -103,6 +102,14 @@ void selectFlag(flag_t flag) {
 void selectMultOption(int argc, char *argv[]) {    
     size_t multOpLen = strlen(argv[IX_OPTION]);
     multOpFlags_t multOpFlags = { 0 };
+
+    // Check if the lenght is greater than the possible amount
+    // of mult options used at once
+    if(multOpLen > MULT_OP_MAX_LEN) {
+        bad_usage = 1;
+
+        return;
+    }
 
     // Iterate through every char of the mult option
     for(uint8_t i = 1; i < multOpLen; i++) {
@@ -167,8 +174,6 @@ void selectMultOption(int argc, char *argv[]) {
             default: bad_usage = 1;
         }
     }
-
-    if(bad_usage) errorHandler(ERROR_ARG);
 }
 
 
