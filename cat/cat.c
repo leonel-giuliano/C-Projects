@@ -109,6 +109,7 @@ void selectMultOption(int argc, char *argv[]) {
         // Check the value of the char
         switch(argv[IX_OPTION][i]) {
             case 'A':
+            case 'e':
                 if(has_mult_v || has_mult_E || has_mult_T)
                     bad_usage = 1;
 
@@ -123,6 +124,47 @@ void selectMultOption(int argc, char *argv[]) {
                 has_mult_b = 1;
 
                 break;
+
+            case 'E':
+                if(has_mult_E) bad_usage = 1;
+                has_mult_E = 1;
+
+                break;
+
+            case 'n':
+                if(has_mult_n) bad_usage = 1;
+                has_mult_n = 1;
+
+                break;
+
+            case 's':
+                if(has_mult_s) bad_usage = 1;
+                has_mult_s = 1;
+
+                break;
+
+            case 't':
+                if(has_mult_v || has_mult_T) bad_usage = 1;
+                has_mult_v = 1;
+                has_mult_T = 1;
+
+                break;
+
+            case 'T':
+                if(has_mult_T) bad_usage = 1;
+                has_mult_T = 1;
+
+                break;
+
+            case 'u': break;
+
+            case 'v':
+                if(has_mult_v) bad_usage = 1;
+                has_mult_v = 1;
+
+                break;
+
+            default: bad_usage = 1;
         }
     }
 
