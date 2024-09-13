@@ -22,6 +22,10 @@ int main(int argc, char *argv[]) {
         flag_t flag = checkFlag(argc, argOp);
 
         selectFlag(flag);
+    } else if(has_option1) {
+        option_t op = checkOption(argc, argv, argOp);
+
+        selectOption(op, argv[IX_OPTION_FILE]);
     }
 
     if(bad_usage) errorHandler(ERROR_ARG);
@@ -72,7 +76,7 @@ flag_t checkFlag(int argc, argOp_t argOp[]) {
 
 option_t checkOption(int argc, char *argv[], argOp_t argOp[]) {
     // Look for the option in a fixed place
-    option_t op = (has_option1) ? argOp[IX_OPTION_FILE - 1].type : argOp[IX_FILE - 1].type;
+    option_t op = argOp[IX_OPTION - 1].type;
 
     // Search there is no argument that uses a mult option
     for(uint8_t i = 1; i < argc; i++) {
@@ -85,19 +89,16 @@ option_t checkOption(int argc, char *argv[], argOp_t argOp[]) {
     return op;
 }
 
-multOpFlags_t checkMultOp(int argc, char *argv[]) {    
+multOpFlags_t checkMultOp(int argc, char *argv[], argOp_t argOp[]) {    
     size_t multOpLen = strlen(argv[IX_OPTION]);
     multOpFlags_t multOpFlags = { 0 };
 
     // Check if the mult op is greater than the possible amount of options
     if(multOpLen > MULT_OP_MAX_LEN) bad_usage = 1;
 
-    // Check if the other arguments are mult options
-    else for(uint8_t i = IX_OPTION + 1; i < argc; i++) {
-        // Is not necessarly to check if it can be an option
-        // because is checked before calling the function
-        if(argv[i][0] == '-') bad_usage = 1;
-    }
+    // Check if the other arguments are an operation
+    else for(uint8_t i = IX_OPTION; i < argc - 1; i++)
+        if(argOp[i].type != NOT_FOUND) bad_usage = 1;
 
     if(bad_usage) return;
 
@@ -108,12 +109,8 @@ multOpFlags_t checkMultOp(int argc, char *argv[]) {
         switch(argv[IX_OPTION][i]) {
             case 'A':
             case 'e':
-                if(has_mult_v || has_mult_E || has_mult_T)
-                    bad_usage = 1;
-
-                has_mult_v = 1;
-                has_mult_E = 1;
-                has_mult_T = 1;
+                if(CHECK_MULT_A()) bad_usage = 1;
+                SET_MULT_A();
 
                 break;
 
@@ -142,9 +139,8 @@ multOpFlags_t checkMultOp(int argc, char *argv[]) {
                 break;
 
             case 't':
-                if(has_mult_v || has_mult_T) bad_usage = 1;
-                has_mult_v = 1;
-                has_mult_T = 1;
+                if(CHECK_MULT_t()) bad_usage = 1;
+                SET_MULT_t();
 
                 break;
 
@@ -183,6 +179,20 @@ void selectFlag(flag_t flag) {
             break;
     }
 }
+
+void selectOption(option_t op, const char *name) {
+    // Manage the multOp flags to call the principal function
+    multOpFlags_t multOpFlags = { 0 };
+
+    // Only combined option
+    if(op == OPTION_ALL) SET_MULT_A();
+    // Check according to the ix of flag starting with '-b'
+    else if(op != OPTION_PRED)
+        multOpFlags.data |= 1 << op - OPTION_NUM_NONBLANK;
+
+    multOp(multOpFlags, name);
+}
+
 
 void errorHandler(error_t error, ...) {
     va_list arg;

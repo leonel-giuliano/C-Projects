@@ -65,6 +65,16 @@ enum {
 #define has_mult_T multOpFlags.flags.flag4
 #define has_mult_v multOpFlags.flags.flag5
 
+// Value for the combine operations
+
+#define CHECK_MULT_A() multOpFlags.data & (has_mult_v | has_mult_E | has_mult_T)
+#define CHECK_MULT_e() multOpFlags.data & (has_mult_v | has_mult_E | has_mult_T)
+#define CHECK_MULT_t() multOpFlags.data & (has_mult_v | has_mult_T)
+
+#define SET_MULT_A() multOpFlags.data |= (has_mult_v | has_mult_E | has_mult_T)
+#define SET_MULT_e() multOpFlags.data |= (has_mult_v | has_mult_E | has_mult_T)
+#define SET_MULT_t() multOpFlags.data |= (has_mult_v | has_mult_T)
+
 typedef union {
     struct {
         unsigned int flag0 : 1;
@@ -102,12 +112,17 @@ flag_t checkFlag(int argc, argOp_t _ArgOperations[]);
 // Returns an enum of the option operation used
 // and also checks for a bad usage
 option_t checkOption(int argc, char *argv[], argOp_t _ArgOperations[]);
+// Checks the flags depending on the operations used
+// and checks if there was a bad usage
+multOpFlags_t checkMultOp(int argc, char *argv[], argOp_t _ArgOperations[]);
 
 
 /* SELECT FUNCTIONS */
 
 // Executes the flag command given
 void selectFlag(flag_t _Flag);
+// Sets flags to call the multOp function
+void selectOption(option_t _Option, const char *_FileName);
 
 void errorHandler(error_t _ErrorEvent, ...);
 

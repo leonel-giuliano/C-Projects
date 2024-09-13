@@ -25,4 +25,9 @@ void helpFlag();
 void versionFlag();
 
 
+/* OPTIONS */
+
+void multOp(multOpFlags_t _Flags, const char *_FileName);
+
+
 #endif
