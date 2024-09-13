@@ -85,34 +85,24 @@ option_t checkOption(int argc, char *argv[], argOp_t argOp[]) {
     return op;
 }
 
-
-/* SELECT FUNCTIONS */
-
-void selectFlag(flag_t flag) {
-    switch(flag) {
-        case FLAG_HELP:
-            helpFlag();
-            break;
-
-        case FLAG_VERSION:
-            versionFlag();
-            break;
-    }
-}
-
-void selectMultOption(int argc, char *argv[]) {    
+multOpFlags_t checkMultOp(int argc, char *argv[]) {    
     size_t multOpLen = strlen(argv[IX_OPTION]);
     multOpFlags_t multOpFlags = { 0 };
 
-    // Check if the lenght is greater than the possible amount
-    // of mult options used at once
-    if(multOpLen > MULT_OP_MAX_LEN) {
-        bad_usage = 1;
+    // Check if the mult op is greater than the possible amount of options
+    if(multOpLen > MULT_OP_MAX_LEN) bad_usage = 1;
 
-        return;
+    // Check if the other arguments are mult options
+    else for(uint8_t i = IX_OPTION + 1; i < argc; i++) {
+        // Is not necessarly to check if it can be an option
+        // because is checked before calling the function
+        if(argv[i][0] == '-') bad_usage = 1;
     }
 
+    if(bad_usage) return;
+
     // Iterate through every char of the mult option
+    // Skip the '-' char
     for(uint8_t i = 1; i < multOpLen; i++) {
         // Check the value of the char
         switch(argv[IX_OPTION][i]) {
@@ -175,8 +165,24 @@ void selectMultOption(int argc, char *argv[]) {
             default: bad_usage = 1;
         }
     }
+
+    return multOpFlags;
 }
 
+
+/* SELECT FUNCTIONS */
+
+void selectFlag(flag_t flag) {
+    switch(flag) {
+        case FLAG_HELP:
+            helpFlag();
+            break;
+
+        case FLAG_VERSION:
+            versionFlag();
+            break;
+    }
+}
 
 void errorHandler(error_t error, ...) {
     va_list arg;
@@ -190,7 +196,7 @@ void errorHandler(error_t error, ...) {
             break;
 
         case ERROR_FILE:
-            printf("cat: %s: File doesn't exits.\n", va_arg(arg, const char *));
+            printf("cat: %s: No such file or directory.\n", va_arg(arg, const char *));
             break;
 
         default:

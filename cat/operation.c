@@ -74,8 +74,8 @@ void multOp(multOpFlags_t multOpFlags, const char *name) {
         // Print end of the line $ before the char in '-E'
         if(has_mult_E && newCh == '\n') putchar('$');
 
-        // Change output for '-v'
-        if(has_mult_v && newCh >= CARET_ALPHABET_START && newCh <= CARET_ALPHABET_END && newCh != '\t') {
+        // Change output to "^" notation for '-v'
+        if(has_mult_v && newCh >= CARET_ALPHABET_START && newCh <= CARET_ALPHABET_END && newCh != '\t' && newCh != '\n') {
             newCh += ASCII_TO_CARET;
 
             putchar('^');

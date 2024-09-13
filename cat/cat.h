@@ -108,9 +108,6 @@ option_t checkOption(int argc, char *argv[], argOp_t _ArgOperations[]);
 
 // Executes the flag command given
 void selectFlag(flag_t _Flag);
-// Sets the flags depending on the options and executes the program
-void selectMultOption(int argc, char *argv[]);
-
 
 void errorHandler(error_t _ErrorEvent, ...);
 
