@@ -5,6 +5,20 @@
 #include <stdio.h>
 
 
+/* ARGUMENTS */
+
+// "cat [file...]"
+#define ARGC_PRED_MIN 2
+// "cat [option...] [file...]"
+#define ARGC_OPTION_MIN 3
+
+// "cat [file...]"
+#define ARGC_PRED_MAX 2
+// "cat [option...] [file...]"
+#define ARGC_OPTION_MAX 3
+
+
+
 /* TEXT */
 
 #define BOLD_ON "\e[1m"
@@ -17,6 +31,9 @@
 
 // Function to print the text in bold
 #define PRINT_BOLD(str) printf("%s%s%s", BOLD_ON, str, BOLD_OFF);
+
+
+#include "cat.h"
 
 
 /* FLAGS */

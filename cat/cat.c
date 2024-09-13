@@ -22,10 +22,25 @@ int main(int argc, char *argv[]) {
         flag_t flag = checkFlag(argc, argOp);
 
         selectFlag(flag);
-    } else if(has_option1) {
+    }
+    
+    else if(has_option1) {
         option_t op = checkOption(argc, argv, argOp);
 
-        selectOption(op, argv[IX_OPTION_FILE]);
+        if(!bad_usage) selectOption(op, argv[IX_OPTION_FILE]);
+    }
+    
+    else {
+        // Check if it isn't a mult option
+        if(argv[IX_OPTION][0] != '-' && argc >= ARGC_PRED_MIN && argc <= ARGC_PRED_MAX)
+            selectOption(OPTION_PRED, argv[IX_FILE]);
+
+        // Check if it is a mult option
+        else if(argv[IX_OPTION][0] == '-' && argc >= ARGC_OPTION_MIN && argc <= ARGC_OPTION_MAX) {
+            multOpFlags_t multOpFlags = checkMultOp(argc, argv, argOp);
+
+            if(!bad_usage) multOp(multOpFlags, argv[IX_OPTION_FILE]);
+        } else bad_usage = 1;
     }
 
     if(bad_usage) errorHandler(ERROR_ARG);
@@ -78,8 +93,10 @@ option_t checkOption(int argc, char *argv[], argOp_t argOp[]) {
     // Look for the option in a fixed place
     option_t op = argOp[IX_OPTION - 1].type;
 
+    if(argc < ARGC_OPTION_MIN || argc > ARGC_OPTION_MAX) bad_usage = 1;
+
     // Search there is no argument that uses a mult option
-    for(uint8_t i = 1; i < argc; i++) {
+    else for(uint8_t i = 1; i < argc; i++) {
         // Check if the arg has the min lenght "-x"
         // Check if it is a mult option
         if(strlen(argv[i]) >= MULT_OP_MIN_LEN && argv[i][0] == '-' && argv[i][1] != '-')
@@ -100,7 +117,7 @@ multOpFlags_t checkMultOp(int argc, char *argv[], argOp_t argOp[]) {
     else for(uint8_t i = IX_OPTION; i < argc - 1; i++)
         if(argOp[i].type != NOT_FOUND) bad_usage = 1;
 
-    if(bad_usage) return;
+    if(bad_usage) return multOpFlags;
 
     // Iterate through every char of the mult option
     // Skip the '-' char
