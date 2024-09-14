@@ -16,6 +16,13 @@
 #define has_option argFlags.flags.flag2
 #define has_mult argFlags.flags.flag3
 
+enum {
+    TYPE_SET = 1,
+    TYPE_FLAG,
+    TYPE_OPTION,
+    TYPE_MULT
+};
+
 
 /* ERROR EVENTS */
 

@@ -5,6 +5,7 @@
 #include "argop.h"
 
 #include "ls.h"
+#include "manage_op.h"
 
 
 int main(int argc, char *argv[]) {
@@ -13,6 +14,8 @@ int main(int argc, char *argv[]) {
         errorHandler(ERROR_MEMORY);
 
     initFlags(argc, argv, argOp);
+
+    if(has_flag) manageFlag(argc, argOp);
 
     free(argOp);
 
