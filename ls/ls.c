@@ -16,6 +16,7 @@ int main(int argc, char *argv[]) {
 
     initFlags(argc, argv, argOp);
 
+    // The flags has priority because they interrupt the ls command
     if(has_flag) manageFlag(argc, argOp);
 
     free(argOp);
@@ -93,10 +94,6 @@ void initFlags(int argc, char *argv[], argOp_t argOp[]) {
         flag,
         option
     );
-
-    // Even though is not used, it gets set if an operation appears more than once
-    // and that doesn't mean a bad usage for the ls command
-    bad_usage = 0;
 }
 
 
@@ -107,10 +104,6 @@ void errorHandler(error_t error, ...) {
     printf("ls: ");
 
     switch(error) {
-        case ERROR_DIR:
-            printf("cannot access '%s': No such file or directory.\n", va_arg(arg, const char *));
-            break;
-
         case ERROR_MEMORY:
             perror("problem allocating.\n");
             break;
