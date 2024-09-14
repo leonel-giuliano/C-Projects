@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include <stdarg.h>
 
 #include "argop.h"
 
@@ -99,16 +100,27 @@ void initFlags(int argc, char *argv[], argOp_t argOp[]) {
 }
 
 
-void errorHandler(error_t error) {
+void errorHandler(error_t error, ...) {
+    va_list arg;
+    va_start(arg, error);
+
+    printf("ls: ");
+
     switch(error) {
+        case ERROR_DIR:
+            printf("cannot access '%s': No such file or directory.\n", va_arg(arg, const char *));
+            break;
+
         case ERROR_MEMORY:
-            perror("Problem allocating.\n");
+            perror("problem allocating.\n");
             break;
 
         default:
-            perror("Unkown error.\n");
+            perror("unkown error.\n");
             break;
     }
+
+    va_end(arg);
 
     exit(EXIT_FAILURE);
 }

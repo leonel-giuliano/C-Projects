@@ -1,5 +1,11 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h>
 
+#include "argop.h"
+
+#include "ls.h"
+#include "manage_op.h"
 #include "op.h"
 
 
@@ -152,4 +158,9 @@ void versionFlag() {
     printf("This is free software: you are free to change and redistribute it.\n");
     printf("There is NO WARRANTY, to the extent permitted by law.\n\n");
     printf("Written by Richard M. Stallman and David MacKenzie.\n");
+}
+
+
+void lsCommand(multOpFlags_t multOpFlags) {
+
 }

@@ -28,7 +28,9 @@ enum {
 
 typedef uint8_t error_t;
 enum {
-    ERROR_MEMORY
+    ERROR_MEMORY,
+
+    ERROR_DIR
 };
 
 
@@ -37,7 +39,7 @@ void initFlags(int argc, char *argv[], argOp_t _ArgOp[]);
 
 
 // Exits the program in case of an error
-void errorHandler(error_t _ErrorEvent);
+void errorHandler(error_t _ErrorEvent, ...);
 
 
 #endif
