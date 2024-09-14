@@ -75,6 +75,74 @@ void helpFlag() {
     printf("  -o                         like -l, but do not list group information\n");
     printf("  -p, --indicator-style=slash\n");
     printf("                             append / indicator to directories\n\n");
+    printf("  -q, --hide-control-chars   print ? instead of nongraphic characters\n");
+    printf("      --show-control-chars   show nongraphic characters as-is (the default,\n");
+    printf("                             unless program is 'ls' and output is a terminal)\n\n");
+
+    printf("  -Q, --quote-name           enclose entry names in double quotes\n");
+    printf("      --quoting-style=WORD   use quoting style WORD for entry names:\n");
+    printf("                             literal, locale, shell, shell-always,\n");
+    printf("                             shell-escape, shell-escape-always, c, escape\n");
+    printf("                             (overrides QUOTING_STYLE environment variable)\n\n");
+
+    printf("  -r, --reverse              reverse order while sorting\n");
+    printf("  -R, --recursive            list subdirectories recursively\n");
+    printf("  -s, --size                 print the allocated size of each file, in blocks\n");
+    printf("  -S                         sort by file size, largest first\n");
+    printf("      --sort=WORD            sort by WORD instead of name: none (-U), size (-S),\n");
+    printf("                             time (-t), version (-v), extension (-X), width\n\n");
+
+    printf("      --time=WORD            change the default of using modification times;\n");
+    printf("                               access time (-u): atime, access, use;\n");
+    printf("                               change time (-c): ctime, status;\n");
+    printf("                               birth time: birth, creation;\n");
+    printf("                             with -l, WORD determines which time to show;\n");
+    printf("                             with --sort=time, sort by WORD (newest first)\n\n");
+
+    printf("      --time-style=TIME_STYLE\n");
+    printf("                             time/date format with -l; see TIME_STYLE below\n");
+    printf("  -t                         sort by time, newest first; see --time\n");
+    printf("  -T, --tabsize=COLS         assume tab stops at each COLS instead of 8\n");
+    printf("  -u                         with -lt: sort by, and show, access time;\n");
+    printf("                             with -l: show access time and sort by name;\n");
+    printf("                             otherwise: sort by access time, newest first\n\n");
+
+    printf("  -U                         do not sort; list entries in directory order\n");
+    printf("  -v                         natural sort of (version) numbers within text\n");
+    printf("  -w, --width=COLS           set output width to COLS.  0 means no limit\n");
+    printf("  -x                         list entries by lines instead of by columns\n");
+    printf("  -X                         sort alphabetically by entry extension\n");
+    printf("  -Z, --context              print any security context of each file\n");
+    printf("      --zero                 end each output line with NUL, not newline\n");
+    printf("  -1                         list one file per line\n");
+    printf("      --help        display this help and exit\n");
+    printf("      --version     output version information and exit\n\n");
+
+    printf("The SIZE argument is an integer and optional unit (example: 10K is 10*1024).\n");
+    printf("Units are K,M,G,T,P,E,Z,Y (powers of 1024) or KB,MB,... (powers of 1000).\n");
+    printf("Binary prefixes can be used, too: KiB=K, MiB=M, and so on.\n\n");
+
+    printf("The TIME_STYLE argument can be full-iso, long-iso, iso, locale, or +FORMAT.\n");
+    printf("FORMAT is interpreted like in date(1).  If FORMAT is FORMAT1<newline>FORMAT2,\n");
+    printf("then FORMAT1 applies to non-recent files and FORMAT2 to recent files.\n");
+    printf("TIME_STYLE prefixed with 'posix-' takes effect only outside the POSIX locale.\n");
+    printf("Also the TIME_STYLE environment variable sets the default style to use.\n\n");
+
+    printf("The WHEN argument defaults to 'always' and can also be 'auto' or 'never'.\n\n");
+
+    printf("Using color to distinguish file types is disabled both by default and\n");
+    printf("with --color=never.  With --color=auto, ls emits color codes only when\n");
+    printf("standard output is connected to a terminal.  The LS_COLORS environment\n");
+    printf("variable can change the settings.  Use the dircolors(1) command to set it.\n\n");
+
+    printf("Exit status:\n");
+    printf(" 0  if OK,\n");
+    printf(" 1  if minor problems (e.g., cannot access subdirectory),\n");
+    printf(" 2  if serious trouble (e.g., cannot access command-line argument).\n\n");
+
+    printf("GNU coreutils online help: <https://www.gnu.org/software/coreutils/>\n");
+    printf("Full documentation <https://www.gnu.org/software/coreutils/ls>\n");
+    printf("or available locally via: info '(coreutils) ls invocation'\n");
 }
 
 void versionFlag() {
