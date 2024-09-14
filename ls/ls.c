@@ -92,6 +92,10 @@ void initFlags(int argc, char *argv[], argOp_t argOp[]) {
         flag,
         option
     );
+
+    // Even though is not used, it gets set if an operation appears more than once
+    // and that doesn't mean a bad usage for the ls command
+    bad_usage = 0;
 }
 
 
