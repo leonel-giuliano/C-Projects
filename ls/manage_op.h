@@ -95,7 +95,7 @@ void manageOperations(int argc, char argv[], argOp_t _ArgOp[]);
 /* CHECK */
 
 // Checks the flags depending on the operations used
-void checkMult(const char *mult, multOpFlags_t *multOpFlags);
+void checkMult(const char *_MultArg, multOpFlags_t *multOpFlags);
 
 
 #endif

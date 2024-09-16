@@ -58,6 +58,22 @@ void checkMult(const char *mult, multOpFlags_t *multOpFlags) {
     const char multOp[] = "aAbBcCdDfFgGhHiIklLmnNopqQrRsStTuUvwxXZ";
 
     // Compare char by char after the '-'
-    for(uint8_t i = 0; i < len; i++) {
+    for(uint8_t i = 1; i < len; i++) {
+        // Pointer to the string from where the char is
+        char *str = strchr(multOp, mult[i]);
+        // If the char was found, then substracts the pointers to
+        // get the index of it
+        int8_t ix = (str != NULL) ? str - multOp : -1;
+
+        // Activate the flag depending on the order
+        if(ix != -1) {
+            // This is to select the index of the char inside 'multOpFlags'
+            uint8_t iFlag = ix % sizeof(uint8_t);
+            // Made the ix reflect the flag from 0 to 7
+            ix -= iFlag * sizeof(uint8_t);
+
+            // Activate the flag by bit
+            multOpFlags->flags8[iFlag].data |= 1 << ix;
+        }
     }
 }
