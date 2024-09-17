@@ -35,14 +35,23 @@ void manageFlag(int argc, argOp_t argOp[]) {
 
 void manageOperations(int argc, char argv[], argOp_t argOp[]) {
     // This flags are used for the final function
-    multOpFlags_t multOpFlags = { 0 };
+    opFlags_t opFlags = { 0 };
 
     // Check every argument to know the operation
     for(uint8_t i = 0; i < argc - 1; i++) {
         // Call the respective check function
         switch(argOp[i].type) {
+            case TYPE_OPTION:
+                // This is to select the index of the char inside 'multOpFlags'
+                uint8_t iFlag = argOp[i].operation % sizeof(uint8_t);
+                // Made the ix reflect the flag from 0 to 7
+                uint8_t ix = argOp[i].operation - iFlag * sizeof(uint8_t);
+
+                opFlags.flags8[iFlag].data |= 1 << ix;
+                break;
+
             case TYPE_MULT:
-                checkMult(argv[i + 1], &multOpFlags);
+                checkMult(argv[i + 1], &opFlags);
                 break;
         }
     }
@@ -51,11 +60,11 @@ void manageOperations(int argc, char argv[], argOp_t argOp[]) {
 
 /* CHECK */
 
-void checkMult(const char *mult, multOpFlags_t *multOpFlags) {
+void checkMult(const char *mult, opFlags_t *opFlags) {
     uint8_t len = strlen(mult);
 
     // Every operation in the flag order
-    const char multOp[] = "aAbBcCdDfFgGhHiIklLmnNopqQrRsStTuUvwxXZ";
+    const char multOp[] = "aAbBcCdDfFgGhHiIklLmnNopqQrRsStTuUvwxXZ1";
 
     // Compare char by char after the '-'
     for(uint8_t i = 1; i < len; i++) {
@@ -67,13 +76,11 @@ void checkMult(const char *mult, multOpFlags_t *multOpFlags) {
 
         // Activate the flag depending on the order
         if(ix != -1) {
-            // This is to select the index of the char inside 'multOpFlags'
             uint8_t iFlag = ix % sizeof(uint8_t);
-            // Made the ix reflect the flag from 0 to 7
             ix -= iFlag * sizeof(uint8_t);
 
             // Activate the flag by bit
-            multOpFlags->flags8[iFlag].data |= 1 << ix;
+            opFlags->flags8[iFlag].data |= 1 << ix;
         }
     }
 }
