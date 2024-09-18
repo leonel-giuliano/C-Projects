@@ -99,7 +99,7 @@ enum {
 void manageFlag(int argc, argOp_t _ArgOp[]);
 
 // This manages every other operation apart from the flags
-void manageOperations(int argc, char argv[], argOp_t _ArgOp[]);
+void manageOperations(int argc, char *argv[], argOp_t _ArgOp[]);
 
 
 /* CHECK */

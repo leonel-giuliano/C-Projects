@@ -33,7 +33,7 @@ void manageFlag(int argc, argOp_t argOp[]) {
     }
 }
 
-void manageOperations(int argc, char argv[], argOp_t argOp[]) {
+void manageOperations(int argc, char *argv[], argOp_t argOp[]) {
     // This flags are used for the final function
     opFlags_t opFlags = { 0 };
 

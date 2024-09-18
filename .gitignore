@@ -1,8 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/c,visualstudiocode,cmake
 # Edit at https://www.toptal.com/developers/gitignore?templates=c,visualstudiocode,cmake
 
-# Personal
-*.txt
+### Personal ###
+build/ 
+
 
 ### C ###
 # Prerequisites
@@ -43,8 +44,7 @@
 *.x86_64
 *.hex
 
-# Debug files# Personal
-*.txt
+# Debug files
 *.dSYM/
 *.su
 *.idb
@@ -52,11 +52,11 @@
 
 # Kernel Module Compile Results
 *.mod*
-*.cmdFixed 
+*.cmd
 .tmp_versions/
 modules.order
 Module.symvers
-Mkfile.oldFixed 
+Mkfile.old
 dkms.conf
 
 ### CMake ###
@@ -65,26 +65,24 @@ CMakeCache.txt
 CMakeFiles
 CMakeScripts
 Testing
+Makefile
 cmake_install.cmake
 install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
-.cmake
-build
 
 ### CMake Patch ###
 # External projects
 *-prefix/
-# Personal
-*.txt
+
 ### VisualStudioCode ###
 */.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
-!.vscode/*.code-snippets
+*/!.vscode/settings.json
+*/!.vscode/tasks.json
+*/!.vscode/launch.json
+*/!.vscode/extensions.json
+*/!.vscode/*.code-snippets
 
 # Local History for Visual Studio Code
 .history/
