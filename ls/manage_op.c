@@ -37,7 +37,7 @@ void manageOperations(int argc, char argv[], argOp_t argOp[]) {
     // This flags are used for the final function
     opFlags_t opFlags = { 0 };
 
-    // Check every argument to know the operation
+    // Check every argument to activate the flags for operation
     for(uint8_t i = 0; i < argc - 1; i++) {
         // Call the respective check function
         switch(argOp[i].type) {
@@ -72,7 +72,7 @@ void checkMult(const char *mult, opFlags_t *opFlags) {
         char *str = strchr(multOp, mult[i]);
         // If the char was found, then substracts the pointers to
         // get the index of it
-        int8_t ix = (str != NULL) ? str - multOp : -1;
+        int8_t ix = (str != NULL) ? (int8_t)(str - multOp) : -1;
 
         // Activate the flag depending on the order
         if(ix != -1) {

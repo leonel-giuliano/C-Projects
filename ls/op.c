@@ -1,4 +1,12 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <dirent.h>
+
+#include "argop.h"
+
+#include "ls.h"
+#include "manage_op.h"
+#include "op.h"
 
 
 /* FLAG */
@@ -150,4 +158,31 @@ void versionFlag() {
     printf("This is free software: you are free to change and redistribute it.\n");
     printf("There is NO WARRANTY, to the extent permitted by law.\n\n");
     printf("Written by Richard M. Stallman and David MacKenzie.\n");
+}
+
+
+/* OPERATIONS */
+
+void listOp(const char *path, argOp_t argOp[], opFlags_t *opFlags) {
+    DIR *dir = NULL;
+    // In the case the directory couldn't be open, just exits
+    // the function to try with the other directories
+    if((dir = opendir(path)) == NULL) {
+        printf("ls: cannot access '%s'", path);
+        perror("");
+
+        return;
+    }
+
+    // Iterate through every file from the directory
+    struct dirent *entry = NULL;
+    while((entry = readdir(dir)) != NULL) {
+        
+    }
+
+    if(closedir(dir) == -1) {
+        free(argOp);
+
+        errorHandler(ERROR_DIR, path);
+    }
 }

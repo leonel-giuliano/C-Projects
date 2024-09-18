@@ -11,7 +11,7 @@
 
 int main(int argc, char *argv[]) {
     argOp_t *argOp = NULL;
-    if((argOp = malloc((argc - 1) * sizeof(argOp_t))) == NULL)
+    if((argOp = (argOp_t *)malloc((argc - 1) * sizeof(argOp_t))) == NULL)
         errorHandler(ERROR_MEMORY);
 
     initFlags(argc, argv, argOp);
@@ -127,11 +127,16 @@ void errorHandler(error_t error, ...) {
 
     switch(error) {
         case ERROR_MEMORY:
-            perror("problem allocating.\n");
+            perror("Error allocating memory");
+            break;
+
+        case ERROR_DIR:
+            printf("Error closing '%s' directory", va_arg(arg, const char *));
+            perror("");
             break;
 
         default:
-            perror("unkown error.\n");
+            perror("Unkown error.\n");
             break;
     }
 
