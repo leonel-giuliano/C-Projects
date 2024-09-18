@@ -55,6 +55,12 @@ void manageOperations(int argc, char *argv[], argOp_t argOp[]) {
                 break;
         }
     }
+
+    // Iterate through all the arguments in search of the paths
+    for(uint8_t i = 1; i < argc; i++) {
+        if(argOp[i - 1].type == NOT_FOUND)
+            listOp(argv[i], argOp, &opFlags);
+    }
 }
 
 

@@ -130,7 +130,7 @@ void errorHandler(error_t error, ...) {
             perror("Error allocating memory");
             break;
 
-        case ERROR_DIR:
+        case ERROR_CLOSEDIR:
             printf("Error closing '%s' directory", va_arg(arg, const char *));
             perror("");
             break;

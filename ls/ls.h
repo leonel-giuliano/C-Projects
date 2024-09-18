@@ -34,7 +34,7 @@ enum {
 typedef uint8_t error_t;
 enum {
     ERROR_MEMORY,
-    ERROR_DIR
+    ERROR_CLOSEDIR
 };
 
 

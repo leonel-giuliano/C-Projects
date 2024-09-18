@@ -196,6 +196,6 @@ void listOp(const char *path, argOp_t argOp[], opFlags_t *opFlags) {
     if(closedir(dir) == -1) {
         free(argOp);
 
-        errorHandler(ERROR_DIR, path);
+        errorHandler(ERROR_CLOSEDIR, path);
     }
 }
