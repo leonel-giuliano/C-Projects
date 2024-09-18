@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <dirent.h>
+#include <string.h>
 
 #include "argop.h"
 
@@ -177,7 +178,19 @@ void listOp(const char *path, argOp_t argOp[], opFlags_t *opFlags) {
     // Iterate through every file from the directory
     struct dirent *entry = NULL;
     while((entry = readdir(dir)) != NULL) {
-        
+        size_t len = strlen(entry->d_name);
+
+        // Operations which skip specific files
+        /* ADD has_mult_G WITH FUNCTION TO KNOW IF IT IS A GROUP FILE */
+        /* ADD has_mult_I */
+        if(
+            (!has_mult_a || entry->d_name[0] == '.')
+                &&
+            !(has_mult_A && (!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, "..")))
+                &&
+            !(has_mult_B && entry->d_name[len] == '~')            
+        )
+        printf("%s\t", entry->d_name);
     }
 
     if(closedir(dir) == -1) {
