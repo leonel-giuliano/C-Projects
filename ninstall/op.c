@@ -33,8 +33,8 @@ deleting the '.list' file");
     PRINT_B("FLAG\n");
     puts("\t-y, --remove-file:\tAutomatically remove the file when the 'remove' option is used");
     puts("\t-n, --keep-file:\tKeep the file when the 'remove' option is used");
-    puts("\t--help:\tPrint this information message");
-    puts("\t--version:\tPrint version message");
+    puts("\t--help:\t\t\tPrint this information message");
+    puts("\t--version:\t\tPrint version message");
 }
 
 void versionFlag() {
