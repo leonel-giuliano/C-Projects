@@ -62,10 +62,6 @@ void errorHandler(error_t error) {
             puts("Bad usage of the ninstall program");
             puts("Check the '--help' flag for help");
             break;
-
-        default:
-            perror("[DEBUG] Unkown error");
-            break;
     }
 
     exit(EXIT_FAILURE);

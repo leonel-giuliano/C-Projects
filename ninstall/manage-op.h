@@ -11,7 +11,8 @@
 
 enum {
     TYPE_FLAG = 1,
-    TYPE_OPTION
+    TYPE_OPTION,
+    TYPE_FLAG_RM
 };
 
 typedef uint8_t flag_t;
@@ -20,10 +21,27 @@ enum {
     FLAG_VERSION
 };
 
+typedef uint8_t option_t;
+enum {
+    OPTION_PRED,
+    OPTION_NEW,
+    OPTION_EDIT,
+    OPTION_LIST,
+    OPTION_REMOVE
+};
+
 
 /* MANAGE */
 
 void manageFlag(int argc, argOp_t _ArgOp[]);
+void manageOption(int argc, char *argv[], argOp_t _ArgOp[]);
+
+
+/* CHECK */
+
+void checkNew(uint8_t _NumArg, argOp_t _ArgOp[]);
+void checkList(uint8_t _NumArg, argOp_t _ArgOp[]);
+void checkRemove(uint8_t _NumArg, argOp_t _ArgOp[]);
 
 
 #endif
