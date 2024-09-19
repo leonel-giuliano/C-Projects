@@ -7,12 +7,7 @@
 
 /* FLAGS */
 
-void helpFlag(int argc, argOp_t _Argop[]);
-
-
-/* HELP */
-
-void helpPred();
+void helpFlag();
 
 
 #endif

@@ -4,6 +4,7 @@
 #include "argop.h"
 
 #include "manage-op.h"
+#include "op.h"
 
 
 /* MANAGE */
@@ -16,5 +17,10 @@ void manageFlag(int argc, argOp_t argOp[]) {
         if(argOp[i].type == TYPE_FLAG) flag = argOp[i].operation;
     }
 
-    
+    // Execute corresponding flag function
+    switch(flag) {
+        case FLAG_HELP:
+            helpFlag();
+            break;
+    }
 }

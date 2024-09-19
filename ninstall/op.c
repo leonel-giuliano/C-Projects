@@ -3,20 +3,13 @@
 #include "argop.h"
 
 #include "ninstall.h"
-#include "manage-op.h"
 #include "op.h"
 
 
 /* FLAGS */
 
-void helpFlag(int argc, argOp_t argOp[]) {
-    if(!has_option) helpPred();
-}
 
-
-/* HELP */
-
-void helpPred() {
+void helpFlag() {
     PRINT_B("USAGE\n");
     puts("\tninstall [OPTION] [PROGRAM] [FLAG]\n");
 
@@ -40,6 +33,6 @@ deleting the '.list' file");
     PRINT_B("FLAG\n");
     puts("\t-y, --remove-file:\tAutomatically remove the file when the 'remove' option is used");
     puts("\t-n, --keep-file:\tKeep the file when the 'remove' option is used");
-    puts("\t--help:\tPrint information message about the program or option");
+    puts("\t--help:\tPrint this information message");
     puts("\t--version:\tPrint version message");
 }
