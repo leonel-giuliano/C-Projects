@@ -36,3 +36,8 @@ deleting the '.list' file");
     puts("\t--help:\tPrint this information message");
     puts("\t--version:\tPrint version message");
 }
+
+void versionFlag() {
+    puts("ninstall 1.0\n");
+    puts("Made by: Leonel Giuliano");
+}

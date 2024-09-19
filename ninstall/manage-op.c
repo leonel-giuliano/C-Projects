@@ -22,5 +22,9 @@ void manageFlag(int argc, argOp_t argOp[]) {
         case FLAG_HELP:
             helpFlag();
             break;
+
+        case FLAG_VERSION:
+            versionFlag();
+            break;
     }
 }

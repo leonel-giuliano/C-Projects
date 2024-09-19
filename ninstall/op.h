@@ -8,6 +8,7 @@
 /* FLAGS */
 
 void helpFlag();
+void versionFlag();
 
 
 #endif

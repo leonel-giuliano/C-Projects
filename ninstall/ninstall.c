@@ -4,6 +4,7 @@
 #include "argop.h"
 
 #include "ninstall.h"
+#include "manage-op.h"
 
 
 int main(int argc, char *argv[]) {
@@ -14,6 +15,9 @@ int main(int argc, char *argv[]) {
 
     // This happens if an operation was used more than once
     if(bad_usage) errorHandler(ERROR_ARG);
+
+    // The flags have priority
+    if(has_flag) manageFlag(argc, argOp);
 
     return 0;
 }

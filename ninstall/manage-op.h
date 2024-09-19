@@ -4,6 +4,8 @@
 
 #include <stdint.h>
 
+#include "argop.h"
+
 
 /* ENUM */
 
@@ -17,6 +19,11 @@ enum {
     FLAG_HELP = 1,
     FLAG_VERSION
 };
+
+
+/* MANAGE */
+
+void manageFlag(int argc, argOp_t _ArgOp[]);
 
 
 #endif
