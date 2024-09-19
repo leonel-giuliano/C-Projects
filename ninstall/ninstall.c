@@ -34,7 +34,19 @@ void initFlags(int argc, char *argv[], argOp_t argOp[]) {
         NULL
     };
 
-    checkArgs(argc, argv, argOp, OP_AMOUNT, flag, option);
+    const char *flagRm0[] = {
+        "-y",
+        "-n",
+        NULL
+    };
+
+    const char *flagRm1[] = {
+        "--remove-file",
+        "--keep-file",
+        NULL
+    };
+
+    checkArgs(argc, argv, argOp, OP_AMOUNT, flag, option, flagRm0, flagRm1);
 }
 
 

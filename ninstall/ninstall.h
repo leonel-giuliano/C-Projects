@@ -2,6 +2,7 @@
 #define __NINSTALL_H__
 
 
+#include <stdio.h>
 #include <stdint.h>
 
 #include "argop.h"
@@ -12,8 +13,8 @@
 // ninstall [PROGRAM]
 #define ARGC_MIN 2
 
-// ninstall [OPTION] [PROGRAM] [FLAG]
-#define ARGC_MAX 4
+// ninstall remove [PROGRAM] [FLAG] --help
+#define ARGC_MAX 5
 
 
 /* OPERATIONS */
@@ -22,6 +23,8 @@
 
 #define has_flag argFlags.flags.flag0
 #define has_option argFlags.flags.flag1
+#define has_flag_rm0 argFlags.flags.flag2
+#define has_flag_rm1 argFlags.flags.flag3
 
 
 /* ERROR EVENTS */
@@ -30,6 +33,14 @@ typedef uint8_t error_t;
 enum {
     ERROR_ARG
 };
+
+
+/* TEXT */
+
+#define BOLD_ON "\e[1m"
+#define BOLD_OFF "\e[0m"
+
+#define PRINT_B(str) printf("%s%s%s", BOLD_ON, str, BOLD_OFF);
 
 
 // Check the arguments operation to initializate 'argFlags' and save
