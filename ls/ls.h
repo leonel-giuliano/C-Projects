@@ -10,16 +10,11 @@
 /* OPERATIONS */
 
 #define OP_AMOUNT 4
-#define MULT_OPTION_AMOUNT 39
 
 #define has_set argFlags.flags.flag0
 #define has_flag argFlags.flags.flag1
 #define has_option argFlags.flags.flag2
 #define has_mult argFlags.flags.flag3
-
-// Because the bad usage isn't important for the ls command,
-// is going to be used as a way to check if any operation appeared more than once
-#define is_op_repeated bad_usage
 
 enum {
     TYPE_SET = 1,

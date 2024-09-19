@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <dirent.h>
 #include <string.h>
+#include <linux/limits.h>
 
 #include "argop.h"
 
@@ -169,7 +170,10 @@ void listOp(const char *path, argOp_t argOp[], opFlags_t *opFlags) {
     // In the case the directory couldn't be open, just exits
     // the function to try with the other directories
     if((dir = opendir(path)) == NULL) {
-        printf("ls: cannot access '%s'", path);
+        printf("ls: cannot access '%s': ", path);
+        // Needed because perror gets printed given there is no new line
+        fflush(stdout);
+
         perror("");
 
         return;
@@ -184,13 +188,14 @@ void listOp(const char *path, argOp_t argOp[], opFlags_t *opFlags) {
         /* ADD has_mult_G WITH FUNCTION TO KNOW IF IT IS A GROUP FILE */
         /* ADD has_mult_I */
         if(
-            (!has_mult_a || entry->d_name[0] == '.')
+            // Ignore case where it doesn't have mult_a, isn't "." or ".." and starts with '.'
+            !(!has_mult_a && strcmp(entry->d_name, ".") && strcmp(entry->d_name, "..") && entry->d_name[0] == '.')
                 &&
             !(has_mult_A && (!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, "..")))
                 &&
             !(has_mult_B && entry->d_name[len] == '~')            
         )
-        printf("%s\t", entry->d_name);
+            printf("%s\n", entry->d_name);
     }
 
     if(closedir(dir) == -1) {

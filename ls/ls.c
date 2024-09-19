@@ -18,6 +18,7 @@ int main(int argc, char *argv[]) {
 
     // The flags has priority because they interrupt the ls command
     if(has_flag) manageFlag(argc, argOp);
+    else manageOperations(argc, argv, argOp);
 
     free(argOp);
 
@@ -131,12 +132,14 @@ void errorHandler(error_t error, ...) {
             break;
 
         case ERROR_CLOSEDIR:
-            printf("Error closing '%s' directory", va_arg(arg, const char *));
+            printf("Error closing '%s' directory: ", va_arg(arg, const char *));
+            fflush(stdout);
+
             perror("");
             break;
 
         default:
-            perror("Unkown error.\n");
+            perror("Unkown error");
             break;
     }
 
