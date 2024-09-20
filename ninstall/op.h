@@ -41,6 +41,7 @@ void versionFlag();
 /* OPTION */
 
 void newOption(const char *_ProgramName);
+void editOption(const char *_ProgramName);
 
 
 #endif

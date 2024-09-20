@@ -134,3 +134,10 @@ void newOption(const char *program) {
 
     if(fclose(fp) == EOF) CATCH_FILE(program, ERROR_FCLOSE);
 }
+
+void editOption(const char *program) {
+    FILE *fp = fopenNano(program);
+    if(fp == NULL) CATCH_FILE(program, ERROR_FILE);
+
+    if(fclose(fp) == EOF) CATCH_FILE(program, ERROR_FCLOSE);
+}

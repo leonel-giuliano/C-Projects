@@ -118,5 +118,9 @@ void selectOption(int argc, char *argv[], option_t op) {
         case OPTION_NEW:
             newOption(pArgv[IX_PROGRAM]);
             break;
+
+        case OPTION_EDIT:
+            editOption(pArgv[IX_PROGRAM]);
+            break;
     }
 }
