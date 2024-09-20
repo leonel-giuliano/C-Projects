@@ -49,20 +49,8 @@ uint8_t execCommand(const char *search, FILE *fp) {
     return returnVal;
 }
 
-FILE *fopenProgram(char *path, const char *program) {
-    // Get home env for the ninstall folder
-    char *home = getenv("HOME");
-    if(home == NULL) return NULL;
-
-    snprintf(path, PATH_MAX, "%s/%s/%s.list", home, NINSTALL_HOME_FOLDER, program);
-
-    // Create file (new) or don't truncate it (edit, remove)
-    return fopen(path, "a+");
-}
-
-FILE *fopenNano(const char *program) {
-    char path[PATH_MAX];
-    FILE *fp = fopenProgram(path, program);
+FILE *fopenNano(char *path, const char *program) {
+    FILE *fp = fopen(getPath(path, program), "a+");
     if(fp == NULL) return NULL;
 
     // Check if the file is empty to write the comments
@@ -78,6 +66,17 @@ FILE *fopenNano(const char *program) {
     system(nano);
 
     return fp;
+}
+
+char *getPath(char *path, const char *program) {
+    // Get home env for the ninstall folder
+    char *home = getenv("HOME");
+    if(home == NULL) return NULL;
+
+    snprintf(path, PATH_MAX, "%s/%s/%s.list", home, NINSTALL_HOME_FOLDER, program);
+
+    // Create file (new) or don't truncate it (edit, remove)
+    return path;
 }
 
 
@@ -120,7 +119,8 @@ void versionFlag() {
 /* OPTION */
 
 void newOption(const char *program) {
-    FILE *fp = fopenNano(program);
+    char path[PATH_MAX];
+    FILE *fp = fopenNano(path, program);
     if(fp == NULL) CATCH_FILE(program, ERROR_FILE);
 
     // Executes the installation commands
@@ -136,7 +136,8 @@ void newOption(const char *program) {
 }
 
 void editOption(const char *program) {
-    FILE *fp = fopenNano(program);
+    char path[PATH_MAX];
+    FILE *fp = fopenNano(path, program);
     if(fp == NULL) CATCH_FILE(program, ERROR_FILE);
 
     if(fclose(fp) == EOF) CATCH_FILE(program, ERROR_FCLOSE);

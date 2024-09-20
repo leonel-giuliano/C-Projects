@@ -24,12 +24,12 @@
 uint8_t execCommand(const char *_StrToSearch, FILE *_Stream);
 
 // Opens the file in the ninstall folder in append mode
-// Returns NULL if the home env or file couldn't been open
-FILE *fopenProgram(char *_FilePath, const char *_ProgramName);
+// Returns NULL if the home env couldn't been open
+char *getPath(char *path, const char *program);
 
 // Opens the file, creates the comments if neccessarly and opens
 // the file with the nano command
-FILE *fopenNano(const char *_ProgramName);
+FILE *fopenNano(char *_PathBuffer, const char *_ProgramName);
 
 
 /* FLAGS */
