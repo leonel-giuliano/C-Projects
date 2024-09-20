@@ -1,4 +1,6 @@
 #include <stdio.h>
+#include <stdlib.h>
+#include <linux/limits.h>
 
 #include "argop.h"
 
@@ -6,8 +8,37 @@
 #include "op.h"
 
 
-/* FLAGS */
+void fileCommands(const char *program, const char *search) {
+    FILE *fp = openProgram(program);
+    if(fp == NULL) {
+        char programFile[PATH_MAX];
+        snprintf(programFile, PATH_MAX, "%s.list", program);
 
+        errorHandler(ERROR_FILE, programFile);
+    }
+
+    if(fclose(fp) == EOF) {
+        char programFile[PATH_MAX];
+        snprintf(programFile, PATH_MAX, "%s.list", program);
+        
+        errorHandler(ERROR_FCLOSE, programFile);
+    }
+}
+
+FILE *openProgram(const char *program) {
+    // Get home path for the full path of the program
+    char *home = getenv("HOME");
+    if(home == NULL) errorHandler(ERROR_HOME);
+
+    // Get the path to the file
+    char path[PATH_MAX];
+    snprintf(path, PATH_MAX, "%s/%s/%s.list", home, NINSTALL_HOME_FOLDER, program);
+
+    return fopen(path, "a+");
+}
+
+
+/* FLAGS */
 
 void helpFlag() {
     PRINT_B("USAGE\n");

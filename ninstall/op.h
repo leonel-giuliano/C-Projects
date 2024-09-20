@@ -5,6 +5,10 @@
 #include "argop.h"
 
 
+// Return a pointer to the file in ninstall folder
+FILE *openProgram(const char *_ProgramName);
+
+
 /* FLAGS */
 
 void helpFlag();

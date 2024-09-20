@@ -71,6 +71,8 @@ void manageOption(int argc, char *argv[], argOp_t argOp[]) {
 
     checkF(arg, pArgOp);
     if(bad_usage) return;
+
+    /* ADD WAY TO SELECT THE OPTION FUNCTION */
 }
 
 

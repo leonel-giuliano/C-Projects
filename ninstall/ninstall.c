@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <stdarg.h>
 
 #include "argop.h"
 
@@ -54,15 +55,36 @@ void initFlags(int argc, char *argv[], argOp_t argOp[]) {
 }
 
 
-void errorHandler(error_t error) {
+void errorHandler(error_t error, ...) {
+    va_list arg;
+    va_start(arg, error);
+
     printf("ninstall: ");
 
     switch(error) {
         case ERROR_ARG:
-            puts("Bad usage of the ninstall program");
+            puts("bad usage of the ninstall program");
             puts("Check the '--help' flag for help");
             break;
+
+        case ERROR_HOME:
+            puts("cannot access home enviroment");
+            break;
+
+        case ERROR_FILE:
+            printf("cannot access '%s': ", va_arg(arg, const char *));
+            fflush(stdout);
+            perror("");
+            break;
+
+        case ERROR_FCLOSE:
+            printf("problem closing '%s': ", va_arg(arg, const char *));
+            fflush(stdout);
+            perror("");
+            break;
     }
+
+    va_end(arg);
 
     exit(EXIT_FAILURE);
 }

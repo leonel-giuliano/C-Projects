@@ -47,11 +47,16 @@ enum {
 
 typedef uint8_t error_t;
 enum {
-    ERROR_ARG
+    ERROR_ARG,
+    ERROR_HOME,
+    ERROR_FILE,
+    ERROR_FCLOSE
 };
 
 
 /* TEXT */
+
+#define NINSTALL_HOME_FOLDER "ninstall"
 
 #define BOLD_ON "\e[1m"
 #define BOLD_OFF "\e[0m"
@@ -64,7 +69,7 @@ enum {
 void initFlags(int argc, char *argv[], argOp_t _ArgOp[]);
 
 // Give an exit failure when is called and print an error msg depending on the event
-void errorHandler(error_t _ErrorEvent);
+void errorHandler(error_t _ErrorEvent, ...);
 
 
 #endif
