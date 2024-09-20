@@ -8,33 +8,32 @@
 #include "op.h"
 
 
-void fileCommands(const char *program, const char *search) {
-    FILE *fp = openProgram(program);
-    if(fp == NULL) {
-        char programFile[PATH_MAX];
-        snprintf(programFile, PATH_MAX, "%s.list", program);
-
-        errorHandler(ERROR_FILE, programFile);
-    }
-
-    if(fclose(fp) == EOF) {
-        char programFile[PATH_MAX];
-        snprintf(programFile, PATH_MAX, "%s.list", program);
-        
-        errorHandler(ERROR_FCLOSE, programFile);
-    }
-}
-
-FILE *openProgram(const char *program) {
-    // Get home path for the full path of the program
+FILE *fopenProgram(char *path, const char *program) {
+    // Get home env for the ninstall folder
     char *home = getenv("HOME");
-    if(home == NULL) errorHandler(ERROR_HOME);
+    if(home == NULL) return NULL;
 
-    // Get the path to the file
-    char path[PATH_MAX];
     snprintf(path, PATH_MAX, "%s/%s/%s.list", home, NINSTALL_HOME_FOLDER, program);
 
+    // Create file (new) or don't truncate it (edit, remove)
     return fopen(path, "a+");
+}
+
+FILE *fopenNano(const char *program) {
+    char path[PATH_MAX];
+    FILE *fp = fopenProgram(path, program);
+    if(fp == NULL) return NULL;
+
+    // Check if the file is empty to write the comments
+    fseek(fp, 0, SEEK_END);
+    if(!ftell(fp)) fprintf(fp, "%s\n%s", INSTALL_STR, UNINSTALL_STR);
+
+    // Open the file in nano
+    char nano[PATH_MAX + NANO_LEN];
+    snprintf(nano, PATH_MAX + NANO_LEN, "nano %s", path);
+    system(nano);
+
+    return fp;
 }
 
 

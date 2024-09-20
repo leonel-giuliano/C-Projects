@@ -5,8 +5,13 @@
 #include "argop.h"
 
 
-// Return a pointer to the file in ninstall folder
-FILE *openProgram(const char *_ProgramName);
+// Opens the file in the ninstall folder in append mode
+// Returns NULL if the home env or file couldn't been open
+FILE *fopenProgram(char *_FilePath, const char *_ProgramName);
+
+// Opens the file, creates the comments if neccessarly and opens
+// the file with the nano command
+FILE *fopenNano(const char *_ProgramName);
 
 
 /* FLAGS */

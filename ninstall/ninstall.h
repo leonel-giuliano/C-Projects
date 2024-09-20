@@ -57,6 +57,11 @@ enum {
 /* TEXT */
 
 #define NINSTALL_HOME_FOLDER "ninstall"
+#define INSTALL_STR "# Installation\n"
+#define UNINSTALL_STR "# Uninstallation\n"
+
+// "nano "
+#define NANO_LEN 5
 
 #define BOLD_ON "\e[1m"
 #define BOLD_OFF "\e[0m"

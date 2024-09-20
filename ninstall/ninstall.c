@@ -67,10 +67,6 @@ void errorHandler(error_t error, ...) {
             puts("Check the '--help' flag for help");
             break;
 
-        case ERROR_HOME:
-            puts("cannot access home enviroment");
-            break;
-
         case ERROR_FILE:
             printf("cannot access '%s': ", va_arg(arg, const char *));
             fflush(stdout);
