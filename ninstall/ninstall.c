@@ -19,6 +19,9 @@ int main(int argc, char *argv[]) {
 
     // The flags have priority
     if(has_flag) manageFlag(argc, argOp);
+    else manageOption(argc, argv, argOp);
+
+    if(bad_usage) errorHandler(ERROR_ARG);
 
     return 0;
 }
@@ -55,7 +58,7 @@ void initFlags(int argc, char *argv[], argOp_t argOp[]) {
 }
 
 
-void errorHandler(error_t error, ...) {
+void errorHandler(errorEvent_t error, ...) {
     va_list arg;
     va_start(arg, error);
 
@@ -84,6 +87,7 @@ void errorHandler(error_t error, ...) {
             break;
 
         case ERROR_NOMEM:
+            fflush(stdout);
             perror("problem allocating");
             break;
     }

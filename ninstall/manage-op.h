@@ -39,9 +39,15 @@ void manageOption(int argc, char *argv[], argOp_t _ArgOp[]);
 
 /* CHECK */
 
-void checkNew(uint8_t _NumArg, argOp_t _ArgOp[]);
-void checkList(uint8_t _NumArg, argOp_t _ArgOp[]);
-void checkRemove(uint8_t _NumArg, argOp_t _ArgOp[]);
+void checkOption(int argc, argOp_t _ArgOp[], option_t _Option);
+void checkNew(int argc, argOp_t _ArgOp[]);
+void checkList(int argc, argOp_t _ArgOp[]);
+void checkRemove(int argc, argOp_t _ArgOp[]);
+
+
+/* SELECT */
+
+void selectOption(int argc, char *argv[], option_t _Option);
 
 
 #endif

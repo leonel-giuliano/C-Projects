@@ -23,21 +23,28 @@ uint8_t execCommand(const char *search, FILE *fp) {
     // Go through the file until the comment is found
     while((nComm = getline(&comm, &commLen, fp)) != -1 && strcmp(comm, search));
 
-    // Wasn't found or problem allocating
-    // That's checked later
-    if(nComm == -1) returnVal = 1;
+    // Problem allocating or the str wasn't found
+    if(nComm == -1) returnVal = (errno == ENOMEM) ? ENOMEM : 1;
+    else {
+        // Used to stop before the EOF
+        uint8_t isInstall = (!strcmp(search, INSTALL_STR)) ? 1 : 0;
 
-    // Execute every command
-    else while((nComm = getline(&comm, &commLen, fp)) != -1) {
-        if(!strcmp(comm, "\n")) continue;
-        printf("Executing: %s", comm);
+        // Execute every command
+        while((nComm = getline(&comm, &commLen, fp)) != -1) {
+            if(!strcmp(comm, "\n")) continue;
 
-        system(comm);
+            // The installation command doesn't go to the EOF
+            if(isInstall && !strcmp(comm, UNINSTALL_STR)) break;
+
+            printf("Executing: %s", comm);
+            system(comm);
+        }
+
+        // Problem allocating
+        // The installation can run withouth the uninstallation comment
+        if(nComm == -1 && errno == ENOMEM) returnVal = ENOMEM;
     }
-
-    // Problem allocating
-    if(nComm == -1 && errno == ENOMEM) returnVal = ENOMEM;
-
+    
     free(comm);
     return returnVal;
 }

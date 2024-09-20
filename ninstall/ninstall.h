@@ -45,7 +45,7 @@ enum {
 
 /* ERROR EVENTS */
 
-typedef uint8_t error_t;
+typedef uint8_t errorEvent_t;
 enum {
     ERROR_ARG,
     ERROR_COMMENT,
@@ -77,7 +77,7 @@ enum {
 void initFlags(int argc, char *argv[], argOp_t _ArgOp[]);
 
 // Give an exit failure when is called and print an error msg depending on the event
-void errorHandler(error_t _ErrorEvent, ...);
+void errorHandler(errorEvent_t _ErrorEvent, ...);
 
 
 #endif

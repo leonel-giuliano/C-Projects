@@ -41,16 +41,24 @@ void manageOption(int argc, char *argv[], argOp_t argOp[]) {
         return;
     }
 
-    // This is for the pred function
-    uint8_t arg = argc;
+    checkOption(argc, argOp, op);
+    if(bad_usage) return;
+
+    selectOption(argc, argv, op);
+}
+
+
+/* CHECK */
+
+void checkOption(int argc, argOp_t argOp[], option_t op) {
+    // For the pred function to align the arguments as it had the option
     argOp_t *pArgOp = argOp;
 
-    // Select the check function
-    void (*checkF)(uint8_t, argOp_t []) = NULL;
+    void (*checkF)(int, argOp_t []) = NULL;
     switch(op) {
         case OPTION_PRED:
             // This is to call the function like it had the option
-            arg++;
+            argc++;
             pArgOp--;
             // The following case is the pred. option
             
@@ -69,30 +77,24 @@ void manageOption(int argc, char *argv[], argOp_t argOp[]) {
             break;
     }
 
-    checkF(arg, pArgOp);
-    if(bad_usage) return;
-
-    /* ADD WAY TO SELECT THE OPTION FUNCTION */
+    checkF(argc, pArgOp);
 }
 
-
-/* CHECK */
-
-void checkNew(uint8_t argc, argOp_t argOp[]) {
+void checkNew(int argc, argOp_t argOp[]) {
     if(argc != ARGC_NEW) bad_usage = 1;
 
     // Check if it is something different from the program
     if(argOp[IX_PROGRAM - 1].type != NOT_FOUND) bad_usage = 1;
 }
 
-void checkList(uint8_t argc, argOp_t argOp[]) {
+void checkList(int argc, argOp_t argOp[]) {
     // Doesn't need to be used
     (void)argOp;
 
     if(argc != ARGC_LIST) bad_usage = 1;
 }
 
-void checkRemove(uint8_t argc, argOp_t argOp[]) {
+void checkRemove(int argc, argOp_t argOp[]) {
     if(argc < ARGC_REMOVE_MIN || argc > ARGC_REMOVE_MAX) bad_usage = 1;
 
     // Check it is a program
@@ -100,4 +102,21 @@ void checkRemove(uint8_t argc, argOp_t argOp[]) {
 
     if(argc == ARGC_REMOVE_MAX && argOp[IX_FLAG_RM - 1].type != TYPE_FLAG_RM)
         bad_usage = 1;
+}
+
+
+/* SELECT */
+
+void selectOption(int argc, char *argv[], option_t op) {
+    // For the pred function
+    char **pArgv = argv;
+
+    switch(op) {
+        case OPTION_PRED:
+            pArgv--;
+
+        case OPTION_NEW:
+            newOption(pArgv[IX_PROGRAM]);
+            break;
+    }
 }
