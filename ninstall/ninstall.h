@@ -48,9 +48,11 @@ enum {
 typedef uint8_t error_t;
 enum {
     ERROR_ARG,
-    ERROR_HOME,
+    ERROR_COMMENT,
+    
     ERROR_FILE,
-    ERROR_FCLOSE
+    ERROR_FCLOSE,
+    ERROR_NOMEM
 };
 
 
@@ -62,6 +64,7 @@ enum {
 
 // "nano "
 #define NANO_LEN 5
+#define COMM_MAX 255
 
 #define BOLD_ON "\e[1m"
 #define BOLD_OFF "\e[0m"

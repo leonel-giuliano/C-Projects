@@ -67,6 +67,10 @@ void errorHandler(error_t error, ...) {
             puts("Check the '--help' flag for help");
             break;
 
+        case ERROR_COMMENT:
+            printf("couldn't find '%s'", va_arg(arg, const char *));
+            break;
+
         case ERROR_FILE:
             printf("cannot access '%s': ", va_arg(arg, const char *));
             fflush(stdout);
@@ -77,6 +81,10 @@ void errorHandler(error_t error, ...) {
             printf("problem closing '%s': ", va_arg(arg, const char *));
             fflush(stdout);
             perror("");
+            break;
+
+        case ERROR_NOMEM:
+            perror("problem allocating");
             break;
     }
 

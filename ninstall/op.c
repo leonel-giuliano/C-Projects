@@ -1,12 +1,46 @@
+#define _GNU_SOURCE
+
 #include <stdio.h>
 #include <stdlib.h>
+#include <errno.h>
 #include <linux/limits.h>
+#include <string.h>
 
 #include "argop.h"
 
 #include "ninstall.h"
 #include "op.h"
 
+
+uint8_t execCommand(const char *search, FILE *fp) {
+    rewind(fp);
+
+    uint8_t returnVal = 0;
+    char *comm = NULL;
+    size_t commLen = COMM_MAX;
+    ssize_t nComm;
+
+    // Go through the file until the comment is found
+    while((nComm = getline(&comm, &commLen, fp)) != -1 && strcmp(comm, search));
+
+    // Wasn't found or problem allocating
+    // That's checked later
+    if(nComm == -1) returnVal = 1;
+
+    // Execute every command
+    else while((nComm = getline(&comm, &commLen, fp)) != -1) {
+        if(!strcmp(comm, "\n")) continue;
+        printf("Executing: %s", comm);
+
+        system(comm);
+    }
+
+    // Problem allocating
+    if(nComm == -1 && errno == ENOMEM) returnVal = ENOMEM;
+
+    free(comm);
+    return returnVal;
+}
 
 FILE *fopenProgram(char *path, const char *program) {
     // Get home env for the ninstall folder
@@ -26,7 +60,10 @@ FILE *fopenNano(const char *program) {
 
     // Check if the file is empty to write the comments
     fseek(fp, 0, SEEK_END);
-    if(!ftell(fp)) fprintf(fp, "%s\n%s", INSTALL_STR, UNINSTALL_STR);
+    if(!ftell(fp)) {
+        fprintf(fp, "%s\n%s", INSTALL_STR, UNINSTALL_STR);
+        fflush(fp);
+    }
 
     // Open the file in nano
     char nano[PATH_MAX + NANO_LEN];
@@ -70,4 +107,23 @@ deleting the '.list' file");
 void versionFlag() {
     puts("ninstall 1.0\n");
     puts("Made by: Leonel Giuliano");
+}
+
+
+/* OPTION */
+
+void newOption(const char *program) {
+    FILE *fp = fopenNano(program);
+    if(fp == NULL) CATCH_FILE(program, ERROR_FILE);
+
+    // Executes the installation commands
+    uint8_t execVal = execCommand(INSTALL_STR, fp);
+    if(execVal) {
+        fclose(fp);
+
+        if(execVal == ENOMEM) errorHandler(ERROR_NOMEM);
+        errorHandler(ERROR_COMMENT, INSTALL_STR);
+    }
+
+    if(fclose(fp) == EOF) CATCH_FILE(program, ERROR_FCLOSE);
 }
