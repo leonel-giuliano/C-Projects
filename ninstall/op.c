@@ -200,6 +200,7 @@ void listOption() {
     while((entry = readdir(dir)) != NULL) {
         if(!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, "..")) continue;
 
+        // Print the name without the file type
         printf("%.*s\n", strlen(entry->d_name) - LIST_LEN, entry->d_name);
     }
 
@@ -211,7 +212,7 @@ void removeOption(const char *program, flagRm_t flagRm) {
     char path[PATH_MAX];
     char *fileName = getPath(path, program);
 
-    FILE *fp = fopenNano(path, program);
+    FILE *fp = fopen(path, "r");
     if(fp == NULL) errorHandler(ERROR_FILE, fileName);
 
     // Executes the installation commands
