@@ -30,6 +30,7 @@ void manageFlag(int argc, argOp_t argOp[]) {
     }
 }
 
+
 void manageOption(int argc, char *argv[], argOp_t argOp[]) {
     // Check if it was used without an option
     option_t op = (has_option) ? argOp[IX_OPTION - 1].operation : OPTION_PRED;
@@ -80,6 +81,7 @@ void checkOption(int argc, argOp_t argOp[], option_t op) {
     checkF(argc, pArgOp);
 }
 
+
 void checkNew(int argc, argOp_t argOp[]) {
     if(argc != ARGC_NEW) bad_usage = 1;
 
@@ -87,12 +89,14 @@ void checkNew(int argc, argOp_t argOp[]) {
     if(argOp[IX_PROGRAM - 1].type != NOT_FOUND) bad_usage = 1;
 }
 
+
 void checkList(int argc, argOp_t argOp[]) {
     // Doesn't need to be used
     (void)argOp;
 
     if(argc != ARGC_LIST) bad_usage = 1;
 }
+
 
 void checkRemove(int argc, argOp_t argOp[]) {
     if(argc < ARGC_REMOVE_MIN || argc > ARGC_REMOVE_MAX) bad_usage = 1;

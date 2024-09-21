@@ -52,7 +52,9 @@ enum {
     
     ERROR_FILE,
     ERROR_FCLOSE,
-    ERROR_NOMEM
+    ERROR_NOMEM,
+    ERROR_DIR,
+    ERROR_CLOSEDIR
 };
 
 

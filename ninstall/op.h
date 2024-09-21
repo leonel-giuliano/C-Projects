@@ -19,10 +19,14 @@ flagRm_t askRemove();
 // Returns ENOMEM if there was a problem allocating
 uint8_t execCommand(const char *_StrToSearch, FILE *_Stream);
 
-// 'path' gets the value of the directory
-// Returns a pointer to only the file path
+// 'path' gets the value of the file
+// Returns a pointer to only the file path (no folder)
 // Returns NULL if the home env couldn't been open
-char *getPath(char *path, const char *program);
+char *getPath(char *_PathBuffer, const char *_ProgramName);
+
+// 'path' gets the ninstall folder
+// Returns NULL if the home env couldn't been open
+char *getDir(char *_PathBuffer);
 
 // Opens the file, creates the comments if neccessarly and opens
 // the file with the nano command

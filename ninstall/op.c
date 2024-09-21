@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <errno.h>
 #include <linux/limits.h>
+#include <dirent.h>
 #include <string.h>
 
 #include "argop.h"
@@ -28,11 +29,14 @@ flagRm_t askRemove() {
 
         // This happens when the input is different
         puts("\nERROR: bad input");
+        // Clean the buffer
+        while(getchar() != '\n');
     }
 
     // If the loop had a problem prevent the file form being deleted
     return FLAG_RM_NO;
 }
+
 
 uint8_t execCommand(const char *search, FILE *fp) {
     rewind(fp);
@@ -71,6 +75,7 @@ uint8_t execCommand(const char *search, FILE *fp) {
     return returnVal;
 }
 
+
 FILE *fopenNano(char *path, const char *program) {
     FILE *fp = fopen(path, "a+");
     if(fp == NULL) return NULL;
@@ -90,18 +95,28 @@ FILE *fopenNano(char *path, const char *program) {
     return fp;
 }
 
+
 char *getPath(char *path, const char *program) {
+    if(getDir(path) == NULL) return NULL;
+
+    size_t len = strlen(path);
+    snprintf(path + len, PATH_MAX - len, "%s.list", program);
+
+    // Pointer to the file instead of the whole path
+    return path + len;
+}
+
+
+char *getDir(char *path) {
     // Get home env for the ninstall folder
     char *home = getenv("HOME");
     if(home == NULL) return NULL;
 
     // Concat only the first part to have the file separated
     snprintf(path, PATH_MAX, "%s/%s/", home, NINSTALL_HOME_FOLDER);
-    size_t len = strlen(path);
-    snprintf(path + len, PATH_MAX - len, "%s.list", program);
 
-    // Pointer to the file instead of the whole path
-    return path + len;
+    // Return folder directory
+    return path;
 }
 
 
@@ -135,6 +150,7 @@ deleting the '.list' file");
     puts("\t--version:\t\tPrint version message");
 }
 
+
 void versionFlag() {
     puts("ninstall 1.0\n");
     puts("Made by: Leonel Giuliano");
@@ -162,6 +178,7 @@ void newOption(const char *program) {
     if(fclose(fp) == EOF) errorHandler(ERROR_FCLOSE, fileName);
 }
 
+
 void editOption(const char *program) {
     char path[PATH_MAX];
     char *fileName = getPath(path, program);
@@ -171,6 +188,16 @@ void editOption(const char *program) {
 
     if(fclose(fp) == EOF) errorHandler(ERROR_FCLOSE, fileName);
 }
+
+
+void listOption() {
+    char path[PATH_MAX];
+    DIR *dir = opendir(getDir(path));
+    if(dir == NULL) errorHandler(ERROR_DIR, path);
+
+    if(closedir(dir)) errorHandler(ERROR_CLOSEDIR, path);
+}
+
 
 void removeOption(const char *program, flagRm_t flagRm) {
     char path[PATH_MAX];

@@ -75,12 +75,14 @@ void errorHandler(errorEvent_t error, ...) {
             break;
 
         case ERROR_FILE:
+        case ERROR_DIR:
             printf("cannot access '%s': ", va_arg(arg, const char *));
             fflush(stdout);
             perror("");
             break;
 
         case ERROR_FCLOSE:
+        case ERROR_CLOSEDIR:
             printf("problem closing '%s': ", va_arg(arg, const char *));
             fflush(stdout);
             perror("");
