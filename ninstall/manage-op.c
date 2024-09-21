@@ -127,6 +127,10 @@ void selectOption(int argc, char *argv[], argOp_t argOp[], option_t op) {
             editOption(pArgv[IX_PROGRAM]);
             break;
 
+        case OPTION_LIST:
+            listOption();
+            break;
+
         case OPTION_REMOVE:
             flagRm_t flag = (argc == ARGC_REMOVE_MAX)
                 ?   argOp[IX_FLAG_RM - 1].operation

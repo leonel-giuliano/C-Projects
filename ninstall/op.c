@@ -195,6 +195,14 @@ void listOption() {
     DIR *dir = opendir(getDir(path));
     if(dir == NULL) errorHandler(ERROR_DIR, path);
 
+    // Iterate through all the entries in the directory
+    struct dirent *entry = NULL;
+    while((entry = readdir(dir)) != NULL) {
+        if(!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, "..")) continue;
+
+        printf("%.*s\n", strlen(entry->d_name) - LIST_LEN, entry->d_name);
+    }
+
     if(closedir(dir)) errorHandler(ERROR_CLOSEDIR, path);
 }
 

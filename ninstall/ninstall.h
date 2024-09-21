@@ -66,7 +66,9 @@ enum {
 
 // "nano "
 #define NANO_LEN 5
-#define COMM_MAX 255
+// ".list"
+#define LIST_LEN 5
+#define COMM_MAX 256
 
 #define BOLD_ON "\e[1m"
 #define BOLD_OFF "\e[0m"
