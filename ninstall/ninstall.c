@@ -66,7 +66,7 @@ void errorHandler(errorEvent_t error, ...) {
 
     switch(error) {
         case ERROR_ARG:
-            puts("bad usage of the ninstall program");
+            puts("bad usage of the program");
             puts("Check the '--help' flag for help");
             break;
 

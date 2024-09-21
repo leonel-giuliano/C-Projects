@@ -12,7 +12,8 @@
 enum {
     TYPE_FLAG = 1,
     TYPE_OPTION,
-    TYPE_FLAG_RM
+    TYPE_FLAG_RM0,
+    TYPE_FLAG_RM1
 };
 
 typedef uint8_t flag_t;
@@ -53,7 +54,7 @@ void checkRemove(int argc, argOp_t _ArgOp[]);
 
 /* SELECT */
 
-void selectOption(int argc, char *argv[], option_t _Option);
+void selectOption(int argc, char *argv[], argOp_t _ArgOp[], option_t _Option);
 
 
 #endif

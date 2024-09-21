@@ -35,7 +35,7 @@ enum {
 
 /* OPERATIONS */
 
-#define OP_AMOUNT 2
+#define OP_AMOUNT 4
 
 #define has_flag argFlags.flags.flag0
 #define has_option argFlags.flags.flag1

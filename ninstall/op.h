@@ -39,6 +39,7 @@ void versionFlag();
 
 void newOption(const char *_ProgramName);
 void editOption(const char *_ProgramName);
+void removeOption(const char *_ProgramName, flagRm_t _Flag);
 
 
 #endif

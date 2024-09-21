@@ -72,7 +72,7 @@ uint8_t execCommand(const char *search, FILE *fp) {
 }
 
 FILE *fopenNano(char *path, const char *program) {
-    FILE *fp = fopen(path, "r+");
+    FILE *fp = fopen(path, "a+");
     if(fp == NULL) return NULL;
 
     // Check if the file is empty to write the comments
@@ -172,7 +172,7 @@ void editOption(const char *program) {
     if(fclose(fp) == EOF) errorHandler(ERROR_FCLOSE, fileName);
 }
 
-void removeOption(const char *program, argOp_t option) {
+void removeOption(const char *program, flagRm_t flagRm) {
     char path[PATH_MAX];
     char *fileName = getPath(path, program);
 
@@ -180,14 +180,26 @@ void removeOption(const char *program, argOp_t option) {
     if(fp == NULL) errorHandler(ERROR_FILE, fileName);
 
     // Executes the installation commands
-    uint8_t execVal = execCommand(INSTALL_STR, fp);
+    uint8_t execVal = execCommand(UNINSTALL_STR, fp);
     if(execVal) {
         fclose(fp);
 
         if(execVal == ENOMEM) errorHandler(ERROR_NOMEM);
-        errorHandler(ERROR_COMMENT, INSTALL_STR);
+        errorHandler(ERROR_COMMENT, UNINSTALL_STR);
     }
 
     // Close the file before deleting it
     if(fclose(fp) == EOF) errorHandler(ERROR_FCLOSE, fileName);
+
+    // Ask to remove only if the flags weren't use
+    flagRm_t flag = (has_flag_rm0 || has_flag_rm1) ? flagRm : askRemove();
+
+    if(flag == FLAG_RM_YES) {
+        printf("\nDeleting '%s'...\n", fileName);
+        
+        if(remove(path) == -1) errorHandler(ERROR_FILE, fileName);
+        puts("File deleted");
+    }
+    
+    else puts("The file wasn't delete");
 }

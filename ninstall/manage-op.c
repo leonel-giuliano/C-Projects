@@ -44,7 +44,7 @@ void manageOption(int argc, char *argv[], argOp_t argOp[]) {
     checkOption(argc, argOp, op);
     if(bad_usage) return;
 
-    selectOption(argc, argv, op);
+    selectOption(argc, argv, argOp, op);
 }
 
 
@@ -100,14 +100,14 @@ void checkRemove(int argc, argOp_t argOp[]) {
     // Check it is a program
     if(argOp[IX_PROGRAM - 1].type != NOT_FOUND) bad_usage = 1;
 
-    if(argc == ARGC_REMOVE_MAX && argOp[IX_FLAG_RM - 1].type != TYPE_FLAG_RM)
+    if(argc == ARGC_REMOVE_MAX && argOp[IX_FLAG_RM - 1].type < TYPE_FLAG_RM0)
         bad_usage = 1;
 }
 
 
 /* SELECT */
 
-void selectOption(int argc, char *argv[], option_t op) {
+void selectOption(int argc, char *argv[], argOp_t argOp[], option_t op) {
     // For the pred function
     char **pArgv = argv;
 
@@ -121,6 +121,14 @@ void selectOption(int argc, char *argv[], option_t op) {
 
         case OPTION_EDIT:
             editOption(pArgv[IX_PROGRAM]);
+            break;
+
+        case OPTION_REMOVE:
+            flagRm_t flag = (argc == ARGC_REMOVE_MAX)
+                ?   argOp[IX_FLAG_RM - 1].operation
+                :   NOT_FOUND;
+
+            removeOption(pArgv[IX_PROGRAM], flag);
             break;
     }
 }
