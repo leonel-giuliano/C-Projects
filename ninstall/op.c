@@ -9,8 +9,30 @@
 #include "argop.h"
 
 #include "ninstall.h"
+#include "manage-op.h"
 #include "op.h"
 
+
+flagRm_t askRemove() {
+    char ch;
+
+    uint8_t loop = 0;
+    // Loop the question until the value is 0 (255 times)
+    // This is only in case of a strange input problem
+    while(++loop) {
+        printf("Do you want to delete the file [y/n]: ");
+        ch = getchar();
+
+        if(ch == 'y' || ch == 'Y') return FLAG_RM_YES;
+        if(ch == 'n' || ch == 'N') return FLAG_RM_NO;
+
+        // This happens when the input is different
+        puts("\nERROR: bad input");
+    }
+
+    // If the loop had a problem prevent the file form being deleted
+    return FLAG_RM_NO;
+}
 
 uint8_t execCommand(const char *search, FILE *fp) {
     rewind(fp);
@@ -50,7 +72,7 @@ uint8_t execCommand(const char *search, FILE *fp) {
 }
 
 FILE *fopenNano(char *path, const char *program) {
-    FILE *fp = fopen(getPath(path, program), "a+");
+    FILE *fp = fopen(path, "r+");
     if(fp == NULL) return NULL;
 
     // Check if the file is empty to write the comments
@@ -73,10 +95,13 @@ char *getPath(char *path, const char *program) {
     char *home = getenv("HOME");
     if(home == NULL) return NULL;
 
-    snprintf(path, PATH_MAX, "%s/%s/%s.list", home, NINSTALL_HOME_FOLDER, program);
+    // Concat only the first part to have the file separated
+    snprintf(path, PATH_MAX, "%s/%s/", home, NINSTALL_HOME_FOLDER);
+    size_t len = strlen(path);
+    snprintf(path + len, PATH_MAX - len, "%s.list", program);
 
-    // Create file (new) or don't truncate it (edit, remove)
-    return path;
+    // Pointer to the file instead of the whole path
+    return path + len;
 }
 
 
@@ -120,8 +145,10 @@ void versionFlag() {
 
 void newOption(const char *program) {
     char path[PATH_MAX];
+    char *fileName = getPath(path, program);
+
     FILE *fp = fopenNano(path, program);
-    if(fp == NULL) CATCH_FILE(program, ERROR_FILE);
+    if(fp == NULL) errorHandler(ERROR_FILE, fileName);
 
     // Executes the installation commands
     uint8_t execVal = execCommand(INSTALL_STR, fp);
@@ -132,13 +159,35 @@ void newOption(const char *program) {
         errorHandler(ERROR_COMMENT, INSTALL_STR);
     }
 
-    if(fclose(fp) == EOF) CATCH_FILE(program, ERROR_FCLOSE);
+    if(fclose(fp) == EOF) errorHandler(ERROR_FCLOSE, fileName);
 }
 
 void editOption(const char *program) {
     char path[PATH_MAX];
-    FILE *fp = fopenNano(path, program);
-    if(fp == NULL) CATCH_FILE(program, ERROR_FILE);
+    char *fileName = getPath(path, program);
 
-    if(fclose(fp) == EOF) CATCH_FILE(program, ERROR_FCLOSE);
+    FILE *fp = fopenNano(path, program);
+    if(fp == NULL) errorHandler(ERROR_FILE, fileName);
+
+    if(fclose(fp) == EOF) errorHandler(ERROR_FCLOSE, fileName);
+}
+
+void removeOption(const char *program, argOp_t option) {
+    char path[PATH_MAX];
+    char *fileName = getPath(path, program);
+
+    FILE *fp = fopenNano(path, program);
+    if(fp == NULL) errorHandler(ERROR_FILE, fileName);
+
+    // Executes the installation commands
+    uint8_t execVal = execCommand(INSTALL_STR, fp);
+    if(execVal) {
+        fclose(fp);
+
+        if(execVal == ENOMEM) errorHandler(ERROR_NOMEM);
+        errorHandler(ERROR_COMMENT, INSTALL_STR);
+    }
+
+    // Close the file before deleting it
+    if(fclose(fp) == EOF) errorHandler(ERROR_FCLOSE, fileName);
 }

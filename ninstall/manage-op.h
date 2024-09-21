@@ -30,6 +30,12 @@ enum {
     OPTION_REMOVE
 };
 
+typedef uint8_t flagRm_t;
+enum {
+    FLAG_RM_YES = 1,
+    FLAG_RM_NO
+};
+
 
 /* MANAGE */
 

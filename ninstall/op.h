@@ -8,13 +8,9 @@
 #include "argop.h"
 
 
-#define CATCH_FILE(program, error) {                \
-    char path[NAME_MAX];                            \
-    snprintf(path, NAME_MAX, "%s.list", program);   \
-                                                    \
-    errorHandler(error, path);                      \
-}
-
+// Asks the user if it wants to delete the file
+// Returns the flag corresponding to the action
+flagRm_t askRemove();
 
 // Searches for the comment inside the file and executes
 // all of the commands below
@@ -23,7 +19,8 @@
 // Returns ENOMEM if there was a problem allocating
 uint8_t execCommand(const char *_StrToSearch, FILE *_Stream);
 
-// Opens the file in the ninstall folder in append mode
+// 'path' gets the value of the directory
+// Returns a pointer to only the file path
 // Returns NULL if the home env couldn't been open
 char *getPath(char *path, const char *program);
 
