@@ -20,9 +20,10 @@
 /* FILE STRUCT */
 
 typedef struct {
+    uint8_t is_created;
     char path[PATH_MAX];
 
-    FILE *fp = NULL;
+    FILE *fp;
 } btFile_t;
 
 

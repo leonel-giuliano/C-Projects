@@ -3,15 +3,17 @@
 #include <stdint.h>
 #include <string.h>
 
+#include "bulletin.h"
 #include "file.h"
 
 
 char *getDir(char *path) {
     FILE *fpConfig = fopen(CONFIG_FILE, "r");
 
-    // This means the file hasn't been created
-    if(fpConfig == NULL) strncpy(path, PRED_PATH, PATH_MAX);
-    else fgets(path, PATH_MAX, fpConfig);
+    // Saves the pred path if the config file didn't exist or if
+    // there was a problem reading the path
+    if(fpConfig == NULL || fgetsClean(path, PATH_MAX, fpConfig) == NULL)
+        strncpy(path, PRED_PATH, PATH_MAX);
 
     return path;
 }

@@ -8,14 +8,15 @@
 
 /* BULLETIN STRUCT */
 
-#define file fileData.fp
+#define is_fcreated fileData.is_created
 #define pathStr fileData.path
+#define file fileData.fp
 
 typedef struct {
     uint8_t len;
 
-    markName_t *markName = NULL;
-    student_t *students = NULL;
+    markName_t *markName;
+    student_t *students;
 
     btFile_t fileData;
 } bulletin_t;
@@ -25,15 +26,24 @@ typedef struct {
 
 typedef uint8_t errorEvent_t;
 enum {
-    ERROR_FILE
+    ERROR_INPUT,
+
+    ERROR_FILE,
+    ERROR_NOMEM
 };
 
 
 // Opens the file and gets the length (amount of students)
-// Returns 1 in case the file couldn't been created
-uint8_t fopenLen(bulletin_t *_Bulletin);
+// Returns the bool indicating if the file was 'r+' or 'w+'
+// Returns -1 in case the file couldn't been created
+int8_t fopenLen(bulletin_t *_Bulletin);
 
-void errorHandler(errorEvent_t _ErrorEvent, ...);
+// Scan a string using 'fgets()' and gets rid of the '\n'
+// or flushes the input buffer for the stdin
+// Returns NULL if it didn't scan any char (because of '\n' or EOF)
+char *fgetsClean(char *_Buffer, int _nChars, FILE *_Stream);
+
+uint8_t errorHandler(errorEvent_t _ErrorEvent, ...);
 
 
 #endif
