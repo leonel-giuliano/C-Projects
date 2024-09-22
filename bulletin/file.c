@@ -16,6 +16,8 @@ char *getDir(char *path) {
     if(fpConfig == NULL || fgetsClean(path, PATH_MAX, fpConfig) == NULL)
         strncpy(path, PRED_PATH, PATH_MAX);
 
+    if(fpConfig != NULL) fclose(fpConfig);
+
     return path;
 }
 
@@ -53,7 +55,7 @@ uint8_t fgetsStudents(bulletin_t *bulletin) {
     // Iterate through evey student
     for(uint8_t i = 0; i < bulletin->len; i++)
         // Reads until the first comma is found
-        if(!fscanf("%.*[^,]", ST_NAME_MAX, bulletin->students[i].name)) return 1;
+        if(!fscanf(bulletin->file, "%.*[^,]", ST_NAME_MAX, bulletin->students[i].name)) return 1;
 
     return 0;
 }
