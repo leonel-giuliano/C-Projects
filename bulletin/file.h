@@ -6,13 +6,26 @@
 #include <linux/limits.h>
 
 
+/* TEXT */
+
+#define PRED_PATH "./bulletin.csv"
+#define PRED_DIR "./"
+#define PRED_FILE_NAME "bulletin"
+#define FILE_TYPE ".csv"
+
+#define CONFIG_FILE "./path.config"
+
+
 /* FILE STRUCT */
 
 typedef struct {
     char path[PATH_MAX];
 
-    FILE *file = NULL;
+    FILE *fp = NULL;
 } btFile_t;
+
+
+char *getDir(char *_BufferPath);
 
 
 #endif
