@@ -26,7 +26,7 @@ uint8_t askNames(bulletin_t *bulletin) {
     for(uint8_t i = 0; i < bulletin->len; i++) {
         printf("Student %hhu: ", i + 1);
 
-        if(fgetsClean(bulletin->students[i].name, NAME_MAX, stdin) == NULL)
+        if(fgetsClean(bulletin->students[i].name, ST_NAME_MAX, stdin) == NULL)
             return 1;
     }
 

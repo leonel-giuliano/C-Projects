@@ -20,7 +20,7 @@
 /* FILE STRUCT */
 
 typedef struct {
-    uint8_t is_created;
+    uint8_t had_names;
     char path[PATH_MAX];
 
     FILE *fp;
@@ -32,6 +32,10 @@ char *getDir(char *_BufferPath);
 
 // Count the first comma of every line to know the amount of students
 uint8_t fgetnStudents(FILE *_Stream);
+
+// Reads the names of the students from the file
+// Returns 1 if there was a problem reading it
+uint8_t fgetsStudents(bulletin_t *_Bulletin);
 
 
 #endif

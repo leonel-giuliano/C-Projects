@@ -2,13 +2,24 @@
 #define __BULLETIN_H__
 
 
+/* ERROR EVENTS */
+
+typedef uint8_t errorEvent_t;
+enum {
+    ERROR_INPUT,
+
+    ERROR_FILE,
+    ERROR_NOMEM
+};
+
+
 #include "student.h"
 #include "file.h"
 
 
 /* BULLETIN STRUCT */
 
-#define is_fcreated fileData.is_created
+#define f_had_names fileData.had_names
 #define pathStr fileData.path
 #define file fileData.fp
 
@@ -22,19 +33,8 @@ typedef struct {
 } bulletin_t;
 
 
-/* ERROR EVENTS */
-
-typedef uint8_t errorEvent_t;
-enum {
-    ERROR_INPUT,
-
-    ERROR_FILE,
-    ERROR_NOMEM
-};
-
-
 // Opens the file and gets the length (amount of students)
-// Returns the bool indicating if the file was 'r+' or 'w+'
+// Returns the bool indicating if the file had the students names
 // Returns -1 in case the file couldn't been created
 int8_t fopenLen(bulletin_t *_Bulletin);
 

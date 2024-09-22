@@ -4,6 +4,7 @@
 #include <string.h>
 
 #include "bulletin.h"
+#include "student.h"
 #include "file.h"
 
 
@@ -35,4 +36,24 @@ uint8_t fgetnStudents(FILE *fp) {
 
     // The first collumn doesn't count
     return --n;
+}
+
+
+uint8_t fgetsStudents(bulletin_t *bulletin) {
+    rewind(bulletin->file);
+
+    // Skip the first line
+    char ch;
+    while((ch = getc(bulletin->file)) != '\n' && ch != EOF);
+
+    // This shouldn't happen because the 'f_had_names' prevents
+    // the program from getting into this function
+    if(ch == EOF) return 1;
+
+    // Iterate through evey student
+    for(uint8_t i = 0; i < bulletin->len; i++)
+        // Reads until the first comma is found
+        if(!fscanf("%.*[^,]", ST_NAME_MAX, bulletin->students[i].name)) return 1;
+
+    return 0;
 }

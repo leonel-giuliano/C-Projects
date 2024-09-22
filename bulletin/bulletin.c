@@ -40,7 +40,7 @@ int main() {
 
 
 int8_t fopenLen(bulletin_t *bulletin) {
-    bulletin->is_fcreated = 0;
+    bulletin->f_had_names = 0;
 
     // Try to open the file if it exists
     if((bulletin->file = fopen(getDir(bulletin->pathStr), "r+")) == NULL) {
@@ -48,14 +48,16 @@ int8_t fopenLen(bulletin_t *bulletin) {
             return -1;
 
         bulletin->len = asknStudents();
-        bulletin->is_fcreated = 1;
+        bulletin->f_had_names = 1;
     }
     // The amount of students is taken from the file
     // If it didn't have any student, asks the user
-    else if(!(bulletin->len = fgetnStudents(bulletin->file)))
+    else if(!(bulletin->len = fgetnStudents(bulletin->file))) {
         bulletin->len = asknStudents();
+        bulletin->f_had_names = 1;
+    }
 
-    return bulletin->is_fcreated;
+    return bulletin->f_had_names;
 }
 
 
