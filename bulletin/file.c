@@ -53,9 +53,17 @@ uint8_t fgetsStudents(bulletin_t *bulletin) {
     if(ch == EOF) return 1;
 
     // Iterate through evey student
-    for(uint8_t i = 0; i < bulletin->len; i++)
+    for(uint8_t i = 0; i < bulletin->len; i++) {
         // Reads until the first comma is found
         if(!fscanf(bulletin->file, "%.*[^,]", ST_NAME_MAX, bulletin->students[i].name)) return 1;
+
+        // Skip to the following row
+        char ch;
+        while((ch = getc(bulletin->file)) != '\n' && ch != EOF);
+
+        // Strange case where the end of the file was reached before the amount of students
+        if(ch == EOF && i != bulletin->len - 1) return 1;
+    }
 
     return 0;
 }
