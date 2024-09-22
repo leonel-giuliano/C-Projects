@@ -67,3 +67,29 @@ uint8_t fgetsStudents(bulletin_t *bulletin) {
 
     return 0;
 }
+
+
+int16_t fgetsMarksName(bulletin_t *bulletin) {
+    fseek(bulletin->file, STUDENTS_LEN, SEEK_SET);
+
+    // Count amount of marks
+    uint8_t n = 0;
+    char ch;
+    while((ch = getc(bulletin->file)) != '\n' && ch != EOF)
+        if(ch == ',') n++;
+
+    // Pointer to the last mark so the allocation is faster
+    // instead of going from the begining to the end every iteration
+    markName_t *lastMark = bulletin->markName;
+    fseek(bulletin->file, STUDENTS_LEN, SEEK_SET);
+    for(uint8_t i = 0; i < n; i++) {
+        if((lastMark = mallocMarkName(lastMark)) == NULL) return -1;
+
+        fscanf(bulletin->file, "%.*[^,]", MARK_NAME_MAX, lastMark->name);
+
+        char ch;
+        while((ch = getc(bulletin->file)) != ',' && ch != EOF);
+    }
+
+    return (int16_t)n;
+}

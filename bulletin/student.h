@@ -33,8 +33,22 @@ typedef struct {
 } student_t;
 
 
+/* ASK USER INPUT */
+
 // Asks the user for the amount of students
 uint8_t asknStudents();
+
+// Asks the user for the names of the students
+uint8_t askNames(bulletin_t *_Bulletin);
+
+
+/* ALLOC */
+
+// Allocates a new mark name at the end of the dynamic list
+markName_t *mallocMarkName(markName_t *_MarkName);
+
+// Free all the elements inside the dynamic lisy
+void freeMarkNameList(markName_t *_MarkName);
 
 
 #endif

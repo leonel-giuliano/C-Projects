@@ -16,6 +16,11 @@
 
 #define CONFIG_FILE "./path.config"
 
+#define STUDENTS_ROW "Students,"
+
+// "Students,"
+#define STUDENTS_LEN "9"
+
 
 /* FILE STRUCT */
 
@@ -36,6 +41,10 @@ uint8_t fgetnStudents(FILE *_Stream);
 // Reads the names of the students from the file
 // Returns 1 if there was a problem reading it
 uint8_t fgetsStudents(bulletin_t *_Bulletin);
+
+// Scans the names of the marks and allocates them in the list returning the amount of marks
+// Returns -1 if there was a problem allocating
+int16_t fgetsMarksName(bulletin_t *_Bulletin);
 
 
 #endif
