@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <errno.h>
 #include <stdarg.h>
 #include <stdint.h>
@@ -11,21 +10,39 @@
 
 
 int main() {
-    bulletin_t bulettin;
-    // Try to open the file if it exists
-    if((bulettin.file = fopen(getDir(bulettin.pathStr), "r+")) == NULL) {
-        if((bulettin.file = fopen(getDir(bulettin.pathStr), "w+")) == NULL)
-            errorHandler(ERROR_FILE, bulettin.pathStr);
-    }
+    uint8_t retVal = 0;
+    bulletin_t bulletin;
+
+    // Get the file and the lenght
+    // Exit the function if there was a problem creating the file
+    if(fopenLen(&bulletin)) return errorHandler(ERROR_FILE, bulletin.pathStr);
+    
 
     close_file:
-        fclose(bulettin.file);
+        fclose(bulletin.file);
 
-        return 0;
+        return retVal;
 }
 
 
-void errorHandler(errorEvent_t error, ...) {
+uint8_t fopenLen(bulletin_t *bulletin) {
+    // Try to open the file if it exists
+    if((bulletin->file = fopen(getDir(bulletin->pathStr), "r+")) == NULL) {
+        if((bulletin->file = fopen(bulletin->pathStr, "w+")) == NULL)
+            return 1;
+
+        bulletin->len = asknStudents();
+    }
+    // The amount of students is taken from the file
+    // If it didn't have any student, asks the user
+    else if(!(bulletin->len = fgetnStudents(bulletin->file)))
+        bulletin->len = asknStudents();
+
+    return 0;
+}
+
+
+uint8_t errorHandler(errorEvent_t error, ...) {
     va_list arg;
     va_start(arg, error);
 
@@ -39,5 +56,5 @@ void errorHandler(errorEvent_t error, ...) {
 
     va_end(arg);
 
-    exit(EXIT_FAILURE);
+    return 1;
 }

@@ -29,6 +29,10 @@ enum {
 };
 
 
+// Opens the file and gets the length (amount of students)
+// Returns 1 in case the file couldn't been created
+uint8_t fopenLen(bulletin_t *_Bulletin);
+
 void errorHandler(errorEvent_t _ErrorEvent, ...);
 
 

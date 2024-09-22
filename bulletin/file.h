@@ -4,6 +4,7 @@
 
 #include <stdio.h>
 #include <linux/limits.h>
+#include <stdint.h>
 
 
 /* TEXT */
@@ -25,7 +26,11 @@ typedef struct {
 } btFile_t;
 
 
+// Save the pred directory or the one in the config file
 char *getDir(char *_BufferPath);
+
+// Count the first comma of every line to know the amount of students
+uint8_t fgetnStudents(FILE *_Stream);
 
 
 #endif

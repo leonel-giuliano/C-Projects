@@ -33,4 +33,8 @@ typedef struct {
 } student_t;
 
 
+// Asks the user for the amount of students
+uint8_t asknStudents();
+
+
 #endif

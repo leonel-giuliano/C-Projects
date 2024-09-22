@@ -15,3 +15,22 @@ char *getDir(char *path) {
 
     return path;
 }
+
+
+uint8_t fgetnStudents(FILE *fp) {
+    uint8_t n = 0, boolCount = 1;
+
+    char ch;
+    while((ch = getc(fp)) != EOF) {
+        // Count the first comma
+        if(boolCount && ch == ',') {
+            boolCount = 0;
+            n++;
+        }
+        
+        else if(ch == '\n') boolCount = 1;
+    }
+
+    // The first collumn doesn't count
+    return --n;
+}
