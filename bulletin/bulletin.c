@@ -17,7 +17,8 @@ int main() {
     if(getPath(bulletin.fpData.path) == NULL) return errorHandler(ERROR_FILE, CONFIG_PATH);
     if(fopenBt(&bulletin.fpData) == NULL) return errorHandler(ERROR_FILE, bulletin.fpData.path);
 
-    if(bulletin.fpData.was_read) getnStudents(&bulletin);
+    if(bulletin.fpData.was_read) fgetnStudents(&bulletin);
+    
     // Ask the user if there was no file or it didn't have the students
     // Throw error if there was a problem reading the stdin
     if(!bulletin.fpData.has_students && !(bulletin.len = asknStudents())) {

@@ -13,7 +13,20 @@
 #include "file.h"
 
 
-int8_t getnStudents(bulletin_t *bulletin) {
+uint8_t fgetnMarkNames(FILE *fp) {
+    uint8_t n = 0;
+
+    fseek(fp, STUDENT_ROW_LEN, SEEK_SET);
+    char ch;
+    while((ch = getc(fp)) != '\n' && ch != EOF) {
+        if(ch == ',') n++;
+    }
+
+    return n;
+}
+
+
+int8_t fgetnStudents(bulletin_t *bulletin) {
     // Check if the file isn't empty (wasn't created but is empty)
     fseek(bulletin->fpData.fp, 0, SEEK_END);
     if(ftell(bulletin->fpData.fp) < STUDENT_ROW_LEN) return -1;
@@ -21,19 +34,20 @@ int8_t getnStudents(bulletin_t *bulletin) {
     // Skip first line
     rewind(bulletin->fpData.fp);
     char ch;
-    while((ch = getc(bulletin->fpData.fp)) != '\n' && ch != EOF);
-    if(ch == EOF) {
-        bulletin->fpData.has_col_names = 1;
+    // Check if the first line has the mark names
+    if((ch = getc(bulletin->fpData.fp)) != '\n' && ch != EOF) {
+        bulletin->fpData.has_mark_names = 1;
 
-        return 1;
+        while((ch = getc(bulletin->fpData.fp)) != '\n' && ch != EOF);
     }
+
+    if(ch == EOF) return 1;
 
     // Count the lines to know the students amount
     while((ch = getc(bulletin->fpData.fp)) != EOF) {
         if(ch == '\n') bulletin->len++;
     }
 
-    bulletin->fpData.has_col_names = 1;
     bulletin->fpData.has_students = 1;
 
     return 0;

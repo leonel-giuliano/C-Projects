@@ -34,7 +34,7 @@ typedef struct {
 /* FILE STRUCT */
 
 #define was_read flags.bits.flag0
-#define has_col_names flags.bits.flag1
+#define has_mark_names flags.bits.flag1
 #define has_students flags.bits.flag2
 
 typedef union {
