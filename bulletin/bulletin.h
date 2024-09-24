@@ -42,6 +42,10 @@ typedef struct {
 // Sets the 'bulletin_t' pointers to NULL
 bulletin_t initBt();
 
+// Gets rid of the '\n' and cleans the stdin
+// Returns NULL if no char was read
+char *fgetsClean(char *_Buffer, int _BufferSize, FILE *_Stream);
+
 uint8_t errorHandler(errorEvent_t _ErrorEvent, ...);
 
 

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdarg.h>
 #include <stdint.h>
+#include <string.h>
 
 #include "bulletin.h"
 #include "student.h"
@@ -22,6 +23,23 @@ bulletin_t initBt() {
     b.fpData.fp = NULL;
 
     return b;
+}
+
+
+char *fgetsClean(char *dest, int n, FILE *fp) {
+    if(fgets(dest, n, fp) == NULL) return NULL;
+    size_t len = strlen(dest);
+    
+    // Get rid of the new line
+    if(dest[len - 1] == '\n') dest[len - 1] = '\0';
+
+    // Clean the stdin
+    else if(fp == stdin) {
+        char ch;
+        while((ch = getchar()) != '\n' && ch != EOF);
+    }
+
+    return dest;
 }
 
 
