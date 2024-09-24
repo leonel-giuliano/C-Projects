@@ -10,6 +10,14 @@
 #define MARK_STR_MAX 100
 
 
+/* ERROR EVENTS */
+
+typedef uint8_t errorEvent_t;
+enum {
+    ERROR_FILE
+};
+
+
 #include "student.h"
 #include "file.h"
 
@@ -29,6 +37,12 @@ typedef struct {
 
     fpData_t fpData;
 } bulletin_t;
+
+
+// Sets the 'bulletin_t' pointers to NULL
+bulletin_t initBt();
+
+uint8_t errorHandler(errorEvent_t _ErrorEvent, ...);
 
 
 #endif
