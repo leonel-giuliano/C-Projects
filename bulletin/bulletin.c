@@ -20,6 +20,7 @@ bulletin_t initBt() {
 
     b.markNameList = NULL;
     b.students = NULL;
+    b.fpData.flags.data = 0;
     b.fpData.fp = NULL;
 
     return b;
