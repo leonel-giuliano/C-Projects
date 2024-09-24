@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <errno.h>
 #include <stdarg.h>
 #include <stdint.h>
 #include <string.h>
@@ -9,9 +10,17 @@
 
 
 int main() {
-    bulletin_t bulletin = initBt();
+    uint8_t retVal = 0;
 
-    return 0;
+    bulletin_t bulletin = initBt();
+    if(fopenBt(&bulletin.fpData) == -1) return errorHandler(ERROR_FILE, CONFIG_PATH);
+    if(bulletin.fpData.fp == NULL) return errorHandler(ERROR_FILE, bulletin.fpData.path);
+
+
+    close_file:
+        fclose(bulletin.fpData.fp);
+
+        return retVal;
 }
 
 
@@ -49,6 +58,12 @@ uint8_t errorHandler(errorEvent_t error, ...) {
     va_start(arg, error);
 
     printf("bulletin: ");
+
+    switch(error) {
+        case ERROR_FILE:
+            printf("cannot access '%s': %s", va_arg(arg, const char *), strerror(errno));
+            break;
+    }
 
     va_end(arg);
 
