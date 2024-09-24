@@ -16,7 +16,7 @@
 int8_t getnStudents(bulletin_t *bulletin) {
     // Check if the file isn't empty (wasn't created but is empty)
     fseek(bulletin->fpData.fp, 0, SEEK_END);
-    if(!ftell(bulletin->fpData.fp)) return -1;
+    if(ftell(bulletin->fpData.fp) < STUDENT_ROW_LEN) return -1;
 
     // Skip first line
     rewind(bulletin->fpData.fp);

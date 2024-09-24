@@ -18,14 +18,6 @@
 #define STUDENT_STR_MAX 50
 
 
-/* ERROR EVENTS */
-
-typedef uint8_t errorEvent_t;
-enum {
-    ERROR_FILE
-};
-
-
 /* STUDENT STRUCT */
 
 typedef struct _mark_t {
@@ -82,6 +74,16 @@ typedef struct {
 
     fpData_t fpData;
 } bulletin_t;
+
+
+/* ERROR EVENTS */
+
+typedef uint8_t errorEvent_t;
+enum {
+    ERROR_FILE,
+    ERROR_INPUT,
+    ERROR_MALLOC
+};
 
 
 // Sets the 'bulletin_t' pointers to NULL

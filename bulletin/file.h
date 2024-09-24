@@ -5,6 +5,8 @@
 #include <stdio.h>
 #include <stdint.h>
 
+#include "bulletin.h"
+
 
 /* TEXT */
 
@@ -14,9 +16,6 @@
 
 // "Students,"
 #define STUDENT_ROW_LEN 9
-
-
-#include "bulletin.h"
 
 
 // Saves in the 'bulletin.len' the amount of students given the lines of the file
