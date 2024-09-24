@@ -5,7 +5,6 @@
 #include <string.h>
 
 #include "bulletin.h"
-#include "student.h"
 #include "file.h"
 
 
@@ -13,8 +12,8 @@ int main() {
     uint8_t retVal = 0;
 
     bulletin_t bulletin = initBt();
-    if(fopenBt(&bulletin.fpData) == -1) return errorHandler(ERROR_FILE, CONFIG_PATH);
-    if(bulletin.fpData.fp == NULL) return errorHandler(ERROR_FILE, bulletin.fpData.path);
+    if(getPath(bulletin.fpData.path) == NULL) return errorHandler(ERROR_FILE, CONFIG_PATH);
+    if(fopenBt(&bulletin.fpData) == NULL) return errorHandler(ERROR_FILE, bulletin.fpData.path);
 
 
     close_file:
@@ -27,6 +26,7 @@ int main() {
 bulletin_t initBt() {
     bulletin_t b;
 
+    b.len = 0;
     b.markNameList = NULL;
     b.students = NULL;
     b.fpData.flags.data = 0;

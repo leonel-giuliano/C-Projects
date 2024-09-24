@@ -3,7 +3,6 @@
 
 
 #include <stdio.h>
-#include <linux/limits.h>
 #include <stdint.h>
 
 
@@ -13,37 +12,21 @@
 
 #define CONFIG_PATH "./bulletin.config"
 
+// "Students,"
+#define STUDENT_ROW_LEN 9
 
-/* FILE STRUCT */
 
-#define was_created flags.bits.flag0
+#include "bulletin.h"
 
-typedef union {
-    struct {
-        unsigned int flag0 : 1;
-        unsigned int flag1 : 1;
-        unsigned int flag2 : 1;
-        unsigned int flag3 : 1;
-        unsigned int flag4 : 1;
-        unsigned int flag5 : 1;
-        unsigned int flag6 : 1;
-        unsigned int flag7 : 1;
-    } bits;
 
-    uint8_t data;
-} flag8_t;
-
-typedef struct {
-    flag8_t flags;
-    char path[PATH_MAX];
-    FILE *fp;
-} fpData_t;
-
+// Saves in the 'bulletin.len' the amount of students given the lines of the file
+// Returns -1 if the file didn't any data
+// Returns 1 if the file didn't have the students names
+int8_t getnStudents(bulletin_t *_Bulletin);
 
 // Selects the path and opens the file, indicating if it was created
-// Returns -1 if there was a problem accessing to the config file
-// Returns 1 if there was a problem creating the file
-int8_t fopenBt(fpData_t *_FileData);
+// Returns NULL if there was a problem creating the file
+FILE *fopenBt(fpData_t *_FileData);
 
 // Selects the path by the config file or the pred path
 // Returns NULL if there was a problem accessing the config file
