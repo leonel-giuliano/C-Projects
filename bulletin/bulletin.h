@@ -80,6 +80,8 @@ typedef struct {
 
 typedef uint8_t errorEvent_t;
 enum {
+    ERROR_READ_FILE,
+
     ERROR_FILE,
     ERROR_INPUT,
     ERROR_MALLOC

@@ -18,6 +18,15 @@ int main() {
     if(fopenBt(&bulletin.fpData) == NULL) return errorHandler(ERROR_FILE, bulletin.fpData.path);
 
     if(bulletin.fpData.was_read) fgetnStudents(&bulletin);
+    // Read the mark names if it had any
+    if(bulletin.fpData.has_mark_names) {
+        int8_t outF = fgetsMarkNames(fgetnMarkNames(bulletin.fpData.fp), &bulletin);
+
+        if(outF) {
+            retVal = (outF == -1) ? errorHandler(ERROR_READ_FILE) : errorHandler(ERROR_MALLOC);
+            goto free_mark_names;
+        }
+    }
 
     // Ask the user if there was no file or it didn't have the students
     // Throw error if there was a problem reading the stdin
@@ -34,6 +43,9 @@ int main() {
 
     free_students:
         free(bulletin.students);
+
+    free_mark_names:
+        freeMarkNameList(bulletin.markNameList);
 
     close_file:
         fclose(bulletin.fpData.fp);
@@ -79,6 +91,10 @@ uint8_t errorHandler(errorEvent_t error, ...) {
     printf("bulletin: ");
 
     switch(error) {
+        case ERROR_READ_FILE:
+            puts("there was a problem reading the file data");
+            break;
+
         case ERROR_FILE:
             printf("cannot access '%s': %s", va_arg(arg, const char *), strerror(errno));
             break;
