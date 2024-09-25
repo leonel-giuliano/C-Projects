@@ -11,6 +11,28 @@
 
 #include "bulletin.h"
 #include "file.h"
+#include "student.h"
+
+
+int8_t fgetsMarkNames(uint8_t n, bulletin_t *bulletin) {
+    fseek(bulletin->fpData.fp, STUDENT_ROW_LEN, SEEK_SET);
+
+    markName_t *newMark = NULL;
+    for(uint8_t i = 0; i < n; i++) {
+        newMark = mallocMarkName(newMark);
+        if(newMark == NULL) return 1;
+
+        // The list points to the first element from the list
+        if(i == 0) bulletin->markNameList = newMark;
+
+        if(!fscanf(bulletin->fpData.fp, "%.*[^,]", MARK_STR_MAX, newMark->name)) return -1;
+
+        char ch;
+        while((ch = getc(bulletin->fpData.fp)) != ',' && ch == EOF);
+    }
+
+    return 0;
+}
 
 
 uint8_t fgetnMarkNames(FILE *fp) {

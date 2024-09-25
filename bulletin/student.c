@@ -26,6 +26,7 @@ uint8_t asknStudents() {
 
 markName_t *mallocMarkName(markName_t *markList) {
     markName_t *mark = (markName_t *)malloc(sizeof(markName_t));
+    mark->next = NULL;
 
     if(markList == NULL) return markList = mark;
 

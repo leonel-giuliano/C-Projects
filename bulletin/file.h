@@ -18,6 +18,11 @@
 #define STUDENT_ROW_LEN 9
 
 
+// Allocates and scans the mark names
+// Returns 1 if there was a problem allocating
+// Returns -1 if there was a problem reading the file
+int8_t fgetsMarkNames(uint8_t _AmountMarkNames, bulletin_t *_Bulletin);
+
 // Counts the ',' from the first line to know the amount of mark names
 uint8_t fgetnMarkNames(FILE *_Stream);
 
