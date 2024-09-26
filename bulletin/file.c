@@ -14,6 +14,23 @@
 #include "student.h"
 
 
+uint8_t fgetsStudents(bulletin_t *bulletin) {
+    fseek(bulletin->fpData.fp, STUDENT_ROW_LEN, SEEK_SET);
+    char ch;
+    while((ch = getc(bulletin->fpData.fp)) != ',' && ch != EOF);
+
+    if(ch == EOF) return 1;
+
+    for(uint8_t i = 0; i < bulletin->len; i++) {
+        if(!fscanf(bulletin->fpData.fp, "%.*[^,]", STUDENT_STR_MAX, bulletin->students[i].name)) return 1;
+
+        while((ch = getc(bulletin->fpData.fp)) != ',' && ch != EOF);
+    }
+
+    return 0;
+}
+
+
 int8_t fgetsMarkNames(uint8_t n, bulletin_t *bulletin) {
     fseek(bulletin->fpData.fp, STUDENT_ROW_LEN, SEEK_SET);
 
@@ -28,7 +45,7 @@ int8_t fgetsMarkNames(uint8_t n, bulletin_t *bulletin) {
         if(!fscanf(bulletin->fpData.fp, "%.*[^,]", MARK_STR_MAX, newMark->name)) return -1;
 
         char ch;
-        while((ch = getc(bulletin->fpData.fp)) != ',' && ch == EOF);
+        while((ch = getc(bulletin->fpData.fp)) != ',' && ch != EOF);
     }
 
     return 0;

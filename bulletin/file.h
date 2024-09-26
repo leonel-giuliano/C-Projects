@@ -26,6 +26,10 @@ int8_t fgetsMarkNames(uint8_t _AmountMarkNames, bulletin_t *_Bulletin);
 // Counts the ',' from the first line to know the amount of mark names
 uint8_t fgetnMarkNames(FILE *_Stream);
 
+// Scans the name of the students from the file
+// Return 1 if there was a problem scanning the file
+uint8_t fgetsStudents(bulletin_t *_Bulletin);
+
 // Saves in the 'bulletin.len' the amount of students given the lines of the file
 // Returns -1 if the file didn't have any data
 // Returns 1 if the file didn't have the students names

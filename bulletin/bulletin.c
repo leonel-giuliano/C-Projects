@@ -28,16 +28,16 @@ int main() {
         }
     }
 
-    // Ask the user if there was no file or it didn't have the students
+    // Ask the user in the case that there was no file or it didn't have the students
     // Throw error if there was a problem reading the stdin
     if(!bulletin.fpData.has_students && !(bulletin.len = asknStudents())) {
         retVal = errorHandler(ERROR_INPUT);
-        goto close_file;
+        goto free_mark_names;
     }
 
     if((bulletin.students = (student_t *)malloc(bulletin.len * sizeof(student_t))) == NULL) {
         retVal = errorHandler(ERROR_MALLOC);
-        goto close_file;
+        goto free_mark_names;
     }
 
 
