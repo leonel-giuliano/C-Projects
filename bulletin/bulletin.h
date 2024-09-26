@@ -91,6 +91,10 @@ enum {
 // Sets the 'bulletin_t' pointers to NULL
 bulletin_t initBt();
 
+// Selects how to scan the students name depending on the file content
+// Returns the error event depending on the function
+uint8_t (*selectGetStudents(errorEvent_t *_ErrorEvent, bulletin_t _Bulletin))(bulletin_t *);
+
 // Gets rid of the '\n' and cleans the stdin
 // Returns NULL if no char was read
 char *fgetsClean(char *_Buffer, int _BufferSize, FILE *_Stream);

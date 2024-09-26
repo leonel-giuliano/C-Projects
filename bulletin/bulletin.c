@@ -40,6 +40,14 @@ int main() {
         goto free_mark_names;
     }
 
+    // Scan the students name either from the file or the terminal
+    errorEvent_t errorGetStudent;
+    uint8_t (*getStudent)(bulletin_t *) = selectGetStudents(errorGetStudent, bulletin);
+    if(getStudent(&bulletin)) {
+        retVal = errorHandler(errorGetStudent);
+        goto free_students;
+    }
+
 
     free_students:
         free(bulletin.students);
@@ -64,6 +72,21 @@ bulletin_t initBt() {
     b.fpData.fp = NULL;
 
     return b;
+}
+
+
+uint8_t (*selectGetStudents(errorEvent_t *error, bulletin_t bulletin))(bulletin_t *) {
+    uint8_t (*getF)(bulletin_t *) = NULL;
+
+    if(bulletin.fpData.has_students) {
+        getF = fgetsStudents;
+        *error = ERROR_READ_FILE;
+    } else {
+        getF = scanStudents;
+        *error = ERROR_INPUT;
+    }
+
+    return getF;
 }
 
 
