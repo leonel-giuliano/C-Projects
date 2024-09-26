@@ -7,6 +7,10 @@
 #include "bulletin.h"
 
 
+// Scan the students names
+// Returns 1 if there was a problem in the input (non char read)
+uint8_t scanStudents(bulletin_t *_Bulletin);
+
 // Asks the user for the amount of students
 // Returns 0 only if there was a problem inside the loop
 uint8_t asknStudents();

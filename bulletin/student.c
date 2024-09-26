@@ -6,6 +6,18 @@
 #include "student.h"
 
 
+uint8_t scanStudents(bulletin_t *bulletin) {
+    for(uint8_t i = 0; i < bulletin->len; i++) {
+        printf("Student n°%hhu: ", i + 1);
+
+        if(fgetsClean(bulletin->students[i].name, STUDENT_STR_MAX, stdin) == NULL)
+            return 1;
+    }
+
+    return 0;
+}
+
+
 uint8_t asknStudents() {
     uint8_t n, loop = 0;
     while(++loop) {
