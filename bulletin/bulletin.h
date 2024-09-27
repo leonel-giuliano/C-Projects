@@ -20,7 +20,7 @@
 
 /* SETUP FLAGS */
 
-#define was_read setupFlags->bits.flag0
+#define was_read bits.flag0
 
 
 /* BULLETIN STRUCT */
@@ -64,12 +64,23 @@ typedef struct {
 typedef uint8_t setupError_t;
 enum {
     SETUP_NOERROR,
-    SETUP_NOGOTO
+    SETUP_NOGOTO,
+    SETUP_MARK_LIST
 };
 
 
 // Proccess before the menu is executed
 setupError_t bulletinSetup(bulletin_t *_Bulletin);
+
+
+/* ALLOC MARK NAMES */
+
+// Allocates a mark name at the end of the list
+// Returns NULL if there was a problem allocating
+markName_t *mallocMarkName(markName_t *_MarkNameList);
+
+// Free every element in the list
+void freeMarkNameList(markName_t *_MarkNameList);
 
 
 #endif

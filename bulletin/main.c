@@ -17,6 +17,14 @@ uint8_t errorHandler(errorEvent_t error, ...) {
         case ERROR_FILE:
             printf("cannot access '%s': %s\n", va_arg(arg, const char *), strerror(errno));
             break;
+
+        case ERROR_NOMEM:
+            printf("problem allocating: %s\n", strerror(errno));
+            break;
+
+        case ERROR_READ_FILE:
+            puts("there was a problem reading the file");
+            break;
     }
 
     va_end(arg);
