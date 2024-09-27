@@ -2,8 +2,18 @@
 #include <errno.h>
 #include <string.h>
 
+#include "main.h"
 #include "bulletin.h"
 #include "file.h"
+
+
+FILE *fopenBulletin(fpData_t *fpData, flags8_t *setupFlags) {
+    if((fpData->fp = fopen(fpData->path, "r+")) == NULL) {
+        if((fpData->fp = fopen(fpData->path, "w+")) == NULL) return NULL;
+    } else was_read = 1;
+
+    return fpData->fp;
+}
 
 
 char *getPath(char *path) {

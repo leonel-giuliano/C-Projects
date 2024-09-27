@@ -18,6 +18,11 @@
 #define ST_STR_MAX 100
 
 
+/* SETUP FLAGS */
+
+#define was_read setupFlags->bits.flag0
+
+
 /* BULLETIN STRUCT */
 
 typedef struct _markName_t {

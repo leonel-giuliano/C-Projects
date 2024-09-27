@@ -15,5 +15,12 @@ setupError_t bulletinSetup(bulletin_t *bulletin) {
         return SETUP_NOGOTO;
     }
 
+    flags8_t setupFlags = { 0 };
+
+    if(fopenBulletin(&bulletin->fpData, &setupFlags) == NULL) {
+        errorHandler(ERROR_FILE, bulletin->fpData.path);
+        return SETUP_NOGOTO;
+    }
+
     return SETUP_NOERROR;
 }

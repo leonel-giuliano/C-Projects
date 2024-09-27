@@ -8,6 +8,13 @@
 #define CONFIG_PATH "./bulletin.config"
 
 
+#include "main.h"
+
+
+// Open the file in "r+" or "w+" and checks the flag
+// Returns NULL if there was a problem trying to open the file
+FILE *fopenBulletin(fpData_t *_FileData, flags8_t *setupFlags);
+
 // Select the path from the config file or the pred path
 // Return NULL if there was a problem reading the config file
 char *getPath(char *_Buffer);
