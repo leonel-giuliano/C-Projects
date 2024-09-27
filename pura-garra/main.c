@@ -10,6 +10,7 @@ int main() {
     return 0;
 }
 
+
 void errorHandler(errorEvent_t error, ...) {
     va_list arg;
     va_start(arg, error);

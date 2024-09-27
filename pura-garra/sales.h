@@ -35,7 +35,15 @@ typedef struct {
     char path[PATH_MAX];
     sale_t *saleList;
     FILE *fp;
-} saleRecord_t;
+} salesRecord_t;
+
+
+/* SETUP ERRORS */
+
+typedef uint8_t setupError_t;
+enum {
+    SETUP_NOERROR
+};
 
 
 #endif
