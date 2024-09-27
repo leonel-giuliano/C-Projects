@@ -7,6 +7,10 @@
 #define PRED_PATH "./bulletin.csv"
 #define CONFIG_PATH "./bulletin.config"
 
+#define STUDENTS_ROW "Students,"
+
+#define STUDENTS_ROW_LEN 9
+
 
 #include "main.h"
 

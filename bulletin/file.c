@@ -7,6 +7,20 @@
 #include "file.h"
 
 
+uint8_t fgetsMarkNames(FILE *fp) {
+    // Check if the file has at least the student row len
+    fseek(fp, 0, SEEK_END);
+    if(ftell(fp) < STUDENTS_ROW_LEN) return 0;
+
+    // Check if it has the students row name
+    rewind(fp);
+    char stRow[STUDENTS_ROW_LEN + 1];
+    if(strcmp(STUDENTS_ROW, fgets(stRow, STUDENTS_ROW_LEN, fp))) return 0;
+
+    return 0;
+}
+
+
 FILE *fopenBulletin(fpData_t *fpData, flags8_t *setupFlags) {
     if((fpData->fp = fopen(fpData->path, "r+")) == NULL) {
         if((fpData->fp = fopen(fpData->path, "w+")) == NULL) return NULL;
