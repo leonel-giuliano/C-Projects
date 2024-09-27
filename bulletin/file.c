@@ -7,15 +7,35 @@
 #include "file.h"
 
 
-int8_t fgetsMarkNames(bulletin_t *bulletin) {
-    // Check if the file has a char after the student row len
-    fseek(bulletin->fpData.fp, 0, SEEK_END);
-    if(ftell(bulletin->fpData.fp) < STUDENTS_ROW_LEN + 1) return 0;
+uint8_t fgetnStudents(FILE *fp) {
+    uint8_t n = 0;
+    rewind(fp);
+    char ch = 0;
 
-    // Check if it has the students row name
+    // Repeats per line until the end is found
+    while(ch != EOF) {
+        // Goes to the end of the line
+        while((ch = getc(fp)) != '\n' && ch != EOF);
+
+        n++;
+    }
+
+    // Doesn't count the first row;
+    return --n;
+}
+
+
+int8_t fgetsMarkNames(bulletin_t *bulletin, flags8_t *flags) {
+    // Check if the file has a char after the student column len
+    fseek(bulletin->fpData.fp, 0, SEEK_END);
+    if(ftell(bulletin->fpData.fp) < STUDENTS_COL_LEN + 1) return 0;
+
+    flags->has_data = 1;
+
+    // Check if it has the students column name
     rewind(bulletin->fpData.fp);
-    char stRow[STUDENTS_ROW_LEN + 1];
-    if(strcmp(STUDENTS_ROW, fgets(stRow, STUDENTS_ROW_LEN, bulletin->fpData.fp))) return 0;
+    char stCol[STUDENTS_COL_LEN + 1];
+    if(strcmp(STUDENTS_COL, fgets(stCol, STUDENTS_COL_LEN, bulletin->fpData.fp))) return 0;
 
     // Check if the next char to know if there is another mark name
     char ch;
@@ -42,6 +62,9 @@ int8_t fgetsMarkNames(bulletin_t *bulletin) {
 
     // This means there was a ',,' case
     if(ch == ',') return -1;
+
+    if(ch != EOF) flags->has_students = 1;
+    flags->has_mark_name = 1;
 
     return 0;
 }

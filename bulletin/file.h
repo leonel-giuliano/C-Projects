@@ -14,15 +14,18 @@
 #define PRED_PATH "./bulletin.csv"
 #define CONFIG_PATH "./bulletin.config"
 
-#define STUDENTS_ROW "Students,"
+#define STUDENTS_COL "Students,"
 
-#define STUDENTS_ROW_LEN 9
+#define STUDENTS_COL_LEN 9
 
+
+// Count the amount of rows to know the amount of students
+uint8_t fgetnStudents(FILE *_Stream);
 
 // Allocates a mark name in the list and scans the name from the file
 // Returns 1 if there was a problem allocating
 // Returns -1 if the mark name was empty (',,')
-int8_t fgetsMarkNames(bulletin_t *_Bulletin);
+int8_t fgetsMarkNames(bulletin_t *_Bulletin, flags8_t *_Flags);
 
 // Open the file in "r+" or "w+" and checks the flag
 // Returns NULL if there was a problem trying to open the file

@@ -7,6 +7,7 @@
 
 
 setupError_t bulletinSetup(bulletin_t *bulletin) {
+    bulletin->len = 0;
     bulletin->markNameList = NULL;
     bulletin->students = NULL;
     bulletin->fpData.fp = NULL;
@@ -23,14 +24,17 @@ setupError_t bulletinSetup(bulletin_t *bulletin) {
         return SETUP_NOGOTO;
     }
 
-    // Read the mark names if the file already existed
     if(setupFlags.was_read) {
-        int8_t e = fgetsMarkNames(&bulletin);
+        // Read the mark names if the file already existed
+        int8_t e = fgetsMarkNames(bulletin, &setupFlags);
 
         if(e == 1) errorHandler(ERROR_NOMEM);
         else if(e == -1) errorHandler(ERROR_READ_FILE);
 
         if(e) return SETUP_MARK_LIST;
+
+        // Read the amount of students in the file
+        if(setupFlags.has_students) bulletin->len = fgetnStudents(bulletin->fpData.fp);
     }
 
     return SETUP_NOERROR;

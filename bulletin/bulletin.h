@@ -21,6 +21,9 @@
 /* SETUP FLAGS */
 
 #define was_read bits.flag0
+#define has_data bits.flag1
+#define has_students bits.flag2
+#define has_mark_name bits.flag3
 
 
 /* BULLETIN STRUCT */
