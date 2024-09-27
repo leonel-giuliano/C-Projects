@@ -7,9 +7,27 @@
 #include "file.h"
 
 
-uint8_t fgetnStudents(FILE *fp) {
+uint8_t fscanStudents(bulletin_t *bulletin) {
+    // Skip row names
+    fseek(bulletin->fpData.fp, STUDENTS_COL_LEN, SEEK_SET);
+    char ch;
+    while((ch = getc(bulletin->fpData.fp)) != '\n' && ch != EOF);
+
+    for(uint8_t i = 0; i < bulletin->len; i++) {
+        if(!fscanf(bulletin->fpData.fp, ".*[^,]", ST_STR_MAX, bulletin->students[i].name))
+            return -1;
+
+        // Skip the ','
+        getc(bulletin->fpData.fp);
+    }
+
+    return 0;
+}
+
+
+uint8_t fgetnStudents(FILE *fp, flags8_t *flags) {
     uint8_t n = 0;
-    rewind(fp);
+    fseek(fp, STUDENTS_COL_LEN, SEEK_SET);
     char ch = 0;
 
     // Repeats per line until the end is found
@@ -21,7 +39,9 @@ uint8_t fgetnStudents(FILE *fp) {
     }
 
     // Doesn't count the first row;
-    return --n;
+    if(n-- == 0) flags->has_students;
+
+    return n;
 }
 
 

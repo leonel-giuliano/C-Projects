@@ -34,13 +34,19 @@ setupError_t bulletinSetup(bulletin_t *bulletin) {
         if(e) return SETUP_MARK_LIST;
 
         // Read the amount of students in the file
-        if(setupFlags.has_students) bulletin->len = fgetnStudents(bulletin->fpData.fp);
+        if(setupFlags.has_students)
+            bulletin->len = fgetnStudents(bulletin->fpData.fp, &setupFlags);
     }
 
     // Ask for the user input if the file was created or if
     // the file didn't have the students
-    if(!bulletin->len && !(bulletin->len = getnStudents())) {
+    if(!setupFlags.has_students && !(bulletin->len = getnStudents())) {
         errorHandler(ERROR_INPUT);
+        return SETUP_MARK_LIST;
+    }
+
+    if((bulletin->students = (student_t *)malloc(bulletin->len * sizeof(student_t))) == NULL) {
+        errorHandler(ERROR_NOMEM);
         return SETUP_MARK_LIST;
     }
 

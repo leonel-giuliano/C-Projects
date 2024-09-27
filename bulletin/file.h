@@ -20,7 +20,7 @@
 
 
 // Count the amount of rows to know the amount of students
-uint8_t fgetnStudents(FILE *_Stream);
+uint8_t fgetnStudents(FILE *_Stream, flags8_t *_Flags);
 
 // Allocates a mark name in the list and scans the name from the file
 // Returns 1 if there was a problem allocating

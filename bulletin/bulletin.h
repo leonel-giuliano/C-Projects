@@ -15,7 +15,7 @@
 /* TEXT */
 
 #define MARK_STR_MAX 100
-#define ST_STR_MAX 100
+#define ST_STR_MAX 50
 
 
 /* SETUP FLAGS */
