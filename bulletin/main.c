@@ -25,6 +25,10 @@ uint8_t errorHandler(errorEvent_t error, ...) {
         case ERROR_READ_FILE:
             puts("there was a problem reading the file");
             break;
+
+        case ERROR_INPUT:
+            puts("problem reading the input");
+            break;
     }
 
     va_end(arg);

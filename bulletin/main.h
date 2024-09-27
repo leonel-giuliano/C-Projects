@@ -29,7 +29,8 @@ typedef uint8_t errorEvent_t;
 enum {
     ERROR_FILE,
     ERROR_NOMEM,
-    ERROR_READ_FILE
+    ERROR_READ_FILE,
+    ERROR_INPUT
 };
 
 

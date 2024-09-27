@@ -37,7 +37,31 @@ setupError_t bulletinSetup(bulletin_t *bulletin) {
         if(setupFlags.has_students) bulletin->len = fgetnStudents(bulletin->fpData.fp);
     }
 
+    // Ask for the user input if the file was created or if
+    // the file didn't have the students
+    if(!bulletin->len && !(bulletin->len = getnStudents())) {
+        errorHandler(ERROR_INPUT);
+        return SETUP_MARK_LIST;
+    }
+
     return SETUP_NOERROR;
+}
+
+
+uint8_t getnStudents() {
+    uint8_t n, loop = 0;
+
+    while(++loop) {
+        printf("Amount of students: ");
+        scanf("%hhu", &n);
+
+        if(n) return n;
+
+        // In case the input is 0
+        puts("ERROR: the amount of students can't be 0");
+    }
+
+    return 0;
 }
 
 

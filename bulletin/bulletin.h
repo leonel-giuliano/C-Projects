@@ -75,6 +75,10 @@ enum {
 // Proccess before the menu is executed
 setupError_t bulletinSetup(bulletin_t *_Bulletin);
 
+// Scan user input to know the amount of students
+// Returns 0 if there was a problem
+uint8_t getnStudents();
+
 
 /* ALLOC MARK NAMES */
 
