@@ -5,6 +5,32 @@
 #include <string.h>
 
 #include "main.h"
+#include "bulletin.h"
+
+
+int main() {
+    uint8_t retVal = 1;
+    bulletin_t bulletin;
+
+    switch(bulletinSetup(&bulletin)) {
+        case SETUP_NOGOTO: return 1;
+        case SETUP_MARK_NAME_LIST: goto free_mark_names;
+        case SETUP_MARK_LIST: goto free_mark_list;
+        case SETUP_NOERROR: retVal = 0;
+    }
+
+
+    free_mark_list:
+        freeAllMarks(&bulletin);
+        free(bulletin.students);
+
+    free_mark_names:
+        freeMarkNameList(bulletin.markNameList);
+
+        fclose(bulletin.fpData.fp);
+
+        return retVal;
+}
 
 
 char *fgetsClean(char *str, int n, FILE *fp) {

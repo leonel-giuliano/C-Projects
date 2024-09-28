@@ -88,7 +88,7 @@ uint8_t getsStudents(bulletin_t *_Bulletin);
 uint8_t getnStudents();
 
 
-/* ALLOC MARK NAMES */
+/* ALLOC MARKS */
 
 // Allocates a mark name at the end of the list
 // Returns NULL if there was a problem allocating
