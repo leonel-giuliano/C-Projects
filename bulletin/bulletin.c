@@ -38,6 +38,10 @@ setupError_t bulletinSetup(bulletin_t *bulletin) {
             bulletin->len = fgetnStudents(bulletin->fpData.fp, &setupFlags);
     }
 
+    // In case the file was empty
+    if(!setupFlags.has_data)
+        fprintf(bulletin->fpData.fp, "%s\n", STUDENTS_COL);
+
     // Ask for the user input if the file was created or if
     // the file didn't have the students
     if(!setupFlags.has_students && !(bulletin->len = getnStudents())) {
@@ -58,8 +62,29 @@ setupError_t bulletinSetup(bulletin_t *bulletin) {
 
         if(e) return SETUP_MARK_LIST;
     }
+    // If there were no students, asks the user only the names
+    else if(getsStudents(bulletin)) {
+        errorHandler(ERROR_INPUT);
+        return SETUP_MARK_NAME_LIST;
+    }
 
     return SETUP_NOERROR;
+}
+
+
+uint8_t getsStudents(bulletin_t *bulletin) {
+    fseek(bulletin->fpData.fp, 0, SEEK_END);
+
+    for(uint8_t i = 0; i < bulletin->len; i++) {
+        printf("Student n°%hhu: ", i + 1);
+
+        if(fgetsClean(bulletin->students[i].name, ST_STR_MAX, bulletin->fpData.fp) == NULL)
+            return 1;
+
+        fprintf(bulletin->fpData.fp, "%s,\n", bulletin->students[i].name);
+    }
+
+    return 0;
 }
 
 
@@ -86,7 +111,9 @@ mark_t *mallocMark(mark_t *mark) {
     mark_t *newMark = (mark_t *)malloc(sizeof(mark_t));
     if(newMark == NULL) return NULL;
 
+    newMark->value = MARK_EMPTY;
     newMark->next = NULL;
+
     // If the list is empty, it makes it the first element
     if(mark == NULL) return mark = newMark;
 

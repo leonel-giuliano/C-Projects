@@ -34,6 +34,10 @@ enum {
 };
 
 
+// Gets rid of the new line in the string and cleans the stdin
+// Returns NULL if there was a problem reading
+char *fgetsClean(char *_Buffer, int _BufferSize, FILE *_Stream);
+
 uint8_t errorHandler(errorEvent_t _ErrorEvent, ...);
 
 
