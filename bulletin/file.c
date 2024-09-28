@@ -13,12 +13,37 @@ uint8_t fscanStudents(bulletin_t *bulletin) {
     char ch;
     while((ch = getc(bulletin->fpData.fp)) != '\n' && ch != EOF);
 
+
+    uint8_t isFirstMark;
+    mark_t *newMark = NULL;
+
     for(uint8_t i = 0; i < bulletin->len; i++) {
         if(!fscanf(bulletin->fpData.fp, ".*[^,]", ST_STR_MAX, bulletin->students[i].name))
             return -1;
 
         // Skip the ','
         getc(bulletin->fpData.fp);
+
+        isFirstMark = 1;
+        newMark = NULL;
+
+        while((ch = getc(bulletin->fpData.fp)) != '\n' && ch != EOF) {
+            ungetc(ch, bulletin->fpData.fp);
+
+            if((newMark = mallocMark(newMark)) == NULL) return 1;
+
+            if(isFirstMark) {
+                bulletin->students[i].markList = newMark;
+                isFirstMark = 0;
+            }
+
+            // If there is a case of ',,' it means the mark wasn't saved yet
+            if(!fscanf(bulletin->fpData.fp, "%hhd", &bulletin->students[i].markList->value))
+                bulletin->students[i].markList->value = MARK_EMPTY;
+
+            // Skip the ','
+            getc(bulletin->fpData.fp);
+        }
     }
 
     return 0;

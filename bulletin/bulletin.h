@@ -12,6 +12,9 @@
 #include <stdint.h>
 
 
+#define MARK_EMPTY -1
+
+
 /* TEXT */
 
 #define MARK_STR_MAX 100
@@ -68,6 +71,7 @@ typedef uint8_t setupError_t;
 enum {
     SETUP_NOERROR,
     SETUP_NOGOTO,
+    SETUP_MARK_NAME_LIST,
     SETUP_MARK_LIST
 };
 
@@ -81,6 +85,17 @@ uint8_t getnStudents();
 
 
 /* ALLOC MARK NAMES */
+
+// Allocates a mark name at the end of the list
+// Returns NULL if there was a problem allocating
+mark_t *mallocMark(mark_t *_MarkList);
+
+// Free the mark list from all the students
+void freeAllMarks(bulletin_t *_Bulletin);
+
+// Free every element in the list
+void freeMarkList(mark_t *_MarkList);
+
 
 // Allocates a mark name at the end of the list
 // Returns NULL if there was a problem allocating

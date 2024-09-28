@@ -31,7 +31,7 @@ setupError_t bulletinSetup(bulletin_t *bulletin) {
         if(e == 1) errorHandler(ERROR_NOMEM);
         else if(e == -1) errorHandler(ERROR_READ_FILE);
 
-        if(e) return SETUP_MARK_LIST;
+        if(e) return SETUP_MARK_NAME_LIST;
 
         // Read the amount of students in the file
         if(setupFlags.has_students)
@@ -42,12 +42,21 @@ setupError_t bulletinSetup(bulletin_t *bulletin) {
     // the file didn't have the students
     if(!setupFlags.has_students && !(bulletin->len = getnStudents())) {
         errorHandler(ERROR_INPUT);
-        return SETUP_MARK_LIST;
+        return SETUP_MARK_NAME_LIST;
     }
 
     if((bulletin->students = (student_t *)malloc(bulletin->len * sizeof(student_t))) == NULL) {
         errorHandler(ERROR_NOMEM);
-        return SETUP_MARK_LIST;
+        return SETUP_MARK_NAME_LIST;
+    }
+
+    if(setupFlags.has_students) {
+        int8_t e = fscanStudents(bulletin);
+
+        if(e == 1) errorHandler(ERROR_NOMEM);
+        else if(e == -1) errorHandler(ERROR_READ_FILE);
+
+        if(e) return SETUP_MARK_LIST;
     }
 
     return SETUP_NOERROR;
@@ -72,6 +81,44 @@ uint8_t getnStudents() {
 
 
 /* ALLOC MARK NAMES */
+
+mark_t *mallocMark(mark_t *mark) {
+    mark_t *newMark = (mark_t *)malloc(sizeof(mark_t));
+    if(newMark == NULL) return NULL;
+
+    newMark->next = NULL;
+    // If the list is empty, it makes it the first element
+    if(mark == NULL) return mark = newMark;
+
+    // Goes to the end of the list
+    mark_t *markSeek = mark;
+    while(markSeek->next != NULL) markSeek = markSeek->next;
+    markSeek->next = newMark;
+
+    return newMark;
+}
+
+
+void freeAllMarks(bulletin_t *bulletin) {
+    for(uint8_t i = 0; i < bulletin->len; i++)
+        freeMarkList(bulletin->students[i].markList);
+}
+
+
+void freeMarkList(mark_t *mark) {
+    if(mark == NULL) return;
+
+    // Free from first to last
+    mark_t *markSeek = NULL;
+    while((markSeek = mark->next) != NULL) {
+        free(mark);
+        mark = markSeek;
+    }
+
+    // Free the last when there is no element left
+    free(mark);
+}
+
 
 markName_t *mallocMarkName(markName_t *mark) {
     markName_t *newMark = (markName_t *)malloc(sizeof(markName_t));
