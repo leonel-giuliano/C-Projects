@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include <errno.h>
 #include <stdarg.h>
 #include <stdint.h>
@@ -15,6 +16,7 @@ int main() {
     switch(bulletinSetup(&bulletin)) {
         case SETUP_NOGOTO: return 1;
         case SETUP_MARK_NAME_LIST: goto free_mark_names;
+        case SETUP_STUDENTS: goto free_students;
         case SETUP_MARK_LIST: goto free_mark_list;
         case SETUP_NOERROR: retVal = 0;
     }
@@ -22,6 +24,8 @@ int main() {
 
     free_mark_list:
         freeAllMarks(&bulletin);
+
+    free_students:
         free(bulletin.students);
 
     free_mark_names:
@@ -53,7 +57,7 @@ uint8_t errorHandler(errorEvent_t error, ...) {
     va_list arg;
     va_start(arg, error);
 
-    printf("bulletin: ");
+    printf("\nbulletin: ");
 
     switch(error) {
         case ERROR_FILE:

@@ -65,7 +65,7 @@ setupError_t bulletinSetup(bulletin_t *bulletin) {
     // If there were no students, asks the user only the names
     else if(getsStudents(bulletin)) {
         errorHandler(ERROR_INPUT);
-        return SETUP_MARK_NAME_LIST;
+        return SETUP_STUDENTS;
     }
 
     return SETUP_NOERROR;
@@ -78,7 +78,7 @@ uint8_t getsStudents(bulletin_t *bulletin) {
     for(uint8_t i = 0; i < bulletin->len; i++) {
         printf("Student n°%hhu: ", i + 1);
 
-        if(fgetsClean(bulletin->students[i].name, ST_STR_MAX, bulletin->fpData.fp) == NULL)
+        if(fgetsClean(bulletin->students[i].name, ST_STR_MAX, stdin) == NULL)
             return 1;
 
         fprintf(bulletin->fpData.fp, "%s,\n", bulletin->students[i].name);
@@ -93,7 +93,10 @@ uint8_t getnStudents() {
 
     while(++loop) {
         printf("Amount of students: ");
-        scanf("%hhu", &n);
+        scanf(" %hhu", &n);
+
+        char ch;
+        while((ch = getchar()) != '\n' && ch != EOF);
 
         if(n) return n;
 
