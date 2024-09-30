@@ -34,6 +34,12 @@ enum {
 };
 
 
+#define CLEAN_STDIN() do {                          \
+    char ch;                                        \
+    while((ch = getchar()) != '\n' && ch != EOF);   \
+} while(0)
+
+
 // Gets rid of the new line in the string and cleans the stdin
 // Returns NULL if there was a problem reading
 char *fgetsClean(char *_Buffer, int _BufferSize, FILE *_Stream);

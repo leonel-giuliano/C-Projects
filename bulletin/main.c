@@ -44,10 +44,7 @@ char *fgetsClean(char *str, int n, FILE *fp) {
     // If there wasn't overflowing data, get rid of the '\n'
     if(str[len - 1] == '\n') str[len - 1] = '\0';
     // Clean the stdin
-    else if(fp == stdin) {
-        char ch;
-        while((ch = getchar()) != '\n' && ch != EOF);
-    }
+    else if(fp == stdin) CLEAN_STDIN();
 
     return str;
 }

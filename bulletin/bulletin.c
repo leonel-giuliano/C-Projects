@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "main.h"
 #include "bulletin.h"
@@ -78,8 +79,9 @@ uint8_t getsStudents(bulletin_t *bulletin) {
     for(uint8_t i = 0; i < bulletin->len; i++) {
         printf("Student n°%hhu: ", i + 1);
 
-        if(fgetsClean(bulletin->students[i].name, ST_STR_MAX, stdin) == NULL)
-            return 1;
+        char *str = fgetsClean(bulletin->students[i].name, ST_STR_MAX, stdin);
+        // In case of some error or the only input is '\n'
+        if(str == NULL || !strlen(str)) return 1;
 
         fprintf(bulletin->fpData.fp, "%s,\n", bulletin->students[i].name);
     }
@@ -94,9 +96,7 @@ uint8_t getnStudents() {
     while(++loop) {
         printf("Amount of students: ");
         scanf(" %hhu", &n);
-
-        char ch;
-        while((ch = getchar()) != '\n' && ch != EOF);
+        CLEAN_STDIN();
 
         if(n) return n;
 
