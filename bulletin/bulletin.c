@@ -55,6 +55,10 @@ setupError_t bulletinSetup(bulletin_t *bulletin) {
         return SETUP_MARK_NAME_LIST;
     }
 
+    // Init the markList to NULL
+    for(uint8_t i = 0; i < bulletin->len; i++)
+        bulletin->students[i].markList = NULL;
+
     if(setupFlags.has_students) {
         int8_t e = fscanStudents(bulletin);
 

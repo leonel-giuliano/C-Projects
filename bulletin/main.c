@@ -22,6 +22,7 @@ int main() {
     }
 
 
+
     free_mark_list:
         freeAllMarks(&bulletin);
 
