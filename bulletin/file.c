@@ -64,7 +64,7 @@ uint8_t fgetnStudents(FILE *fp, flags8_t *flags) {
     }
 
     // Doesn't count the first row;
-    if(n-- == 0) flags->has_students;
+    if(n-- == 0) flags->has_students = 0;
 
     return n;
 }
