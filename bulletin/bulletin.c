@@ -83,7 +83,7 @@ uint8_t getsStudents(bulletin_t *bulletin) {
         // In case of some error or the only input is '\n'
         if(str == NULL || !strlen(str)) return 1;
 
-        fprintf(bulletin->fpData.fp, "%s,\n", bulletin->students[i].name);
+        fprintf(bulletin->fpData.fp, "%s,\n", str);
     }
 
     return 0;
