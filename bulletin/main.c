@@ -38,7 +38,7 @@ int main() {
 }
 
 
-char *fgetsCh(char *buffer, int n, char lim, FILE *fp) {
+char fgetsCh(char *buffer, int n, char lim, FILE *fp) {
     int i = 0;
     char ch;
 
@@ -47,7 +47,7 @@ char *fgetsCh(char *buffer, int n, char lim, FILE *fp) {
 
     buffer[i] = '\0';
 
-    return buffer;
+    return ch;
 }
 
 
@@ -77,10 +77,6 @@ uint8_t errorHandler(errorEvent_t error, ...) {
 
         case ERROR_NOMEM:
             printf("problem allocating: %s\n", strerror(errno));
-            break;
-
-        case ERROR_READ_FILE:
-            puts("there was a problem reading the file");
             break;
 
         case ERROR_INPUT:

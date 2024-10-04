@@ -20,7 +20,8 @@
 
 
 // Scans the students names and marks from the file
-void fscanStudents(bulletin_t *_Bulletin);
+// Returns 1 if there was a problem allocating
+uint8_t fscanStudents(bulletin_t *_Bulletin);
 
 // Count the amount of rows to know the amount of students
 uint8_t fgetnStudents(FILE *_Stream, flags8_t *_Flags);

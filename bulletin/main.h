@@ -29,7 +29,6 @@ typedef uint8_t errorEvent_t;
 enum {
     ERROR_FILE,
     ERROR_NOMEM,
-    ERROR_READ_FILE,
     ERROR_INPUT
 };
 
@@ -41,7 +40,7 @@ enum {
 
 
 // Scans a file until the ch is found
-char *fgetsCh(char *_Buffer, int _BufferSize, char _Ch, FILE *_Stream);
+char fgetsCh(char *_Buffer, int _BufferSize, char _Ch, FILE *_Stream);
 
 // Gets rid of the new line in the string and cleans the stdin
 // Returns NULL if there was a problem reading

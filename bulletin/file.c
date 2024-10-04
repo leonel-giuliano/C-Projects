@@ -7,12 +7,11 @@
 #include "file.h"
 
 
-void fscanStudents(bulletin_t *bulletin) {
+uint8_t fscanStudents(bulletin_t *bulletin) {
     // Skip row names
     fseek(bulletin->fpData.fp, STUDENTS_COL_LEN, SEEK_SET);
     char ch;
     while((ch = getc(bulletin->fpData.fp)) != '\n' && ch != EOF);
-
 
     uint8_t isFirstMark;
     mark_t *newMark = NULL;
@@ -44,6 +43,8 @@ void fscanStudents(bulletin_t *bulletin) {
             getc(bulletin->fpData.fp);
         }
     }
+
+    return 0;
 }
 
 
@@ -96,7 +97,6 @@ int8_t fgetsMarkNames(bulletin_t *bulletin, flags8_t *flags) {
 
         mark->name[0] = ch;
         // Move the name a char because the first one is scanned to check if there was a mark
-        fscanf(bulletin->fpData.fp, "%.*[^,]", MARK_STR_MAX - 1, mark->name + 1);
         fgetsCh(mark->name + 1, MARK_STR_MAX - 1, ',', bulletin->fpData.fp);
 
         // Skip the ','

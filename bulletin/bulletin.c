@@ -53,14 +53,14 @@ setupError_t bulletinSetup(bulletin_t *bulletin) {
     for(uint8_t i = 0; i < bulletin->len; i++)
         bulletin->students[i].markList = NULL;
 
+    // Scan all the students data
     if(setupFlags.has_students) {
-        int8_t e = fscanStudents(bulletin);
-
-        if(e == 1) errorHandler(ERROR_NOMEM);
-        else if(e == -1) errorHandler(ERROR_READ_FILE);
-
-        if(e) return SETUP_MARK_LIST;
+        if(fscanStudents(bulletin)) {
+            errorHandler(ERROR_NOMEM);
+            return SETUP_MARK_LIST;
+        }
     }
+
     // If there were no students, asks the user only the names
     else if(getsStudents(bulletin)) {
         errorHandler(ERROR_INPUT);
