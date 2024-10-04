@@ -38,6 +38,19 @@ int main() {
 }
 
 
+char *fgetsCh(char *buffer, int n, char lim, FILE *fp) {
+    int i = 0;
+    char ch;
+
+    while(i < n && (ch = getc(fp)) != lim && ch != EOF)
+        buffer[i++] = ch;
+
+    buffer[i] = '\0';
+
+    return buffer;
+}
+
+
 char *fgetsClean(char *str, int n, FILE *fp) {
     if(fgets(str, n, fp) == NULL) return NULL;
     size_t len = strlen(str);

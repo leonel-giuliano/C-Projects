@@ -7,7 +7,7 @@
 #include "file.h"
 
 
-uint8_t fscanStudents(bulletin_t *bulletin) {
+void fscanStudents(bulletin_t *bulletin) {
     // Skip row names
     fseek(bulletin->fpData.fp, STUDENTS_COL_LEN, SEEK_SET);
     char ch;
@@ -18,8 +18,7 @@ uint8_t fscanStudents(bulletin_t *bulletin) {
     mark_t *newMark = NULL;
 
     for(uint8_t i = 0; i < bulletin->len; i++) {
-        if(!fscanf(bulletin->fpData.fp, ".*[^,]", ST_STR_MAX, bulletin->students[i].name))
-            return -1;
+        fgetsCh(bulletin->students[i].name, ST_STR_MAX, ',', bulletin->fpData.fp);
 
         // Skip the ','
         getc(bulletin->fpData.fp);
@@ -45,8 +44,6 @@ uint8_t fscanStudents(bulletin_t *bulletin) {
             getc(bulletin->fpData.fp);
         }
     }
-
-    return 0;
 }
 
 
@@ -80,7 +77,7 @@ int8_t fgetsMarkNames(bulletin_t *bulletin, flags8_t *flags) {
     // Check if it has the students column name
     rewind(bulletin->fpData.fp);
     char stCol[STUDENTS_COL_LEN + 1];
-    if(strcmp(STUDENTS_COL, fgets(stCol, STUDENTS_COL_LEN, bulletin->fpData.fp))) return 0;
+    if(strcmp(STUDENTS_COL, fgets(stCol, STUDENTS_COL_LEN + 1, bulletin->fpData.fp))) return 0;
 
     // Check if the next char to know if there is another mark name
     char ch;
@@ -100,6 +97,7 @@ int8_t fgetsMarkNames(bulletin_t *bulletin, flags8_t *flags) {
         mark->name[0] = ch;
         // Move the name a char because the first one is scanned to check if there was a mark
         fscanf(bulletin->fpData.fp, "%.*[^,]", MARK_STR_MAX - 1, mark->name + 1);
+        fgetsCh(mark->name + 1, MARK_STR_MAX - 1, ',', bulletin->fpData.fp);
 
         // Skip the ','
         getc(bulletin->fpData.fp);

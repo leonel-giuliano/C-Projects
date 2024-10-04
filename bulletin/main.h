@@ -40,6 +40,9 @@ enum {
 } while(0)
 
 
+// Scans a file until the ch is found
+char *fgetsCh(char *_Buffer, int _BufferSize, char _Ch, FILE *_Stream);
+
 // Gets rid of the new line in the string and cleans the stdin
 // Returns NULL if there was a problem reading
 char *fgetsClean(char *_Buffer, int _BufferSize, FILE *_Stream);

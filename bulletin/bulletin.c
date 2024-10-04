@@ -26,13 +26,7 @@ setupError_t bulletinSetup(bulletin_t *bulletin) {
     }
 
     if(setupFlags.was_read) {
-        // Read the mark names if the file already existed
-        int8_t e = fgetsMarkNames(bulletin, &setupFlags);
-
-        if(e == 1) errorHandler(ERROR_NOMEM);
-        else if(e == -1) errorHandler(ERROR_READ_FILE);
-
-        if(e) return SETUP_MARK_NAME_LIST;
+        fgetsMarkNames(bulletin, &setupFlags);
 
         // Read the amount of students in the file
         if(setupFlags.has_students)
