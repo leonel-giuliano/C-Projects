@@ -5,6 +5,12 @@
 #include <stdint.h>
 
 
+/* TEXT */
+
+// Amount of separators
+#define MENU_N_SEP 10
+
+
 /* FLAG */
 
 typedef union {
@@ -23,6 +29,21 @@ typedef union {
 } flags8_t;
 
 
+/* MENU */
+
+typedef uint8_t menu_t;
+enum {
+    MENU_ADD_MARK = 1,
+    MENU_EDIT_MARK,
+    MENU_EDIT_EVERY_MARK,
+    MENU_REMOVE_MARK,
+    MENU_PRINT,
+    MENU_PRINT_STUDENT,
+    MENU_CONFIG,
+    MENU_END
+};
+
+
 /* ERROR EVENTS */
 
 typedef uint8_t errorEvent_t;
@@ -33,10 +54,15 @@ enum {
 };
 
 
+/* MACRO FUNCTIONS */
+
 #define CLEAN_STDIN() do {                          \
     char ch;                                        \
     while((ch = getchar()) != '\n' && ch != EOF);   \
 } while(0)
+
+
+#define PRINT_MENU_ITEM(num, str) printf("\t%hhu. %s\n", num, str);
 
 
 // Scans a file until the ch is found

@@ -38,6 +38,25 @@ int main() {
 }
 
 
+void menuPrint() {
+    for(uint8_t i = 0; i < MENU_N_SEP; i++) putchar('-');
+    puts("\n");
+
+    PRINT_MENU_ITEM(MENU_ADD_MARK, "Add a new mark with it respective name");
+    PRINT_MENU_ITEM(MENU_EDIT_MARK, "Select a student and edit the mark value");
+    PRINT_MENU_ITEM(MENU_EDIT_EVERY_MARK, "Edit all of the marks");
+    PRINT_MENU_ITEM(MENU_REMOVE_MARK, "Remove a mark from the bulletin");
+    PRINT_MENU_ITEM(MENU_PRINT, "Prints the csv");
+    PRINT_MENU_ITEM(MENU_PRINT_STUDENT, "Prints all the mark from a student");
+    PRINT_MENU_ITEM(MENU_CONFIG, "Select the path for the csv file");
+    PRINT_MENU_ITEM(MENU_END, "End the program");
+
+    putchar('\n');
+    for(uint8_t i = 0; i < MENU_N_SEP; i++) putchar('-');
+    puts("\n");
+}
+
+
 char fgetsCh(char *buffer, int n, char lim, FILE *fp) {
     int i = 0;
     char ch;
